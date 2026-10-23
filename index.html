@@ -598,6 +598,76 @@ p { margin: 0; }
 .students .s-main span { font-size: 13px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .empty { padding: 14px; border-radius: 14px; background: var(--surface-2); color: var(--ink-3); font-size: 14px; text-align: center; }
 
+/* ---------- Envio ao professor e ranking ao vivo ---------- */
+.sync-note { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.4; color: var(--ok-ink); background: var(--ok-soft); border-radius: 12px; padding: 9px 11px; }
+.sync-note .ic { width: 16px; height: 16px; margin-top: 1px; }
+.sync-note.wait { color: var(--warn-ink); background: var(--warn-soft); }
+.t-rank { gap: 14px; }
+.rank-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.rank-status { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--ink-2); }
+.live { width: 10px; height: 10px; border-radius: 50%; background: var(--ink-3); flex: none; }
+.live.ok { background: var(--ok); animation: livePulse 2s ease-out infinite; }
+.live.err { background: var(--bad); }
+@keyframes livePulse { 0% { box-shadow: 0 0 0 0 var(--ok-line); } 70% { box-shadow: 0 0 0 8px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+.seg-mini { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--surface-2); }
+.seg-btn { border: 0; background: none; padding: 6px 12px; border-radius: 999px; font: 700 13px var(--f-body); color: var(--ink-2); cursor: pointer; }
+.seg-btn.on { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+.rank-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0; }
+@media (min-width: 640px) { .rank-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.rank-stats div { background: var(--surface-2); border-radius: 14px; padding: 10px 12px; }
+.rank-stats dt { font-size: 12px; font-weight: 600; color: var(--ink-3); }
+.rank-stats dd { margin: 2px 0 0; font: 800 22px var(--f-display); font-variant-numeric: tabular-nums; }
+.rank-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.rk { display: grid; grid-template-columns: 22px 40px minmax(0, 1fr) auto 34px; align-items: center; gap: 10px; padding: 10px 10px 10px 8px; border-radius: 16px; background: var(--surface-2); }
+.rk .avatar { width: 40px; height: 40px; font-size: 14px; }
+.rk-pos { font: 800 17px var(--f-display); text-align: center; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.rk.top1 .rk-pos { color: var(--gold-deep); }
+.rk.top1 { box-shadow: inset 0 0 0 2px var(--gold); }
+.rk-main { min-width: 0; display: grid; gap: 2px; }
+.rk-main b { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rk-sub { font-size: 12.5px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.on-txt { color: var(--ok-ink); font-weight: 700; }
+.rk-bars { display: flex; gap: 4px; margin: 3px 0 1px; max-width: 260px; }
+.rk-bar { flex: 1 1 0; height: 6px; border-radius: 999px; background: var(--surface-3); overflow: hidden; }
+.rk-bar > span { display: block; height: 100%; background: var(--ph-deep); }
+.rk-num { display: grid; justify-items: end; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.rk-num b { font: 800 16px var(--f-display); white-space: nowrap; }
+.rk-num span { font-size: 11px; color: var(--ink-3); }
+.rk-when { font-size: 12.5px; color: var(--ink-3); white-space: nowrap; }
+.rk-when.on { color: var(--ok-ink); font-weight: 700; }
+.rk-when.on::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: var(--ok); }
+.rk-del { width: 34px; height: 34px; color: var(--ink-3); }
+.rk-del .ic { width: 17px; height: 17px; }
+.lg-only { display: none; }
+@media (min-width: 760px) {
+  .rk { grid-template-columns: 26px 40px minmax(0, 1fr) 74px 74px 62px 92px 34px; padding: 10px 12px; }
+  .lg-only { display: grid; }
+  .rk-when.lg-only { display: block; }
+  .sm-only { display: none; }
+}
+.feed-h { font: 800 15px var(--f-display); margin-top: 4px; }
+.feed { list-style: none; margin: 0; padding: 0; display: grid; max-height: 360px; overflow: auto; }
+.fd { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 10px; align-items: baseline; padding: 8px 4px; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.4; }
+.fd:last-child { border-bottom: 0; }
+.fd-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); }
+.fd.ok .fd-dot { background: var(--ok); }
+.fd.bad .fd-dot { background: var(--bad); }
+.fd-t { font: 500 11px var(--f-mono); color: var(--ink-3); letter-spacing: 0.04em; }
+.fd-when { font-size: 12px; color: var(--ink-3); white-space: nowrap; }
+
+.wait-note { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 14px; background: var(--warn-soft); color: var(--ink); font-size: 14px; line-height: 1.45; }
+.wait-note .ic { width: 18px; height: 18px; color: var(--warn-ink); margin-top: 1px; }
+.ph-done .wait-note { grid-column: 1 / -1; }
+.gates { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.gate { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 16px; background: var(--surface-2); }
+.gate-main { display: grid; gap: 2px; min-width: 0; }
+.gate-main b { font: 700 15px var(--f-display); }
+.gate-main span { font-size: 13px; color: var(--ink-3); }
+.switch { width: 52px; height: 30px; border-radius: 999px; border: 0; padding: 3px; background: var(--surface-3); cursor: pointer; display: flex; transition: background 0.2s; flex: none; }
+.switch span { width: 24px; height: 24px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); transition: transform 0.2s; }
+.switch.on { background: var(--ok-deep); }
+.switch.on span { transform: translateX(22px); }
+
 /* ---------- Modais ---------- */
 #modal-root[hidden] { display: none; }
 .modal { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: calc(16px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) calc(16px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
@@ -1433,6 +1503,16 @@ const QUESTIONS = [
   const NB_UNITS = /(\d) (?=(?:km\/L|kg|km|mL|m²|m³|cm²|cm|m|g|L|h|min|dias|anos|minutos|horas|vagas|peças|unidades|metros|litros?)(?![A-Za-zÀ-ÿ]))/g;
   const nb = (s) => (typeof s === 'string' ? s.replace(/R\$ /g, 'R$ ').replace(NB_UNITS, '$1 ') : s);
   const plural = (n, a, b) => (n === 1 ? a : b);
+  function rel(ts, now) {
+    const sec = Math.max(0, Math.round(((now || Date.now()) - ts) / 1000));
+    if (sec < 45) return 'agora';
+    const m = Math.round(sec / 60);
+    if (m < 60) return `há ${m} min`;
+    const h = Math.round(m / 60);
+    if (h < 24) return `há ${h} h`;
+    const d = Math.round(h / 24);
+    return d === 1 ? 'ontem' : `há ${d} dias`;
+  }
 
   /* ---------------- Dados ---------------- */
   QUESTIONS.forEach((q) => {
@@ -1509,15 +1589,195 @@ const QUESTIONS = [
     return { id: slug(clean) + '-' + String(turma).toLowerCase(), name: clean, turma, created: Date.now(), updated: Date.now(), xp: 0, streak: 0, best: 0, q: {}, ph: {}, badges: {}, intro: {}, pending: null, done: null };
   }
 
+  /* ---------------- Envio do progresso ao professor (ranking online) ---------------- */
+  const SYNC_URL = 'https://script.google.com/macros/s/AKfycbzYd8FOYRRHc4YmuPpa1jbLA6UvFyTrqyZy0cbdCebQs22HiBGS7kv6wGJZ2DZ2wVRxZg/exec';
+  const inClaude = /claude/i.test(location.hostname) || !!window.claude;
+  const syncOn = () => /^https:\/\/script\.google\.com\//.test(SYNC_URL) && !inClaude;
+  if (!store.device) store.device = Math.random().toString(36).slice(2, 10);
+  if (!store.outbox || typeof store.outbox !== 'object') store.outbox = {};
+  let flushTimer = 0;
+  let flushing = false;
+  function snapshotOf(p) {
+    const cur = PHASES.find((ph) => !phaseDone(ph.id, p));
+    return {
+      id: p.id, nome: p.name, turma: p.turma, xp: p.xp, nivel: levelOf(p.xp).name, q: doneCount(p), ft: ftCount(p),
+      estrelas: totalStars(p), medalhas: badgeCount(p), fase: cur ? `Fase ${cur.n} · ${cur.name}` : 'Missão concluída',
+      fases: PHASES.map((ph) => phaseQs(ph.id).filter((q) => isDone(q.id, p)).length), concluiu: p.done || 0,
+    };
+  }
+  function syncEvents(evs) {
+    if (!syncOn() || sandbox || !P) return;
+    const box = store.outbox[P.id] || (store.outbox[P.id] = { ev: [], dirty: false, last: 0 });
+    (evs || []).forEach((x) => box.ev.push(x));
+    if (box.ev.length > 300) box.ev.splice(0, box.ev.length - 300);
+    box.dirty = true;
+    save();
+    clearTimeout(flushTimer);
+    flushTimer = setTimeout(flush, 1200);
+  }
+  async function flush() {
+    if (!syncOn()) return;
+    if (flushing) { clearTimeout(flushTimer); flushTimer = setTimeout(flush, 1500); return; }
+    const ids = Object.keys(store.outbox).filter((id) => store.outbox[id] && store.outbox[id].dirty && store.profiles[id]);
+    if (!ids.length) return;
+    flushing = true;
+    let failed = false;
+    for (const id of ids) {
+      const box = store.outbox[id];
+      const ev = box.ev.slice(0, 60);
+      try {
+        await fetch(SYNC_URL, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ v: 1, dev: store.device, s: snapshotOf(store.profiles[id]), ev }) });
+        box.ev.splice(0, ev.length);
+        box.dirty = box.ev.length > 0;
+        box.last = Date.now();
+      } catch (e) { failed = true; }
+    }
+    Object.keys(store.outbox).forEach((id) => { if (!store.profiles[id]) delete store.outbox[id]; });
+    save();
+    flushing = false;
+    updateSyncNote();
+    if (!failed && ids.some((id) => store.outbox[id] && store.outbox[id].dirty)) { clearTimeout(flushTimer); flushTimer = setTimeout(flush, 800); }
+  }
+  window.addEventListener('online', () => flush());
+  setInterval(() => { if (Object.keys(store.outbox).some((id) => store.outbox[id] && store.outbox[id].dirty)) flush(); }, 30000);
+  function jsonp(params, timeout) {
+    return new Promise((resolve) => {
+      const cb = '__mj' + Date.now().toString(36) + Math.floor(Math.random() * 1e5);
+      const tag = document.createElement('script');
+      let done = false;
+      const finish = (d) => { if (done) return; done = true; try { delete window[cb]; } catch (e) { window[cb] = undefined; } tag.remove(); resolve(d); };
+      window[cb] = finish;
+      tag.onerror = () => finish(null);
+      setTimeout(() => finish(null), timeout || 15000);
+      tag.src = `${SYNC_URL}?${params}&callback=${cb}&_=${Date.now()}`;
+      document.head.appendChild(tag);
+    });
+  }
+  async function loadGates() {
+    if (!syncOn()) return;
+    const d = await jsonp('acao=config');
+    if (!d || !d.ok || !d.fases) return;
+    const changed = JSON.stringify(d.fases) !== JSON.stringify(store.gates);
+    store.gates = d.fases;
+    save();
+    if (changed && P && !sandbox && (route.view === 'map' || route.view === 'phase')) render();
+    if (changed && route.view === 'teacher') renderGateBox();
+  }
+  setInterval(() => { if (!document.hidden) loadGates(); }, 45000);
+  window.addEventListener('focus', () => loadGates());
+  function syncNoteHTML() {
+    if (!syncOn() || sandbox || !P) return '';
+    const box = store.outbox[P.id];
+    const pending = !!(box && box.dirty);
+    const msg = pending
+      ? (navigator.onLine === false ? 'Sem internet agora. Seu progresso vai para o professor quando a conexão voltar.' : 'Enviando seu progresso ao professor…')
+      : box && box.last ? `Progresso enviado ao professor ${rel(box.last)}.` : 'Seu progresso é enviado ao professor para o ranking da turma.';
+    return `<p class="sync-note${pending ? ' wait' : ''}" id="sync-note">${ic(pending ? 'rotate' : 'check')}<span>${msg}</span></p>`;
+  }
+  function updateSyncNote() { const el = $('#sync-note'); if (el) el.outerHTML = syncNoteHTML(); }
+
+  /* ---------------- Ranking online (área do professor) ---------------- */
+  let teacherKey = '';
+  const rank = { data: null, err: null, loading: false, at: 0, filtro: 'todas', timer: 0 };
+  function loadRanking() {
+    if (!syncOn() || !teacherKey || rank.loading) return;
+    rank.loading = true;
+    const cb = '__mr' + Date.now().toString(36) + Math.floor(Math.random() * 1e5);
+    const tag = document.createElement('script');
+    let done = false;
+    const finish = (data, err) => {
+      if (done) return;
+      done = true;
+      rank.loading = false;
+      try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+      tag.remove();
+      if (data && data.ok) { rank.data = data; rank.err = null; rank.at = Date.now(); if (data.fases && !rank.gatePending) { store.gates = data.fases; save(); renderGateBox(); } }
+      else rank.err = (data && data.erro) || err || 'falha';
+      renderRankBox();
+    };
+    window[cb] = (data) => finish(data);
+    tag.onerror = () => finish(null, 'rede');
+    setTimeout(() => finish(null, 'tempo'), 20000);
+    tag.src = `${SYNC_URL}?acao=ranking&chave=${encodeURIComponent(teacherKey)}&callback=${cb}&_=${Date.now()}`;
+    document.head.appendChild(tag);
+  }
+  function startRankTimer() {
+    stopRankTimer();
+    if (!syncOn() || !teacherKey) return;
+    loadRanking();
+    rank.timer = setInterval(() => { if (!document.hidden) loadRanking(); else renderRankBox(); }, 15000);
+  }
+  function stopRankTimer() { if (rank.timer) clearInterval(rank.timer); rank.timer = 0; }
+  function gateBoxHTML() {
+    if (!syncOn()) return '<p class="empty">A liberação das fases funciona no site publicado.</p>';
+    return `<ul class="gates">${PHASES.map((ph) => {
+      const open = gateOpen(ph.id);
+      return `<li class="gate ph-${ph.id}"><span class="ph-icon">${ic(ph.icon)}</span><span class="gate-main"><b>Fase ${ph.n} · ${ph.name}</b><span>${open ? 'Liberada para os alunos' : 'Bloqueada: os alunos veem “aguardando o professor”'}</span></span>
+        <button type="button" class="switch${open ? ' on' : ''}" role="switch" aria-checked="${open}" data-act="gate-toggle" data-id="${ph.id}" aria-label="${open ? 'Bloquear' : 'Liberar'} a Fase ${ph.n}"><span></span></button></li>`;
+    }).join('')}</ul>${rank.gatePending ? '<p class="fine">Salvando…</p>' : ''}`;
+  }
+  function renderGateBox() { const el = $('#gate-box'); if (el) el.innerHTML = gateBoxHTML(); }
+  function renderRankBox() { const el = $('#rank-box'); if (el) el.innerHTML = rankBoxHTML(); }
+  const FEED_VERB = { 'Acertou': 'acertou', 'Errou': 'errou', 'Entrou na missão': 'entrou na missão', 'Concluiu a fase': 'concluiu a', 'Concluiu a missão': 'concluiu a Missão ENEM', 'Recomeçou': 'recomeçou do zero' };
+  function rankBoxHTML() {
+    if (!syncOn()) return '<p class="empty">O ranking online funciona no site publicado (mateusbibiano.github.io/missao-enem).</p>';
+    const d = rank.data;
+    const now = d ? d.agora + (Date.now() - rank.at) : Date.now();
+    let status;
+    if (!d && rank.err) status = `<span class="live err"></span>${rank.err === 'chave' ? 'O servidor recusou a senha do professor.' : 'Não consegui carregar o ranking. Confira a internet.'}`;
+    else if (!d) status = '<span class="live"></span>Carregando o ranking…';
+    else status = `<span class="live ok"></span>Ao vivo · atualizado ${rel(rank.at)}${rank.err ? ' · a última atualização falhou' : ''}`;
+    const all = d ? d.alunos.slice() : [];
+    const inF = (t) => rank.filtro === 'todas' || t === rank.filtro;
+    const list = all.filter((a) => inF(a.turma)).sort((a, b) => (Number(b.xp) || 0) - (Number(a.xp) || 0) || (Number(b.q) || 0) - (Number(a.q) || 0) || (a.concluiu || 9e15) - (b.concluiu || 9e15) || String(a.nome).localeCompare(String(b.nome)));
+    const scope = all.filter((a) => inF(a.turma));
+    const ativos = scope.filter((a) => a.ultimo && now - a.ultimo < 180000).length;
+    const concl = scope.filter((a) => Number(a.q) >= TOTAL).length;
+    const media = scope.length ? scope.reduce((t, a) => t + (Number(a.q) || 0), 0) / scope.length : 0;
+    const filtros = ['todas', 'M21', 'M22'].map((f) => `<button type="button" class="seg-btn${rank.filtro === f ? ' on' : ''}" data-act="rank-filter" data-id="${f}" aria-pressed="${rank.filtro === f}">${f === 'todas' ? 'Todas' : f}</button>`).join('');
+    const rows = list.map((a, i) => {
+      const on = a.ultimo && now - a.ultimo < 180000;
+      const when = on ? 'ativo agora' : a.ultimo ? rel(a.ultimo, now) : '—';
+      const bars = PHASES.map((ph, k) => { const n = phaseQs(ph.id).length; const v = Math.min(n, Number((a.fases || [])[k]) || 0); return `<span class="rk-bar ph-${ph.id}" title="${ph.name}: ${v}/${n}"><span style="width:${((v / n) * 100).toFixed(0)}%"></span></span>`; }).join('');
+      return `<li class="rk${i < 3 ? ' top' + (i + 1) : ''}">
+        <span class="rk-pos">${i + 1}</span>${avatar({ id: String(a.id), name: String(a.nome) })}
+        <span class="rk-main"><b>${esc(a.nome)}</b><span class="rk-sub">${esc(a.turma)} · ${esc(a.nivel)} · ${esc(a.fase)}</span><span class="rk-bars" aria-hidden="true">${bars}</span><span class="rk-sub sm-only">${a.q}/${TOTAL} questões · ${a.estrelas} ★ · <span class="${on ? 'on-txt' : ''}">${when}</span></span></span>
+        <span class="rk-num"><b>${fmt(a.xp)}</b><span>XP</span></span>
+        <span class="rk-num lg-only"><b>${a.q}/${TOTAL}</b><span>questões</span></span>
+        <span class="rk-num lg-only"><b>${a.estrelas}</b><span>estrelas</span></span>
+        <span class="rk-when lg-only${on ? ' on' : ''}">${when}</span>
+        <button type="button" class="icon-btn rk-del" data-act="rank-del" data-id="${esc(a.id)}" aria-label="Remover ${esc(a.nome)} do ranking">${ic('trash')}</button>
+      </li>`;
+    }).join('');
+    const feed = (d ? d.eventos : []).filter((ev) => inF(ev.turma)).slice(0, 25).map((ev) => {
+      const verb = FEED_VERB[ev.res] || esc(ev.res);
+      const what = ev.res === 'Acertou' ? ` a ${esc(ev.q)} ${Number(ev.tent) > 1 ? `na ${ev.tent}ª tentativa` : 'de primeira'} (+${ev.xp} XP)`
+        : ev.res === 'Errou' ? ` a ${esc(ev.q)} (${ev.tent}º erro)`
+        : ev.res === 'Concluiu a fase' ? ` ${esc(ev.q)}` : '';
+      const cls = ev.res === 'Acertou' ? 'ok' : ev.res === 'Errou' ? 'bad' : 'info';
+      return `<li class="fd ${cls}"><span class="fd-dot" aria-hidden="true"></span><span class="fd-txt"><b>${esc(ev.nome)}</b> <span class="fd-t">${esc(ev.turma)}</span> ${verb}${what}</span><span class="fd-when">${ev.t ? rel(ev.t, now) : ''}</span></li>`;
+    }).join('');
+    return `<div class="rank-top"><p class="rank-status">${status}</p><div class="seg-mini" role="group" aria-label="Filtrar por turma">${filtros}</div></div>
+      <dl class="rank-stats"><div><dt>Participantes</dt><dd>${scope.length}</dd></div><div><dt>Ativos agora</dt><dd>${ativos}</dd></div><div><dt>Concluíram</dt><dd>${concl}</dd></div><div><dt>Média de questões</dt><dd>${media.toFixed(1).replace('.', ',')}</dd></div></dl>
+      ${list.length ? `<ol class="rank-list">${rows}</ol>` : `<p class="empty">${d ? 'Nenhum aluno enviou progresso ainda. Assim que alguém começar, ele aparece aqui.' : 'Aguardando os dados…'}</p>`}
+      <h3 class="feed-h">Atividade recente</h3>
+      ${feed ? `<ul class="feed">${feed}</ul>` : '<p class="empty">Nenhuma atividade registrada ainda.</p>'}
+      <div class="t-row">${d && d.planilha ? `<a class="btn btn-ghost" href="${esc(d.planilha)}" target="_blank" rel="noopener">${ic('chart')} Abrir planilha</a>` : ''}<button type="button" class="btn btn-ghost" data-act="rank-refresh">${ic('rotate')} Atualizar agora</button></div>`;
+  }
+
   /* ---------------- Estado derivado ---------------- */
   const isDone = (id, p) => { const pr = p || P; return !!(pr && pr.q[id] && pr.q[id].done); };
   const doneCount = (p) => QUESTIONS.filter((q) => isDone(q.id, p)).length;
   const ftCount = (p) => { const pr = p || P; return QUESTIONS.filter((q) => pr.q[q.id] && pr.q[q.id].ft).length; };
   const phaseDone = (pid, p) => phaseQs(pid).every((q) => isDone(q.id, p));
-  function phaseUnlocked(pid) {
-    if (sandbox) return true;
+  const gateOpen = (pid) => !(store.gates && store.gates[pid] === false);
+  function seqUnlocked(pid) {
     const i = PHASES.findIndex((x) => x.id === pid);
     return i <= 0 || phaseDone(PHASES[i - 1].id);
+  }
+  function phaseUnlocked(pid) {
+    if (sandbox) return true;
+    return seqUnlocked(pid) && gateOpen(pid);
   }
   const totalStars = (p) => { const pr = p || P; return PHASES.reduce((s, x) => s + ((pr.ph[x.id] && pr.ph[x.id].stars) || 0), 0); };
   const badgeCount = (p) => Object.keys((p || P).badges).length;
@@ -1582,6 +1842,7 @@ const QUESTIONS = [
     if (route.view === 'phase' && !(PH[route.id] && phaseUnlocked(route.id))) route = { view: 'map', id: null };
     if (route.view === 'question' && !(Q[route.id] && phaseUnlocked(Q[route.id].ph))) route = { view: 'map', id: null };
     const views = { welcome: viewWelcome, map: viewMap, phase: viewPhase, question: viewQuestion, badges: viewBadges, cert: viewCert, teacher: viewTeacher };
+    if (route.view !== 'teacher') stopRankTimer();
     APP.innerHTML = (views[route.view] || viewWelcome)(route.id);
     document.body.setAttribute('data-view', route.view);
     afterRender();
@@ -1597,6 +1858,7 @@ const QUESTIONS = [
     if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) { /* ok */ } }
   }
   function afterRender() {
+    if (route.view === 'teacher' && !rank.timer) startRankTimer();
     if (ui.xpFrom != null) { const el = $('[data-xp]'); if (el) countUp(el, ui.xpFrom, P.xp); ui.xpFrom = null; }
     if (P && P.pending && (route.view === 'map' || route.view === 'phase')) {
       const pid = P.pending;
@@ -1662,14 +1924,14 @@ const QUESTIONS = [
       <section class="wrap welcome-body">
         <form class="card start-card" id="start-form" novalidate>
           <h2 class="h2">Quem vai jogar?</h2>
-          <div class="field"><label for="f-name">Seu nome</label><input class="input" id="f-name" name="name" autocomplete="name" maxlength="40" placeholder="Ex.: Ana Souza"></div>
+          <div class="field"><label for="f-name">Nome e sobrenome</label><input class="input" id="f-name" name="name" autocomplete="name" maxlength="40" placeholder="Ex.: Ana Souza"></div>
           <fieldset class="field"><legend>Sua turma</legend><div class="seg">
             <input type="radio" id="f-m21" name="turma" value="M21"><label for="f-m21">M21</label>
             <input type="radio" id="f-m22" name="turma" value="M22"><label for="f-m22">M22</label>
           </div></fieldset>
           <p class="form-error" id="f-err" role="alert" hidden></p>
           <button class="btn btn-primary btn-lg btn-block" type="submit">Começar a missão ${ic('arrowRight')}</button>
-          <p class="fine">${canStore ? 'Sem login: seu progresso fica salvo neste aparelho, neste navegador.' : 'Atenção: este navegador não está salvando o progresso (janela anônima?). Se fechar a página, você recomeça.'}</p>
+          <p class="fine">${syncOn() ? 'Sem login. Seu progresso fica salvo neste aparelho e é enviado ao Prof. Mateus para o ranking da turma.' : canStore ? 'Sem login: seu progresso fica salvo neste aparelho, neste navegador.' : 'Atenção: este navegador não está salvando o progresso (janela anônima?). Se fechar a página, você recomeça.'}</p>
         </form>
         <div class="welcome-side">
           ${profs.length ? `<div class="card"><h3 class="h3">Continuar neste aparelho</h3><ul class="prof-list">${profs.map((p) => `<li><button type="button" class="prof-btn" data-act="use-profile" data-id="${esc(p.id)}">${avatar(p)}<span class="pb-main"><b>${esc(p.name)}</b><span>${esc(p.turma)} · ${fmt(p.xp)} XP · ${doneCount(p)}/${TOTAL} questões</span></span>${ic('chevronRight')}</button></li>`).join('')}</ul></div>` : ''}
@@ -1700,7 +1962,9 @@ const QUESTIONS = [
     const stars = (P.ph[ph.id] && P.ph[ph.id].stars) || 0;
     const sheet = qs.map((q, i) => { const s = P.q[q.id]; return `<span class="mini-b${s && s.done ? ' done' : s && s.w && s.w.length ? ' tried' : ''}">${i + 1}</span>`; }).join('');
     const foot = state === 'locked'
-      ? `<p class="ph-lock">${ic('lock')} Conclua ${prev.name} para liberar: ${plural(left, 'falta', 'faltam')} ${left} ${plural(left, 'questão', 'questões')}</p>`
+      ? (prev && !seqUnlocked(ph.id)
+        ? `<p class="ph-lock">${ic('lock')} Conclua ${prev.name} para liberar: ${plural(left, 'falta', 'faltam')} ${left} ${plural(left, 'questão', 'questões')}</p>`
+        : `<p class="ph-lock">${ic('lock')} Aguardando o professor liberar esta fase na aula.</p>`)
       : `${complete ? starsHTML(stars) : `<span class="ph-status">${d ? `${d} de ${n} concluídas` : `${n} questões`}</span>`}<button type="button" class="btn btn-ph btn-sm" data-act="phase" data-id="${ph.id}">${complete ? 'Revisar' : d ? 'Continuar' : 'Começar'} ${ic('arrowRight')}</button>`;
     return `<li class="phase ph-${ph.id} is-${state}">
       <div class="ph-node" aria-hidden="true">${state === 'locked' ? ic('lock') : state === 'done' ? ic('check') : ph.n}</div>
@@ -1717,7 +1981,8 @@ const QUESTIONS = [
     const lv = levelOf(P.xp);
     const span = lv.next ? lv.next.min - lv.min : 1;
     const pct = lv.next ? Math.max(0, Math.min(100, ((P.xp - lv.min) / span) * 100)) : 100;
-    const nextPh = PHASES.find((ph) => phaseUnlocked(ph.id) && !phaseDone(ph.id));
+    const nextPh = PHASES.find((ph) => !phaseDone(ph.id));
+    const nextOk = nextPh && phaseUnlocked(nextPh.id);
     return `${topbar()}
     <main class="wrap map">
       <aside class="card player" aria-label="Seu perfil">
@@ -1734,12 +1999,15 @@ const QUESTIONS = [
           <div><dt>Melhor sequência</dt><dd>${P.best}</dd></div>
         </dl>
         ${nextPh
-          ? `<button type="button" class="btn btn-primary btn-lg btn-block" data-act="phase" data-id="${nextPh.id}">${done ? 'Continuar' : 'Começar'}: ${nextPh.name} ${ic('arrowRight')}</button>`
+          ? (nextOk
+            ? `<button type="button" class="btn btn-primary btn-lg btn-block" data-act="phase" data-id="${nextPh.id}">${done ? 'Continuar' : 'Começar'}: ${nextPh.name} ${ic('arrowRight')}</button>`
+            : `<p class="wait-note">${ic('lock')}<span><b>Fase ${nextPh.n} · ${nextPh.name}</b> será liberada pelo professor na aula.</span></p>`)
           : `<button type="button" class="btn btn-lime btn-lg btn-block" data-act="cert">${ic('award')} Ver meu certificado</button>`}
         <div class="pl-links">
           <button type="button" class="pill-btn" data-act="badges">${ic('award')} Medalhas <b>${badgeCount()}/${BADGES.length}</b></button>
           <button type="button" class="pill-btn" data-act="cert"${P.done ? '' : ' aria-disabled="true"'}>${ic(P.done ? 'trophy' : 'lock')} Certificado</button>
         </div>
+        ${syncNoteHTML()}
       </aside>
       <section aria-labelledby="trail-h">
         <div class="trail-head"><h2 id="trail-h" class="h2">Sua trilha</h2><span class="trail-count">${done}/${TOTAL} questões</span></div>
@@ -1754,7 +2022,7 @@ const QUESTIONS = [
     const rec = P.ph[pid] || { stars: 1, ft: 0 };
     const n = phaseQs(pid).length;
     const nx = PHASES[ph.n];
-    return `<section class="ph-done ph-${pid}"><span class="ph-done-trophy">${ic('trophy')}</span><div><h2>Fase concluída</h2><p>${starsHTML(rec.stars)} ${rec.ft} de ${n} acertos de primeira</p></div>${nx ? `<button type="button" class="btn btn-primary" data-act="phase" data-id="${nx.id}">Ir para a Fase ${nx.n} ${ic('arrowRight')}</button>` : `<button type="button" class="btn btn-lime" data-act="cert">${ic('award')} Ver certificado</button>`}</section>`;
+    return `<section class="ph-done ph-${pid}"><span class="ph-done-trophy">${ic('trophy')}</span><div><h2>Fase concluída</h2><p>${starsHTML(rec.stars)} ${rec.ft} de ${n} acertos de primeira</p></div>${nx && !phaseUnlocked(nx.id) ? `<p class="wait-note">${ic('lock')}<span>A Fase ${nx.n} será liberada pelo professor.</span></p>` : nx ? `<button type="button" class="btn btn-primary" data-act="phase" data-id="${nx.id}">Ir para a Fase ${nx.n} ${ic('arrowRight')}</button>` : `<button type="button" class="btn btn-lime" data-act="cert">${ic('award')} Ver certificado</button>`}</section>`;
   }
   function qRow(q, i) {
     const s = P.q[q.id];
@@ -1968,6 +2236,15 @@ const QUESTIONS = [
     return `${header}
     <main class="wrap teacher">
       <h1 class="sr-only">Área do professor</h1>
+      <section class="card t-card" aria-labelledby="gate-h">
+        <h2 class="h3" id="gate-h">${ic('unlock')} Liberação das fases</h2>
+        <p>Libere cada fase na aula em que for trabalhá-la. A mudança chega aos alunos em até 1 minuto. A regra continua valendo: o aluno só entra numa fase depois de concluir a anterior.</p>
+        <div id="gate-box">${gateBoxHTML()}</div>
+      </section>
+      <section class="card t-card t-rank" aria-labelledby="rank-h">
+        <h2 class="h3" id="rank-h">${ic('trophy')} Ranking ao vivo</h2>
+        <div id="rank-box">${rankBoxHTML()}</div>
+      </section>
       <section class="card t-class">
         <h2 class="h3">${ic('play')} Modo aula</h2>
         <p>Libera as 4 fases para projetar e resolver as questões com a turma. Tem botão para mostrar a resposta e a resolução. Nada é salvo e o progresso dos alunos não muda.</p>
@@ -2040,11 +2317,13 @@ const QUESTIONS = [
       <p class="cel-sub">${ph.name} · ${n} de ${n} questões</p>
       <dl class="cel-stats"><div><dt>De primeira</dt><dd>${rec.ft}/${n}</dd></div><div><dt>Bônus da fase</dt><dd>+${PHASE_BONUS}</dd></div><div><dt>XP total</dt><dd>${fmt(P.xp)}</dd></div></dl>
       ${nx
-        ? `<div class="cel-unlock ph-${nx.id}"><span class="lock-anim">${ic('unlock')}</span><div><b>Fase ${nx.n} liberada</b><span>${nx.name}</span></div></div>`
+        ? (phaseUnlocked(nx.id)
+          ? `<div class="cel-unlock ph-${nx.id}"><span class="lock-anim">${ic('unlock')}</span><div><b>Fase ${nx.n} liberada</b><span>${nx.name}</span></div></div>`
+          : `<div class="cel-unlock ph-${nx.id}"><span class="lock-anim">${ic('lock')}</span><div><b>Próxima: Fase ${nx.n} · ${nx.name}</b><span>O professor vai liberar esta fase na aula.</span></div></div>`)
         : `<div class="cel-unlock final"><span class="lock-anim">${ic('trophy')}</span><div><b>Certificado liberado</b><span>Você concluiu as 30 questões da Missão ENEM.</span></div></div>`}
-      <div class="cel-actions">${nx
+      <div class="cel-actions">${nx && phaseUnlocked(nx.id)
         ? `<button type="button" class="btn btn-primary btn-lg btn-block" data-act="phase" data-id="${nx.id}" data-autofocus>Ir para a Fase ${nx.n} ${ic('arrowRight')}</button>`
-        : `<button type="button" class="btn btn-lime btn-lg btn-block" data-act="cert" data-autofocus>${ic('award')} Ver meu certificado</button>`}
+        : nx ? '' : `<button type="button" class="btn btn-lime btn-lg btn-block" data-act="cert" data-autofocus>${ic('award')} Ver meu certificado</button>`}
         <button type="button" class="btn btn-ghost btn-block" data-act="map">Ver a trilha</button></div>
     </div>`, { label: nx ? 'Fase concluída' : 'Missão cumprida' });
     sfx('unlock');
@@ -2215,6 +2494,19 @@ const QUESTIONS = [
     ui.res = res;
     ui.hint = false;
     ui.xpFrom = res.ok ? from : null;
+    {
+      const ph = PH[q.ph];
+      const tag = `${ph.n}.${phaseQs(q.ph).indexOf(q) + 1} · ${q.title}`;
+      const now = Date.now();
+      const evs = [res.ok
+        ? { t: now, q: tag, fase: ph.name, res: 'Acertou', tent: res.wrongs + 1, xp: res.gained + res.combo }
+        : { t: now, q: tag, fase: ph.name, res: 'Errou', tent: res.wrongs, xp: 0 }];
+      if (res.ok && res.phaseJust) {
+        evs.push({ t: now, q: `Fase ${ph.n} · ${ph.name} (${P.ph[q.ph].stars} ★)`, fase: ph.name, res: 'Concluiu a fase', tent: 0, xp: PHASE_BONUS });
+        if (P.done) evs.push({ t: now, q: 'Missão concluída', fase: ph.name, res: 'Concluiu a missão', tent: 0, xp: 0 });
+      }
+      syncEvents(evs);
+    }
     render();
     const optEl = $(`.opt[data-l="${L}"]`);
     if (res.ok) {
@@ -2240,6 +2532,7 @@ const QUESTIONS = [
     const err = $('#f-err');
     const fail = (m) => { err.textContent = m; err.hidden = false; };
     if (name.length < 2) { fail('Digite seu nome para começar.'); $('#f-name').focus(); return; }
+    if (name.split(' ').length < 2) { fail('Digite seu nome e sobrenome, para o professor saber quem é você.'); $('#f-name').focus(); return; }
     if (!t) { fail('Escolha a sua turma: M21 ou M22.'); return; }
     const id = slug(name) + '-' + t.value.toLowerCase();
     const existing = store.profiles[id];
@@ -2249,6 +2542,7 @@ const QUESTIONS = [
     save();
     sfx('unlock');
     go('map');
+    syncEvents(existing ? [] : [{ t: Date.now(), q: 'Entrou na missão', fase: '', res: 'Entrou na missão', tent: 0, xp: 0 }]);
     toast(existing ? `<b>Que bom te ver de novo, ${esc(firstName(P.name))}!</b>Seu progresso foi recuperado.` : `<b>Missão iniciada, ${esc(firstName(P.name))}!</b>Comece pela Fase 1: Porcentagem.`, { icon: existing ? 'rotate' : 'flag', kind: 'info' });
   }
   function copyResult() {
@@ -2318,12 +2612,42 @@ const QUESTIONS = [
         P = fresh;
         save();
         go('map');
+        syncEvents([{ t: Date.now(), q: 'Recomeçou do zero', fase: '', res: 'Recomeçou', tent: 0, xp: 0 }]);
         toast('<b>Progresso zerado</b>Boa missão!', { icon: 'rotate', kind: 'info' });
         break;
       }
       case 'teacher': openPin(); break;
       case 'teacher-back': go(P ? 'map' : 'welcome'); break;
-      case 'teacher-lock': teacherOK = false; go(P ? 'map' : 'welcome'); break;
+      case 'teacher-lock': teacherOK = false; teacherKey = ''; stopRankTimer(); go(P ? 'map' : 'welcome'); break;
+      case 'gate-toggle': {
+        if (!teacherKey || !PH[id]) break;
+        const fases = Object.assign({ p: true, r: true, e: true, g: true }, store.gates || {});
+        fases[id] = !gateOpen(id);
+        store.gates = fases;
+        rank.gatePending = true;
+        save();
+        renderGateBox();
+        const ph = PH[id];
+        fetch(SYNC_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ acao: 'fases', chave: teacherKey, fases }) })
+          .then(() => { toast(`<b>Fase ${ph.n} ${fases[id] ? 'liberada' : 'bloqueada'}</b>${fases[id] ? 'Os alunos já podem entrar nela.' : 'Os alunos não conseguem entrar até você liberar.'}`, { icon: fases[id] ? 'unlock' : 'lock', kind: 'info' }); },
+            () => toast('<b>Não consegui salvar</b>Confira a internet e tente de novo.', { icon: 'alert', kind: 'info' }))
+          .finally(() => setTimeout(() => { rank.gatePending = false; loadGates(); }, 1500));
+        break;
+      }
+      case 'rank-filter': rank.filtro = id || 'todas'; renderRankBox(); break;
+      case 'rank-refresh': loadRanking(); renderRankBox(); break;
+      case 'rank-del': {
+        const a = rank.data && rank.data.alunos.find((x) => String(x.id) === id);
+        if (a) confirmBox('Remover do ranking?', `<b>${esc(a.nome)}</b> (${esc(a.turma)}) sai do ranking e da planilha. Se o aluno continuar jogando, ele volta a aparecer.`, 'do-rank-del', id, `${ic('trash')} Remover`);
+        break;
+      }
+      case 'do-rank-del':
+        closeModal(true);
+        try { fetch(SYNC_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ acao: 'remover', chave: teacherKey, id }) }).then(() => setTimeout(loadRanking, 1500), () => toast('<b>Não consegui remover</b>Confira a internet e tente de novo.', { icon: 'alert', kind: 'info' })); } catch (e) { /* ok */ }
+        if (rank.data) rank.data.alunos = rank.data.alunos.filter((x) => String(x.id) !== id);
+        renderRankBox();
+        toast('<b>Aluno removido do ranking</b>', { icon: 'trash', kind: 'info' });
+        break;
       case 'start-sandbox':
         sandbox = true;
         P = newProfile('Modo aula', 'Prof');
@@ -2359,7 +2683,7 @@ const QUESTIONS = [
     if (f.id === 'start-form') startGame(f);
     else if (f.id === 'pin-form') {
       const v = ($('#pin-in').value || '');
-      if (fnv('missao:' + norm(v)) === PIN_HASH) { teacherOK = true; closeModal(true); go('teacher'); }
+      if (fnv('missao:' + norm(v)) === PIN_HASH) { teacherOK = true; teacherKey = norm(v); closeModal(true); go('teacher'); }
       else { const er = $('#pin-err'); er.hidden = false; $('#pin-in').select(); }
     } else if (f.id === 'verify-form') {
       const num = (s) => parseInt(String(s || '').replace(/\D/g, ''), 10) || 0;
@@ -2409,6 +2733,9 @@ const QUESTIONS = [
     const r = data && data.route;
     route = P && r && r.view ? { view: r.view, id: r.id || null } : { view: P ? 'map' : 'welcome', id: null };
     render();
+    loadGates();
+    if (P && syncOn() && !(store.outbox[P.id] && store.outbox[P.id].last)) syncEvents([]);
+    else setTimeout(flush, 2500);
   }
   const hot = window.claude && window.claude.hot;
   if (hot && typeof hot.ready === 'function') hot.ready(start);
