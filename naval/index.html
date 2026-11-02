@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Batalha Naval · Corpos Redondos</title>
+<meta name="description" content="Batalha Naval contra o computador: cada linha do mar é uma questão da prova de cilindros, cones e esferas. Turmas M21 e M22 · Prof. Mateus Bibiano.">
+<meta name="theme-color" content="#14365C">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Batalha Naval · Corpos Redondos">
+<meta property="og:description" content="Batalha Naval contra o computador: cada linha do mar é uma questão da prova de cilindros, cones e esferas. Turmas M21 e M22 · Prof. Mateus Bibiano.">
+<meta property="og:url" content="https://mateusbibiano.github.io/missao-enem/naval/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2314365C'/%3E%3Cpath d='M10 38h44l-7 12H17z' fill='%23EEF1EA'/%3E%3Crect x='22' y='26' width='14' height='12' fill='%23EEF1EA'/%3E%3Cpath d='M30 14v12' stroke='%23C8372D' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Saira+Stencil+One&display=swap">
+<style>
+:root {
+  --paper: #EEF1EA; --paper2: #E3E9E1; --ink: #14365C; --ink2: #47607C; --line: #B9C8CF;
+  --sea: #CFE2EA; --sea2: #B7D3E0; --deep: #0F2A47; --red: #C8372D; --brass: #B8862F; --ok: #2E7D4F; --white: #FBFCF8;
+  --fd: 'Saira Stencil One', 'Arial Black', sans-serif; --fb: 'Barlow', system-ui, sans-serif; --fm: 'IBM Plex Mono', ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+html { background: var(--paper); }
+body {
+  color: var(--ink); font-family: var(--fb); font-size: 16px; line-height: 1.5; min-height: 100vh;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(circle at 12% 18%, transparent 0 118px, rgba(20,54,92,.07) 119px 120px, transparent 121px 168px, rgba(20,54,92,.06) 169px 170px, transparent 171px),
+    radial-gradient(circle at 88% 74%, transparent 0 98px, rgba(20,54,92,.07) 99px 100px, transparent 101px 150px, rgba(20,54,92,.06) 151px 152px, transparent 153px 210px, rgba(20,54,92,.05) 211px 212px, transparent 213px),
+    linear-gradient(rgba(20,54,92,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(20,54,92,.05) 1px, transparent 1px);
+  background-size: auto, auto, 80px 80px, 80px 80px; background-attachment: fixed;
+}
+#app { max-width: 1200px; margin: 0 auto; padding: 0 16px 48px; }
+button { font: inherit; cursor: pointer; color: inherit; }
+button:disabled { cursor: default; }
+:focus-visible { outline: 3px solid var(--brass); outline-offset: 2px; }
+h1, h2, h3 { font-family: var(--fd); font-weight: 400; line-height: 1.05; margin: 0 0 .4em; letter-spacing: .01em; }
+.center { text-align: center; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.row.center { justify-content: center; }
+.row.end { justify-content: flex-end; }
+.small { font-size: 14px; color: var(--ink2); }
+.eyebrow, .kick { font-family: var(--fm); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--brass); margin: 0 0 8px; }
+.lead { font-size: 18px; color: var(--ink2); max-width: 58ch; }
+
+.btn { border: 2px solid var(--ink); border-radius: 4px; padding: 10px 18px; font-weight: 700; letter-spacing: .02em; transition: transform .08s, background .15s; }
+.btn.red { background: var(--red); border-color: var(--red); color: #fff; box-shadow: 0 3px 0 #8E241D; }
+.btn.red:hover:not(:disabled) { background: #DA4337; }
+.btn.red:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 #8E241D; }
+.btn.ghost { background: var(--white); }
+.btn.ghost:hover:not(:disabled) { background: var(--ink); color: var(--white); }
+.btn.big { font-size: 18px; padding: 13px 22px; }
+.btn:disabled { opacity: .4; }
+.btn.danger { border-color: var(--red); color: var(--red); }
+.lnk { background: none; border: 0; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+
+.top { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 2px solid var(--ink); margin-bottom: 20px; flex-wrap: wrap; }
+.top .logo { height: 34px; width: auto; }
+.brand { display: grid; line-height: 1.1; }
+.brand b { font-family: var(--fd); font-weight: 400; font-size: 22px; letter-spacing: .04em; }
+.brand span { font-family: var(--fm); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink2); }
+.top-r { margin-left: auto; display: flex; gap: 14px; align-items: center; }
+.who { font-family: var(--fm); font-size: 13px; color: var(--ink2); }
+
+/* início */
+.hero { display: grid; grid-template-columns: 1fr 200px; gap: 20px; align-items: center; margin: 14px 0 22px; }
+.hero h1 { font-size: clamp(40px, 7vw, 80px); }
+.hero h1 span { color: var(--red); }
+.rose { width: 100%; height: auto; color: var(--ink); opacity: .8; animation: drift 18s ease-in-out infinite alternate; }
+@keyframes drift { to { transform: rotate(14deg); } }
+.home-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; margin-bottom: 20px; }
+.card { background: var(--white); border: 2px solid var(--ink); border-radius: 6px; padding: 16px; box-shadow: 6px 6px 0 rgba(20,54,92,.12); }
+.card-h { margin: 0 0 10px; font-family: var(--fd); font-size: 20px; }
+.form { display: grid; gap: 12px; }
+.form label { display: grid; gap: 4px; font-weight: 700; }
+input:not([type=radio]) { font: inherit; font-size: 18px; padding: 10px 12px; border: 2px solid var(--ink); border-radius: 4px; background: #fff; color: var(--ink); }
+fieldset { border: 0; padding: 0; margin: 0; }
+legend { font-weight: 700; margin-bottom: 4px; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.seg3 { grid-template-columns: repeat(3, 1fr); }
+.seg input { position: absolute; opacity: 0; }
+.seg span { display: block; text-align: center; padding: 9px 6px; border: 2px solid var(--ink); border-radius: 4px; font-family: var(--fm); font-weight: 600; background: #fff; }
+.seg input:checked + span { background: var(--ink); color: var(--white); }
+.seg input:focus-visible + span { outline: 3px solid var(--brass); }
+.rowlist { list-style: none; padding: 0; margin: 0 0 10px; display: grid; gap: 4px; }
+.rowlist li { display: grid; grid-template-columns: 30px 1fr auto; gap: 8px; align-items: center; padding: 4px 0; border-bottom: 1px dashed var(--line); }
+.rowlist b { font-family: var(--fd); font-weight: 400; font-size: 20px; color: var(--red); }
+.rowlist i { font-style: normal; font-family: var(--fm); font-size: 12px; color: var(--ink2); }
+
+/* tabuleiro */
+.sea { min-width: 0; }
+.sea-h { margin: 0 0 6px; font-family: var(--fm); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink2); }
+.grid { display: grid; grid-template-columns: minmax(46px, auto) repeat(6, minmax(0, 1fr)); gap: 3px; background: var(--ink); padding: 3px; border-radius: 6px; }
+.grid .corner { background: var(--ink); }
+.grid .ch { background: var(--ink); color: var(--white); font-family: var(--fm); font-weight: 600; text-align: center; font-size: 13px; padding: 2px 0; }
+.grid .rh { background: var(--ink); color: var(--white); display: grid; align-content: center; padding: 0 6px; line-height: 1.05; }
+.grid .rh b { font-family: var(--fd); font-weight: 400; font-size: 20px; color: #FFD27A; }
+.grid .rh small { font-size: 10.5px; opacity: .85; }
+.cell { position: relative; aspect-ratio: 1; border: 0; padding: 0; background: linear-gradient(160deg, var(--sea), var(--sea2)); border-radius: 2px; overflow: hidden; }
+.cell::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(170deg, transparent 0 9px, rgba(255,255,255,.35) 9px 10px, transparent 10px 20px); opacity: .6; }
+[data-board="cpu"] .cell:not(.miss):not(.hit):hover { background: #FFE8A8; }
+[data-board="cpu"] .cell:not(.miss):not(.hit):hover::after { content: '⌖'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 26px; color: var(--red); }
+.cell i { position: absolute; inset: 0; }
+.cell.ship { background: linear-gradient(160deg, #7E92A6, #5E7287); }
+.cell.ship.st-l { border-radius: 40% 2px 2px 40%; } .cell.ship.st-r { border-radius: 2px 40% 40% 2px; }
+.cell.ship.st-t { border-radius: 40% 40% 2px 2px; } .cell.ship.st-b { border-radius: 2px 2px 40% 40%; }
+.cell.ship::before { background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.35) 0 18%, transparent 19%); opacity: 1; }
+.cell.miss i::after { content: ''; position: absolute; left: 50%; top: 50%; width: 30%; height: 30%; transform: translate(-50%, -50%); border-radius: 50%; background: var(--white); box-shadow: 0 0 0 4px rgba(255,255,255,.35), 0 0 0 9px rgba(255,255,255,.15); }
+.cell.hit { background: linear-gradient(160deg, #F2B3A6, #E07B6B); }
+.cell.hit i::before, .cell.hit i::after { content: ''; position: absolute; left: 50%; top: 50%; width: 62%; height: 12%; background: var(--red); border-radius: 3px; }
+.cell.hit i::before { transform: translate(-50%, -50%) rotate(45deg); } .cell.hit i::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.cell.ship.hit { background: linear-gradient(160deg, #A54A3E, #7C2E25); }
+.cell.sunk { background: linear-gradient(160deg, #3A2B2B, #1E1515) !important; }
+.cell.sunk i::before, .cell.sunk i::after { background: #FF8A6B; }
+.cell.prev { background: #A9D8B4; } .cell.prev.bad { background: #F2B3A6; }
+.cell.nope { animation: nope .3s; }
+@keyframes nope { 25%, 75% { transform: translateX(-3px); } 50% { transform: translateX(3px); } }
+.cell.boom::after { content: ''; position: absolute; left: 50%; top: 50%; width: 10%; height: 10%; border-radius: 50%; border: 3px solid var(--brass); transform: translate(-50%, -50%); animation: ring .7s ease-out forwards; }
+@keyframes ring { to { width: 180%; height: 180%; opacity: 0; } }
+.battlescr.busy [data-board="cpu"] .cell { cursor: wait; }
+
+.setup-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr); gap: 20px; align-items: start; }
+.setupscr h2 { font-size: 34px; }
+.dock { display: grid; gap: 12px; }
+.ships { display: grid; gap: 8px; }
+.shipbtn { display: grid; grid-template-columns: 112px 1fr; grid-template-rows: auto auto; column-gap: 10px; align-items: center; text-align: left; padding: 8px 10px; border: 2px solid var(--line); border-radius: 4px; background: #fff; font-weight: 700; }
+.shipbtn .hull { grid-row: span 2; display: flex; gap: 2px; }
+.shipbtn .hull i { width: 24px; height: 18px; background: #6F849A; border-radius: 3px; }
+.shipbtn .hull i:first-child { border-radius: 9px 3px 3px 9px; } .shipbtn .hull i:last-child { border-radius: 3px 9px 9px 3px; }
+.shipbtn small { font-family: var(--fm); font-weight: 500; color: var(--ink2); }
+.shipbtn.on { border-color: var(--ink); background: #FFF3D1; }
+.shipbtn.done .hull i { background: var(--ok); }
+
+.hud { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; background: var(--ink); border: 2px solid var(--ink); border-radius: 6px; overflow: hidden; margin-bottom: 10px; }
+.hud div { background: var(--white); padding: 8px 12px; display: grid; }
+.hud small { font-family: var(--fm); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); }
+.hud b { font-family: var(--fd); font-weight: 400; font-size: 26px; font-variant-numeric: tabular-nums; }
+.statusbar { margin-bottom: 12px; }
+.st { display: inline-block; padding: 6px 12px; border-radius: 4px; font-weight: 700; }
+.st.you { background: var(--ink); color: var(--white); }
+.st.fire { background: var(--red); color: #fff; animation: pulse 1s ease-in-out infinite alternate; }
+.st.cpu { background: var(--paper2); color: var(--ink2); border: 2px dashed var(--ink2); }
+@keyframes pulse { to { box-shadow: 0 0 0 6px rgba(200,55,45,.2); } }
+.sea.enemy .grid { max-width: 560px; }
+.battle-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(260px, .85fr); gap: 20px; align-items: start; }
+.side { display: grid; gap: 14px; }
+.sea.small .grid { grid-template-columns: 28px repeat(6, minmax(0, 1fr)); }
+.sea.small .rh b { font-size: 15px; }
+.log { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; font-size: 14px; }
+.log li { padding: 4px 8px; border-left: 4px solid var(--line); background: var(--paper); }
+.log li.good { border-color: var(--ok); } .log li.bad { border-color: var(--red); } .log li.cpu { border-color: var(--ink2); }
+.toast { position: fixed; left: 50%; bottom: max(24px, env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); background: var(--deep); color: var(--white); padding: 10px 18px; border-radius: 6px; font-weight: 700; opacity: 0; pointer-events: none; z-index: 40; }
+.toast.on { animation: toast 1.8s ease forwards; }
+@keyframes toast { 10%, 80% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; transform: translate(-50%, 10px); } }
+
+/* pergunta */
+.veil { position: fixed; inset: 0; background: rgba(15,42,71,.55); display: grid; place-items: center; padding: 16px; z-index: 30; }
+.modal { width: min(560px, 100%); max-height: 92vh; overflow: auto; background: var(--white); border: 2px solid var(--ink); border-radius: 8px; padding: 18px; box-shadow: 10px 10px 0 rgba(15,42,71,.35); animation: rise .2s ease-out; }
+.modal.q { width: min(760px, 100%); }
+@keyframes rise { from { transform: translateY(14px); opacity: 0; } }
+.modal h3 { font-size: 26px; }
+.modal form { display: grid; gap: 12px; }
+.modal label { display: grid; gap: 4px; font-weight: 700; }
+.qgrid { display: grid; grid-template-columns: 220px 1fr; gap: 16px; align-items: center; margin: 6px 0 12px; }
+.qfig .fig { width: 100%; height: auto; display: block; }
+.fig .fl { font-family: var(--fm); font-size: 13px; font-weight: 600; paint-order: stroke; stroke: #fff; stroke-width: 4px; }
+.qtxt { margin: 0 0 8px; font-size: 17px; }
+.qask { margin: 0; font-weight: 800; font-size: 19px; }
+.fb:empty { display: none; }
+.fb { margin: 12px 0; padding: 10px 14px; border: 2px solid; border-radius: 4px; }
+.fb.warn { border-color: var(--line); }
+.fb.ok { border-color: var(--ok); background: #E7F3EA; } .fb.no { border-color: var(--red); background: #FBE9E6; }
+.fb-h { margin: 0; font-weight: 800; }
+.steps { margin: 6px 0 0; padding-left: 22px; }
+
+/* teclado */
+.kp { display: grid; grid-template-columns: 1fr 1.2fr; gap: 10px; align-items: start; }
+.kp-screen { background: var(--deep); color: #fff; padding: 8px 14px; border-radius: 4px; }
+.kp-l { font-family: var(--fm); font-size: 11px; letter-spacing: .12em; color: #9DB3C8; text-transform: uppercase; }
+.kp-v { display: flex; align-items: baseline; gap: 4px; font-family: var(--fm); min-height: 44px; flex-wrap: wrap; }
+.kp-num { font-size: 30px; color: #FFD27A; font-weight: 600; }
+.kp-num.empty { width: 18px; border-bottom: 3px solid #FFD27A; animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: .2; } }
+.kp-pi { font-size: 26px; color: #FFD27A; font-style: normal; }
+.kp-u { color: #C9D6E3; font-size: 17px; margin-left: 6px; }
+.kp-keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+.kp-keys button { padding: 7px 0; font-family: var(--fm); font-size: 20px; font-weight: 600; border: 2px solid var(--ink); border-radius: 4px; background: #fff; box-shadow: 0 2px 0 var(--ink); }
+.kp-keys button:active { transform: translateY(2px); box-shadow: none; }
+.locked .kp-keys button { pointer-events: none; opacity: .45; }
+
+/* fim */
+.result { margin: 10px 0 18px; }
+.result h1 { font-size: clamp(32px, 5.5vw, 60px); }
+.result.win h1 { color: var(--ok); } .result.lose h1 { color: var(--red); }
+.bigscore { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.bigscore b { font-family: var(--fd); font-weight: 400; font-size: 64px; line-height: 1; }
+.bigscore span { font-family: var(--fm); color: var(--ink2); }
+.end-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 20px; align-items: start; margin-bottom: 20px; }
+.xray { width: 100%; border-collapse: collapse; font-size: 14px; }
+.xray th, .xray td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+.xray th { font-family: var(--fm); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); }
+.xray td:nth-child(3), .xray td:nth-child(4) { font-family: var(--fm); text-align: center; }
+.xray tr.warn td { background: #FBE9E6; } .xray tr.good td { background: #E7F3EA; }
+
+.page h2 { font-size: 34px; }
+.hall { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 4px; }
+.hall li { display: grid; grid-template-columns: 40px 1fr auto auto; gap: 12px; align-items: center; padding: 8px 12px; background: var(--white); border: 2px solid var(--line); border-radius: 4px; }
+.hall .pos { font-family: var(--fd); color: var(--red); font-size: 20px; } .hall small { font-family: var(--fm); color: var(--ink2); } .hall .pz { font-family: var(--fm); font-weight: 600; } .hall .dt { font-family: var(--fm); font-size: 12px; color: var(--ink2); }
+.tcards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+.gab { margin: 16px 0; } .gab summary { font-weight: 800; cursor: pointer; } .gab li { margin: 6px 0; }
+
+body.proj #app { max-width: 1560px; }
+body.proj .qtxt { font-size: 22px; } body.proj .qask { font-size: 25px; } body.proj .modal.q { width: min(1100px, 100%); }
+
+@media (max-width: 900px) {
+  .battle-grid, .setup-grid, .end-grid, .home-grid { grid-template-columns: minmax(0, 1fr); }
+  .hero { grid-template-columns: 1fr; } .rose { display: none; }
+  .hud { grid-template-columns: repeat(3, 1fr); }
+  .hud div:nth-child(4), .hud div:nth-child(5) { grid-column: span 1; }
+}
+@media (max-width: 560px) {
+  .grid { grid-template-columns: 30px repeat(6, minmax(0, 1fr)); }
+  .grid .rh small { display: none; }
+  .grid .rh b { font-size: 16px; }
+  .hud { grid-template-columns: repeat(2, 1fr); } .hud div:last-child { grid-column: span 2; }
+  .qgrid { grid-template-columns: 1fr; } .qfig { max-width: 220px; margin: 0 auto; }
+  .kp { grid-template-columns: 1fr; }
+  .seg3 span { font-size: 13px; }
+  .hall li { grid-template-columns: 34px 1fr auto; } .hall .dt { display: none; }
+  .tcards { grid-template-columns: 1fr; }
+  .top-r { margin-left: 0; width: 100%; justify-content: space-between; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const IMG = {"logo": {"uri": "data:image/webp;base64,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"}};
+const numFmt = (v, d) => Number(v).toLocaleString('pt-BR', { maximumFractionDigits: d == null ? 2 : d });
+const parseBR = (s) => { const t = String(s).replace(/\s/g, '').replace(',', '.'); return t === '' || t === '.' ? NaN : Number(t); };
+
+/* ---------- teclado numérico ---------- */
+function keypad(host, o) {
+  const opt = Object.assign({ unit: '', pi: false, int: false, label: 'Sua resposta' }, o || {});
+  let val = ''; let locked = false;
+  host.innerHTML = `<div class="kp">
+    <div class="kp-screen"><span class="kp-l">${opt.label}</span><div class="kp-v"><b class="kp-num">&nbsp;</b>${opt.pi ? '<i class="kp-pi">π</i>' : ''}<span class="kp-u">${opt.unit}</span></div></div>
+    <div class="kp-keys">${['7', '8', '9', '4', '5', '6', '1', '2', '3', opt.int ? '' : ',', '0', '⌫'].map((k) => (k ? `<button type="button" data-k="${k}" ${k === '⌫' ? 'aria-label="Apagar"' : ''}>${k}</button>` : '<span></span>')).join('')}</div>
+  </div>`;
+  const num = host.querySelector('.kp-num');
+  const show = () => { num.textContent = val || ' '; num.classList.toggle('empty', !val); };
+  const press = (k) => {
+    if (locked) return;
+    if (k === '⌫') val = val.slice(0, -1);
+    else if (k === ',') { if (!val.includes(',')) val = (val || '0') + ','; } else if (val.replace(',', '').length < 9) val = val === '0' ? k : val + k;
+    show(); if (opt.onChange) opt.onChange(val);
+  };
+  host.querySelector('.kp-keys').addEventListener('click', (e) => { const b = e.target.closest('button[data-k]'); if (b) press(b.dataset.k); });
+  const kb = (e) => {
+    if (locked || e.target.tagName === 'INPUT' || document.querySelector('.veil')) return;
+    if (/^[0-9]$/.test(e.key)) press(e.key); else if ((e.key === ',' || e.key === '.') && !opt.int) press(','); else if (e.key === 'Backspace') press('⌫'); else return;
+    e.preventDefault();
+  };
+  document.addEventListener('keydown', kb);
+  KEYHANDLERS.push(() => document.removeEventListener('keydown', kb));
+  show();
+  return { get: () => parseBR(val), raw: () => val, set: (v) => { val = String(v).replace('.', ','); show(); }, lock: () => { locked = true; host.classList.add('locked'); }, unlock: () => { locked = false; host.classList.remove('locked'); }, clear: () => { val = ''; show(); } };
+}
+const KEYHANDLERS = [];
+function clearKeyHandlers() { while (KEYHANDLERS.length) KEYHANDLERS.pop()(); }
+
+
+function buzz() { try { if (navigator.vibrate) navigator.vibrate(8); } catch (e) { /* */ } }
+
+/* =========================================================
+   BANCO DE TORPEDOS — Cilindros, Cones e Esferas (π = 3)
+   Cada linha do tabuleiro = uma questão da prova.
+   As medidas são sorteadas a cada pergunta.
+   ========================================================= */
+const ri = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = (a) => a[Math.floor(Math.random() * a.length)];
+const nf = (v) => Number(v).toLocaleString('pt-BR', { maximumFractionDigits: 3 });
+
+/* ---------- figuras (traço de carta náutica) ---------- */
+const INK = '#14365C'; const FILL = '#DCEBF1'; const FILL2 = '#C5DDE8'; const RED = '#C8372D';
+const svgw = (w, h, body) => `<svg class="fig" viewBox="0 0 ${w} ${h}" role="img" aria-hidden="true">${body}</svg>`;
+const lab = (x, y, t, c, anchor) => `<text x="${x}" y="${y}" text-anchor="${anchor || 'middle'}" class="fl" style="fill:${c || INK}">${t}</text>`;
+function figCyl(o) {
+  const cx = 110; const rx = o.rx || 52; const ry = 14; const top = 34; const H = o.H || 110; const b = top + H;
+  let s = `<path d="M${cx - rx},${top} V${b} A${rx},${ry} 0 0 0 ${cx + rx},${b} V${top}" fill="${FILL}" stroke="${INK}" stroke-width="2"/>`;
+  s += `<path d="M${cx - rx},${b} A${rx},${ry} 0 0 1 ${cx + rx},${b}" fill="none" stroke="${INK}" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+  s += `<ellipse cx="${cx}" cy="${top}" rx="${rx}" ry="${ry}" fill="${FILL2}" stroke="${INK}" stroke-width="2"/>`;
+  if (o.cone) s += `<path d="M${cx - rx},${b} L${cx},${top} L${cx + rx},${b}" fill="#F3D9C9" fill-opacity=".85" stroke="${RED}" stroke-width="2"/>`;
+  if (o.r) s += `<line x1="${cx}" y1="${top}" x2="${cx + rx}" y2="${top}" stroke="${RED}" stroke-width="2.4"/><circle cx="${cx}" cy="${top}" r="2.6" fill="${RED}"/>` + lab(cx + rx / 2, top - 8, o.r, RED);
+  if (o.d) s += `<line x1="${cx - rx}" y1="${top}" x2="${cx + rx}" y2="${top}" stroke="${RED}" stroke-width="2.4"/>` + lab(cx, top - 8, o.d, RED);
+  if (o.h) s += `<line x1="${cx + rx + 12}" y1="${top}" x2="${cx + rx + 12}" y2="${b}" stroke="${INK}" stroke-width="1.4"/>` + lab(cx + rx + 18, top + H / 2 + 4, o.h, INK, 'start');
+  if (o.sec) s += `<rect x="${cx - rx}" y="${top}" width="${2 * rx}" height="${H}" fill="${RED}" fill-opacity=".14" stroke="${RED}" stroke-dasharray="5 4" stroke-width="1.6"/>`;
+  return svgw(240, b + 26, s);
+}
+function figCone(o) {
+  const cx = 110; const rx = 60; const ry = 15; const top = 22; const b = 150;
+  let s = `<path d="M${cx - rx},${b} L${cx},${top} L${cx + rx},${b} A${rx},${ry} 0 0 1 ${cx - rx},${b}" fill="${FILL}" stroke="${INK}" stroke-width="2"/>`;
+  s += `<path d="M${cx - rx},${b} A${rx},${ry} 0 0 1 ${cx + rx},${b}" fill="none" stroke="${INK}" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+  if (o.h) s += `<line x1="${cx}" y1="${top}" x2="${cx}" y2="${b}" stroke="${INK}" stroke-width="1.6" stroke-dasharray="5 4"/>` + lab(cx - 8, (top + b) / 2, o.h, INK, 'end');
+  if (o.r) s += `<line x1="${cx}" y1="${b}" x2="${cx + rx}" y2="${b}" stroke="${RED}" stroke-width="2.4"/>` + lab(cx + rx / 2, b + 22, o.r, RED);
+  if (o.g) s += `<line x1="${cx}" y1="${top}" x2="${cx + rx}" y2="${b}" stroke="#2F6DB5" stroke-width="3"/>` + lab(cx + rx / 2 + 16, (top + b) / 2, o.g, '#2F6DB5', 'start');
+  return svgw(240, 182, s);
+}
+function figSector(o) {
+  const cx = 120; const cy = 30; const R = 120; const th = (o.ang * Math.PI) / 180; const a0 = Math.PI / 2 - th / 2; const a1 = Math.PI / 2 + th / 2;
+  const P = (a) => [cx + R * Math.cos(a), cy + R * Math.sin(a)];
+  const [x0, y0] = P(a0); const [x1, y1] = P(a1);
+  const s = `<path d="M${cx},${cy} L${x0.toFixed(1)},${y0.toFixed(1)} A${R},${R} 0 ${th > Math.PI ? 1 : 0} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z" fill="${FILL}" stroke="${INK}" stroke-width="2"/>`
+    + `<line x1="${cx}" y1="${cy}" x2="${x0.toFixed(1)}" y2="${y0.toFixed(1)}" stroke="#2F6DB5" stroke-width="3"/>` + lab((cx + x0) / 2 + 10, (cy + y0) / 2, o.g, '#2F6DB5', 'start')
+    + lab(cx, cy + 34, `${o.ang}°`, RED);
+  return svgw(240, 170, s);
+}
+function figSphere(o) {
+  const cx = 110; const cy = 86; const R = 62;
+  let s = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="${FILL}" stroke="${INK}" stroke-width="2"/><ellipse cx="${cx}" cy="${cy}" rx="${R}" ry="16" fill="none" stroke="${INK}" stroke-width="1.4" stroke-dasharray="4 4"/>`;
+  if (o.r) s += `<line x1="${cx}" y1="${cy}" x2="${cx + R}" y2="${cy}" stroke="${RED}" stroke-width="2.4"/><circle cx="${cx}" cy="${cy}" r="2.6" fill="${RED}"/>` + lab(cx + R / 2, cy - 8, o.r, RED);
+  if (o.d) s += `<line x1="${cx - R}" y1="${cy}" x2="${cx + R}" y2="${cy}" stroke="${RED}" stroke-width="2.4"/>` + lab(cx, cy - 8, o.d, RED);
+  return svgw(240, 170, s);
+}
+function figHemi(o) {
+  const cx = 110; const cy = 120; const R = 80;
+  const s = `<path d="M${cx - R},${cy} A${R},${R} 0 0 1 ${cx + R},${cy}" fill="${FILL}" stroke="${INK}" stroke-width="2"/><ellipse cx="${cx}" cy="${cy}" rx="${R}" ry="18" fill="${FILL2}" stroke="${INK}" stroke-width="1.6"/>`
+    + `<line x1="${cx}" y1="${cy}" x2="${cx + R}" y2="${cy}" stroke="${RED}" stroke-width="2.4"/>` + lab(cx + R / 2, cy + 32, o.r, RED);
+  return svgw(240, 160, s);
+}
+function figMelt(o) {
+  const s = `<circle cx="56" cy="80" r="40" fill="${FILL}" stroke="${INK}" stroke-width="2"/><line x1="56" y1="80" x2="96" y2="80" stroke="${RED}" stroke-width="2.2"/>${lab(76, 72, o.rs, RED)}`
+    + `<path d="M112 80 h34 m-8 -7 l8 7 -8 7" stroke="${INK}" stroke-width="2" fill="none"/>`
+    + (o.cone ? `<path d="M168 140 L205 30 L242 140 A37 10 0 0 1 168 140" fill="${FILL}" stroke="${INK}" stroke-width="2"/><line x1="205" y1="140" x2="242" y2="140" stroke="${RED}" stroke-width="2.2"/>${lab(224, 158, o.rt, RED)}${lab(205, 90, 'h = ?', INK)}`
+      : `<path d="M168 40 V140 A37 10 0 0 0 242 140 V40" fill="${FILL}" stroke="${INK}" stroke-width="2"/><ellipse cx="205" cy="40" rx="37" ry="10" fill="${FILL2}" stroke="${INK}" stroke-width="2"/><line x1="205" y1="40" x2="242" y2="40" stroke="${RED}" stroke-width="2.2"/>${lab(224, 32, o.rt, RED)}${lab(205, 98, 'h = ?', INK)}`);
+  return svgw(260, 168, s);
+}
+
+/* ---------- geradores por linha (questão da prova) ---------- */
+const TRIPLES = [[3, 4, 5], [6, 8, 10], [8, 15, 17], [9, 12, 15], [7, 24, 25], [12, 16, 20], [4, 3, 5], [8, 6, 10], [12, 9, 15], [15, 8, 17], [12, 5, 13]];
+const CTX_CYL = ['uma lata', 'um pote', 'uma caixa-d’água', 'um copo', 'um tambor'];
+const ROWS = [
+  { L: 'A', q: 1, nome: 'Cilindro equilátero', short: 'Cil. equilátero',
+    gen() {
+      let r; do { r = ri(2, 9); } while (r === 6); const v = ri(0, 3); const obj = pick(['Uma lata', 'Um reservatório', 'Um pote de biscoitos']);
+      const base = `${obj} tem a forma de um <b>cilindro equilátero</b> (altura igual ao diâmetro).`;
+      if (v === 0) return { txt: `${base} A seção meridiana tem área de <b>${4 * r * r} cm²</b>.`, ask: 'Qual é o raio da base?', unit: 'cm', ans: r, fig: figCyl({ sec: true, H: 104, rx: 52 }), steps: ['A seção meridiana é um quadrado de lado 2r: (2r)² = 4r².', `4r² = ${4 * r * r} ⇒ r² = ${r * r} ⇒ <b>r = ${r} cm</b>.`] };
+      if (v === 1) return { txt: `${base} A seção meridiana tem área de <b>${4 * r * r} cm²</b>.`, ask: 'Qual é a área total, em cm²?', unit: 'cm²', ans: 18 * r * r, fig: figCyl({ sec: true, H: 104, rx: 52 }), steps: [`4r² = ${4 * r * r} ⇒ r = ${r} cm e h = ${2 * r} cm.`, `Bases: 2 · 3 · ${r}² = ${6 * r * r}. Lateral: 2 · 3 · ${r} · ${2 * r} = ${12 * r * r}.`, `Total: <b>${18 * r * r} cm²</b>.`] };
+      if (v === 2) return { txt: `${base} O raio da base mede <b>${r} cm</b>.`, ask: 'Qual é o volume, em cm³?', unit: 'cm³', ans: 6 * r ** 3, fig: figCyl({ r: `${r} cm`, H: 104, rx: 52 }), steps: [`h = 2r = ${2 * r} cm.`, `V = 3 · ${r}² · ${2 * r} = <b>${6 * r ** 3} cm³</b>.`] };
+      return { txt: `${base} A área lateral mede <b>${12 * r * r} cm²</b>.`, ask: 'Qual é a altura, em cm?', unit: 'cm', ans: 2 * r, fig: figCyl({ H: 104, rx: 52 }), steps: ['Área lateral = 2πr · h = 2 · 3 · r · 2r = 12r².', `12r² = ${12 * r * r} ⇒ r = ${r} ⇒ <b>h = ${2 * r} cm</b>.`] };
+    } },
+  { L: 'B', q: 2, nome: 'Capacidade em litros', short: 'Capacidade',
+    gen() {
+      const r = ri(2, 10); const h = pick([5, 8, 10, 12, 15, 20, 25, 30]); const V = 3 * r * r * h; const obj = pick(CTX_CYL);
+      if (Math.random() < 0.5) return { txt: `${obj[0].toUpperCase() + obj.slice(1)} cilíndric${obj.startsWith('um ') ? 'o' : 'a'} tem <b>${2 * r} cm de diâmetro</b> e <b>${h} cm de altura</b>. Lembre: 1 cm³ = 1 mL.`, ask: 'Qual é a capacidade, em litros?', unit: 'L', ans: V / 1000, fig: figCyl({ d: `${2 * r} cm`, h: `${h} cm` }), steps: [`r = ${r} cm.`, `V = 3 · ${r}² · ${h} = ${nf(V)} cm³ = ${nf(V)} mL.`, `${nf(V)} mL ÷ 1 000 = <b>${nf(V / 1000)} L</b>.`] };
+      const c = pick([100, 150, 200, 250, 300]); const n = Math.floor(V / c);
+      if (n < 1) return this.gen();
+      return { txt: `Uma garrafa cilíndrica tem, por dentro, <b>${2 * r} cm de diâmetro</b> e <b>${h} cm de altura</b>. Ela está cheia de suco.`, ask: `Quantos copos de ${c} mL ficam completamente cheios?`, unit: 'copos', ans: n, fig: figCyl({ d: `${2 * r} cm`, h: `${h} cm` }), steps: [`V = 3 · ${r}² · ${h} = ${nf(V)} mL.`, `${nf(V)} ÷ ${c} = ${nf(V / c)} ⇒ <b>${n} copos cheios</b>.`] };
+    } },
+  { L: 'C', q: 3, nome: 'Cone: geratriz, área, volume', short: 'Cone',
+    gen() {
+      const [r, h, g] = pick(TRIPLES); const v = ri(0, 3); const obj = pick(['Um cone de papel de pipoca', 'Um chapéu de festa', 'Uma casquinha', 'Um funil']);
+      const base = `${obj} tem a forma de um cone reto de <b>raio ${r} cm</b> e <b>altura ${h} cm</b>.`;
+      const fig = figCone({ r: `${r} cm`, h: `${h} cm`, g: v === 0 ? 'g = ?' : 'g' });
+      if (v === 0) return { txt: base, ask: 'Quanto mede a geratriz, em cm?', unit: 'cm', ans: g, fig, steps: [`g² = ${r}² + ${h}² = ${r * r + h * h}.`, `<b>g = ${g} cm</b>.`] };
+      if (v === 1) return { txt: base, ask: 'Qual é a área lateral, em cm²?', unit: 'cm²', ans: 3 * r * g, fig, steps: [`g² = ${r}² + ${h}² ⇒ g = ${g} cm.`, `Área lateral = π · r · g = 3 · ${r} · ${g} = <b>${3 * r * g} cm²</b>.`] };
+      if (v === 2) return { txt: base, ask: 'Qual é o volume, em cm³?', unit: 'cm³', ans: r * r * h, fig, steps: [`V = π · r² · h ÷ 3 = 3 · ${r * r} · ${h} ÷ 3.`, `<b>V = ${r * r * h} cm³</b>.`] };
+      return { txt: base, ask: 'Qual é a área total (lateral + base), em cm²?', unit: 'cm²', ans: 3 * r * (r + g), fig, steps: [`g = ${g} cm.`, `Lateral: 3 · ${r} · ${g} = ${3 * r * g}. Base: 3 · ${r}² = ${3 * r * r}.`, `Total: <b>${3 * r * (r + g)} cm²</b>.`] };
+    } },
+  { L: 'D', q: 4, nome: 'Setor circular vira cone', short: 'Setor → cone',
+    gen() {
+      const v = ri(0, 3);
+      if (v === 3) {
+        const ang = pick([90, 120, 144, 180, 240, 270, 300]); const k = ang / 360; let g; do { g = ri(4, 30); } while (!Number.isInteger(g * k));
+        return { txt: `Um setor circular de <b>raio ${g} cm</b> e <b>ângulo central de ${ang}°</b> é enrolado para formar a lateral de um cone.`, ask: 'Qual é o raio da base do cone, em cm?', unit: 'cm', ans: g * k, fig: figSector({ g: `${g} cm`, ang }), steps: ['O raio do setor vira a geratriz; o arco do setor vira o contorno da base.', `2πr = 2πg · ${ang}/360 ⇒ r = ${g} · ${ang}/360 = <b>${g * k} cm</b>.`] };
+      }
+      let kk; let big; do { kk = ri(1, 5); big = Math.random() < 0.5; } while (kk === 2 && !big); const r = big ? 4 * kk : 3 * kk; const h = big ? 3 * kk : 4 * kk; const g = 5 * kk; const ang = big ? 288 : 216;
+      const txt = `Um setor circular de <b>raio ${g} cm</b> e <b>ângulo de ${ang}°</b> forma a superfície lateral de um cone.`;
+      const fig = figSector({ g: `${g} cm`, ang });
+      if (v === 0) return { txt, ask: 'Qual é o raio da base do cone, em cm?', unit: 'cm', ans: r, fig, steps: [`r = g · ângulo ÷ 360 = ${g} · ${ang} ÷ 360 = <b>${r} cm</b>.`] };
+      if (v === 1) return { txt, ask: 'Qual é a altura do cone, em cm?', unit: 'cm', ans: h, fig, steps: [`r = ${g} · ${ang} ÷ 360 = ${r} cm.`, `${g}² = ${r}² + h² ⇒ h² = ${g * g - r * r} ⇒ <b>h = ${h} cm</b>.`] };
+      return { txt, ask: 'Qual é o volume do cone, em cm³?', unit: 'cm³', ans: r * r * h, fig, steps: [`r = ${r} cm e h = ${h} cm (Pitágoras com g = ${g}).`, `V = 3 · ${r}² · ${h} ÷ 3 = <b>${r * r * h} cm³</b>.`] };
+    } },
+  { L: 'E', q: 5, nome: 'Entre cilindro e cone', short: 'Cilindro × cone',
+    gen() {
+      const r = ri(2, 10); const h = ri(3, 15); const v = ri(0, 2); const obj = pick(['Uma luminária', 'Um vaso decorativo', 'Um peso de papel', 'Uma embalagem']);
+      const txt = `${obj} é um cilindro de <b>raio ${r} cm</b> e <b>altura ${h} cm</b> com um cone de mesma base e mesma altura dentro.`;
+      const fig = figCyl({ r: `${r} cm`, h: `${h} cm`, cone: true });
+      if (v === 0) return { txt: txt + ' O espaço entre eles será preenchido com areia.', ask: 'Quantos cm³ de areia cabem?', unit: 'cm³', ans: 2 * r * r * h, fig, steps: [`Cilindro: 3 · ${r}² · ${h} = ${3 * r * r * h}. Cone: um terço = ${r * r * h}.`, `Espaço: ${3 * r * r * h} − ${r * r * h} = <b>${2 * r * r * h} cm³</b>.`] };
+      if (v === 1) return { txt, ask: 'Qual é o volume do cone, em cm³?', unit: 'cm³', ans: r * r * h, fig, steps: [`Cilindro: ${3 * r * r * h} cm³.`, `Cone: ${3 * r * r * h} ÷ 3 = <b>${r * r * h} cm³</b>.`] };
+      return { txt: `${obj} é um cilindro de <b>raio ${r} cm</b> com um cone de mesma base e altura dentro. O espaço entre eles tem <b>${2 * r * r * h} cm³</b>.`, ask: 'Qual é a altura, em cm?', unit: 'cm', ans: h, fig: figCyl({ r: `${r} cm`, h: 'h = ?', cone: true }), steps: ['Espaço = cilindro − cone = 2/3 do cilindro = 2 · r² · h (com π = 3).', `2 · ${r * r} · h = ${2 * r * r * h} ⇒ <b>h = ${h} cm</b>.`] };
+    } },
+  { L: 'F', q: 6, nome: 'Esfera: volume e massa', short: 'Esfera',
+    gen() {
+      const r = ri(1, 6); const V = 4 * r ** 3; const v = ri(0, 2);
+      if (v === 0) { const useD = Math.random() < 0.5; return { txt: `Uma bola maciça tem ${useD ? `<b>${2 * r} cm de diâmetro</b>` : `<b>raio ${r} cm</b>`}.`, ask: 'Qual é o seu volume, em cm³?', unit: 'cm³', ans: V, fig: figSphere(useD ? { d: `${2 * r} cm` } : { r: `${r} cm` }), steps: [useD ? `r = ${r} cm.` : `r = ${r} cm.`, `V = 4 · π · r³ ÷ 3 = 4 · 3 · ${r ** 3} ÷ 3 = <b>${V} cm³</b>.`] }; }
+      const mat = pick([['aço', 7.8], ['vidro', 2.5], ['chumbo', 11], ['madeira', 0.5], ['borracha', 1.2]]);
+      if (v === 1) { const m = Math.round(mat[1] * V * 100) / 100; return { txt: `Uma esfera maciça de ${mat[0]} tem <b>raio ${r} cm</b>. A densidade do ${mat[0]} é <b>${nf(mat[1])} g/cm³</b>.`, ask: 'Qual é a massa da esfera, em gramas?', unit: 'g', ans: m, fig: figSphere({ r: `${r} cm` }), steps: [`V = 4 · ${r}³ = ${V} cm³ (com π = 3).`, `Massa = densidade × volume = ${nf(mat[1])} · ${V} = <b>${nf(m)} g</b>.`] }; }
+      const n = pick([5, 10, 20, 25, 50]); const kg = Math.round(mat[1] * V * n) / 1000;
+      return { txt: `Um brinquedo usa <b>${n} esferas</b> maciças de ${mat[0]}, cada uma com <b>raio ${r} cm</b>. A densidade do ${mat[0]} é <b>${nf(mat[1])} g/cm³</b>.`, ask: 'Qual é a massa total, em quilogramas?', unit: 'kg', ans: kg, fig: figSphere({ r: `${r} cm` }), steps: [`V de cada esfera = 4 · ${r}³ = ${V} cm³.`, `Massa de cada = ${nf(mat[1])} · ${V} = ${nf(mat[1] * V)} g.`, `${n} esferas: ${nf(mat[1] * V * n)} g = <b>${nf(kg)} kg</b>.`] };
+    } },
+  { L: 'G', q: 7, nome: 'Semiesfera: área e custo', short: 'Semiesfera',
+    gen() {
+      let r; do { r = ri(2, 12); } while (r === 5); const v = ri(0, 2); const obj = pick(['A cúpula de um observatório', 'Um iglu', 'A cobertura de um coreto', 'Um domo de estufa']);
+      const txt = `${obj} tem a forma de uma <b>semiesfera de ${r} m de raio</b>.`; const fig = figHemi({ r: `${r} m` });
+      if (v === 0) return { txt, ask: 'Qual é a área da superfície curva, em m²?', unit: 'm²', ans: 6 * r * r, fig, steps: ['Semiesfera: metade de 4πr², ou seja, 2πr².', `2 · 3 · ${r}² = <b>${6 * r * r} m²</b>.`] };
+      if (v === 1) { const p = pick([8, 10, 12, 15, 20, 25]); return { txt: `${txt} A pintura externa custa <b>R$ ${p},00 por m²</b>.`, ask: 'Quanto custa a pintura, em reais?', unit: 'reais', ans: 6 * r * r * p, fig, steps: [`Área: 2 · 3 · ${r}² = ${6 * r * r} m².`, `Custo: ${6 * r * r} · ${p} = <b>R$ ${nf(6 * r * r * p)},00</b>.`] }; }
+      return { txt, ask: 'Qual é o volume de ar no interior, em m³?', unit: 'm³', ans: 2 * r ** 3, fig, steps: ['Semiesfera: metade de 4πr³/3 = 2πr³/3.', `2 · 3 · ${r}³ ÷ 3 = <b>${2 * r ** 3} m³</b>.`] };
+    } },
+  { L: 'H', q: 8, nome: 'Derreter e remodelar', short: 'Equivalência',
+    gen() {
+      const opts = [];
+      for (let r = 1; r <= 6; r++) for (let R = 1; R <= 8; R++) {
+        if (r === 3 && R === 3) continue; // medidas da prova
+        const V = 4 * r ** 3;
+        if (V % (3 * R * R) === 0 && V / (3 * R * R) >= 1 && V / (3 * R * R) <= 60) opts.push({ r, R, h: V / (3 * R * R), cone: false });
+        if (V % (R * R) === 0 && V / (R * R) >= 1 && V / (R * R) <= 60) opts.push({ r, R, h: V / (R * R), cone: true });
+      }
+      const o = pick(opts); const V = 4 * o.r ** 3; const obj = pick([['vela', 'parafina'], ['bola de massinha', 'massinha'], ['esfera de chocolate', 'chocolate'], ['peça de metal', 'metal']]);
+      return { txt: `Uma ${obj[0]} esférica de <b>raio ${o.r} cm</b> é derretida, e todo o ${obj[1]} vira ${o.cone ? 'um cone' : 'um cilindro'} reto de <b>raio ${o.R} cm</b>.`, ask: `Qual é a altura do ${o.cone ? 'cone' : 'cilindro'}, em cm?`, unit: 'cm', ans: o.h, fig: figMelt({ rs: `${o.r} cm`, rt: `${o.R} cm`, cone: o.cone }),
+        steps: [`Volume da esfera: 4 · ${o.r}³ = ${V} cm³ (com π = 3).`, o.cone ? `Cone: 3 · ${o.R}² · h ÷ 3 = ${o.R * o.R}h.` : `Cilindro: 3 · ${o.R}² · h = ${3 * o.R * o.R}h.`, `${o.cone ? o.R * o.R : 3 * o.R * o.R}h = ${V} ⇒ <b>h = ${nf(o.h)} cm</b>.`] };
+    } },
+];
+
+/* =========================================================
+   BATALHA NAVAL · CORPOS REDONDOS — telas e fluxo
+   ========================================================= */
+(function () {
+  'use strict';
+  const KEY = 'batalha-naval-corpos-redondos-2ano-v1';
+  const TURMAS = ['M21', 'M22'];
+  const PIN_HASH = 2392177968;
+  const NR = 8; const NC = 6; const COLS = [1, 2, 3, 4, 5, 6];
+  const FLEET = [{ id: 'pa', nome: 'Porta-aviões', s: 4 }, { id: 'cr', nome: 'Cruzador', s: 3 }, { id: 'fr', nome: 'Fragata', s: 2 }, { id: 'de', nome: 'Destróier', s: 2 }];
+  const DIFF = { cadete: { nome: 'Cadete', txt: 'O computador atira ao acaso.' }, capitao: { nome: 'Capitão', txt: 'O computador persegue os navios que acerta.' }, almirante: { nome: 'Almirante', txt: 'Persegue os navios e atira de novo sempre que acerta.' } };
+  const PTS = { ok: 100, hit: 30, sink: 100, win: 300 };
+  const $app = document.getElementById('app');
+  const norm = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+  function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return h >>> 0; }
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const L = (r) => ROWS[r].L; const cellName = (r, c) => `${L(r)}${c + 1}`;
+  const store = {
+    get() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } },
+    set(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) { /* sem armazenamento */ } },
+  };
+  let DB = Object.assign({ cur: null, hall: [], last: null }, store.get());
+  const save = () => store.set(DB);
+  let G = DB.cur;
+  let screen = G ? (G.phase === 'end' ? 'end' : G.phase) : 'home';
+  let modal = null; let projection = false; let busy = false; let kp = null;
+  let setup = { sel: 'pa', vert: false, hover: null };
+
+  /* ---------- tabuleiros ---------- */
+  const empty = () => [...Array(NR)].map(() => Array(NC).fill(0));
+  function cellsOf(r, c, s, vert) { return [...Array(s)].map((_, i) => (vert ? [r + i, c] : [r, c + i])); }
+  function fits(ships, cells, ignore) {
+    if (cells.some(([r, c]) => r < 0 || c < 0 || r >= NR || c >= NC)) return false;
+    const occ = new Set(); ships.filter((s) => s.id !== ignore).forEach((s) => s.cells.forEach(([r, c]) => occ.add(r * NC + c)));
+    return cells.every(([r, c]) => !occ.has(r * NC + c));
+  }
+  function randomFleet() {
+    for (let t = 0; t < 500; t++) {
+      const ships = [];
+      let ok = true;
+      for (const f of FLEET) {
+        let placed = false;
+        for (let k = 0; k < 200 && !placed; k++) { const vert = Math.random() < 0.5; const cells = cellsOf(Math.floor(Math.random() * NR), Math.floor(Math.random() * NC), f.s, vert); if (fits(ships, cells)) { ships.push({ id: f.id, cells }); placed = true; } }
+        if (!placed) { ok = false; break; }
+      }
+      if (ok) return ships;
+    }
+    return [];
+  }
+  const shipAt = (ships, r, c) => ships.find((s) => s.cells.some(([a, b]) => a === r && b === c));
+  const sunk = (ship, shots) => ship.cells.every(([r, c]) => shots[r][c] === 2);
+  const allSunk = (ships, shots) => ships.every((s) => sunk(s, shots));
+  const fleetName = (id) => FLEET.find((f) => f.id === id).nome;
+
+  function newGame(name, turma, diff) {
+    G = { name, turma, diff, phase: 'setup', mine: [], cpu: randomFleet(), myShots: empty(), cpuShots: empty(), stats: ROWS.map(() => ({ ok: 0, err: 0 })), score: 0, pending: 0, log: [], turn: 1, t0: Date.now(), result: null };
+    DB.cur = G; save();
+  }
+  const logIt = (t, k) => { G.log.unshift({ t, k }); G.log = G.log.slice(0, 40); };
+
+  /* ---------- IA do computador ---------- */
+  function cpuShoot() {
+    const S = G.cpuShots; const unknown = [];
+    for (let r = 0; r < NR; r++) for (let c = 0; c < NC; c++) if (!S[r][c]) unknown.push([r, c]);
+    let target = null;
+    if (G.diff !== 'cadete') {
+      const live = []; // acertos em navios ainda não afundados
+      for (let r = 0; r < NR; r++) for (let c = 0; c < NC; c++) if (S[r][c] === 2) { const sh = shipAt(G.mine, r, c); if (sh && !sunk(sh, S)) live.push([r, c]); }
+      if (live.length) {
+        const cand = [];
+        const free = (r, c) => r >= 0 && c >= 0 && r < NR && c < NC && !S[r][c];
+        if (live.length >= 2) {
+          const sameRow = live.every(([r]) => r === live[0][0]); const sameCol = live.every(([, c]) => c === live[0][1]);
+          if (sameRow) { const cs = live.map(([, c]) => c); const r = live[0][0]; [[r, Math.min(...cs) - 1], [r, Math.max(...cs) + 1]].forEach(([a, b]) => free(a, b) && cand.push([a, b])); }
+          if (sameCol) { const rs = live.map(([r]) => r); const c = live[0][1]; [[Math.min(...rs) - 1, c], [Math.max(...rs) + 1, c]].forEach(([a, b]) => free(a, b) && cand.push([a, b])); }
+        }
+        if (!cand.length) live.forEach(([r, c]) => [[r - 1, c], [r + 1, c], [r, c - 1], [r, c + 1]].forEach(([a, b]) => free(a, b) && cand.push([a, b])));
+        if (cand.length) target = cand[Math.floor(Math.random() * cand.length)];
+      }
+      if (!target && G.diff === 'almirante') { const par = unknown.filter(([r, c]) => (r + c) % 2 === 0); if (par.length) target = par[Math.floor(Math.random() * par.length)]; }
+    }
+    if (!target) target = unknown[Math.floor(Math.random() * unknown.length)];
+    const [r, c] = target; const sh = shipAt(G.mine, r, c);
+    S[r][c] = sh ? 2 : 1;
+    if (sh) { if (sunk(sh, S)) logIt(`O computador afundou seu ${fleetName(sh.id)} em ${cellName(r, c)}.`, 'bad'); else logIt(`O computador acertou seu ${fleetName(sh.id)} em ${cellName(r, c)}.`, 'bad'); } else logIt(`O computador errou: água em ${cellName(r, c)}.`, 'cpu');
+    return [r, c];
+  }
+  function cpuTurn() {
+    busy = true; render();
+    const one = () => {
+      const [r, c] = cpuShoot(); save(); render(); flash('me', r, c);
+      if (allSunk(G.mine, G.cpuShots)) { setTimeout(() => finish(false), 900); return; }
+      if (G.diff === 'almirante' && G.cpuShots[r][c] === 2) setTimeout(one, 750); else setTimeout(() => { busy = false; G.turn++; save(); render(); }, 500);
+    };
+    setTimeout(one, 650);
+  }
+  function flash(board, r, c) { const el = $app.querySelector(`[data-board="${board}"] [data-r="${r}"][data-c="${c}"]`); if (el) { el.classList.remove('boom'); void el.offsetWidth; el.classList.add('boom'); } }
+
+  /* ---------- disparo do aluno ---------- */
+  function fire(r, c) {
+    const sh = shipAt(G.cpu, r, c);
+    G.myShots[r][c] = sh ? 2 : 1; G.pending--;
+    if (sh) {
+      G.score += PTS.hit;
+      if (sunk(sh, G.myShots)) { G.score += PTS.sink; logIt(`Você afundou o ${fleetName(sh.id)} inimigo! (+${PTS.hit + PTS.sink})`, 'good'); toast(`💥 ${fleetName(sh.id)} afundado!`); } else { logIt(`Fogo em ${cellName(r, c)}: navio atingido! (+${PTS.hit})`, 'good'); toast('💥 Acertou um navio!'); }
+    } else { logIt(`Água em ${cellName(r, c)}.`, 'me'); toast('🌊 Água!'); }
+    const won = allSunk(G.cpu, G.myShots); const left = G.myShots.some((row) => row.some((v) => !v));
+    const more = !won && G.pending > 0 && left;
+    if (!more) { G.pending = 0; busy = true; }
+    save(); render(); flash('cpu', r, c);
+    if (won) { setTimeout(() => finish(true), 900); return; }
+    if (!more) setTimeout(cpuTurn, 700);
+  }
+  function finish(win) {
+    G.phase = 'end'; G.result = win ? 'win' : 'lose';
+    if (win) { const intact = G.mine.reduce((s, sh) => s + sh.cells.filter(([r, c]) => G.cpuShots[r][c] !== 2).length, 0); G.score += PTS.win + intact * 10; G.bonus = intact * 10; }
+    const d = new Date(); const ok = G.stats.reduce((s, x) => s + x.ok, 0); const er = G.stats.reduce((s, x) => s + x.err, 0);
+    DB.hall = DB.hall.filter((h) => h.id !== G.t0);
+    DB.hall.push({ id: G.t0, name: G.name, turma: G.turma, pts: G.score, win, ok, er, diff: G.diff, t: d.getTime(), date: d.toLocaleDateString('pt-BR') });
+    busy = false; save(); go('end');
+  }
+
+  /* ---------- toast ---------- */
+  function toast(t) { const el = document.getElementById('toast'); if (!el) return; el.textContent = t; el.classList.remove('on'); void el.offsetWidth; el.classList.add('on'); }
+
+  /* ---------- telas ---------- */
+  const logo = () => (typeof IMG !== 'undefined' && IMG.logo ? `<img class="logo" src="${IMG.logo.uri}" alt="Curso G9">` : '');
+  const compass = '<svg class="rose" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width=".6" stroke-dasharray="2 3"/><path d="M50 4 L56 50 L50 96 L44 50 Z" fill="currentColor" opacity=".85"/><path d="M4 50 L50 44 L96 50 L50 56 Z" fill="currentColor" opacity=".45"/><text x="50" y="14" text-anchor="middle" font-size="9" fill="currentColor">N</text></svg>';
+  function header(right) { return `<header class="top">${logo()}<div class="brand"><b>BATALHA NAVAL</b><span>Corpos redondos · 2º ano</span></div><div class="top-r">${right || ''}</div></header>`; }
+  function homeView() {
+    const last = DB.last || {};
+    return `<main class="home">${header('<button class="lnk" data-act="teacher">Área do professor</button>')}
+      <section class="hero">
+        <div class="hero-t">
+          <p class="eyebrow">Carta náutica nº 2 · Cilindros, cones e esferas</p>
+          <h1>Afunde a frota do<br><span>Almirante π</span></h1>
+          <p class="lead">Cada linha do mar é uma questão da prova. Escolha a casa, resolva a conta e ganhe 2 torpedos. Errou? O computador ataca.</p>
+        </div>
+        <div class="hero-r">${compass}</div>
+      </section>
+      <div class="home-grid">
+        <form class="card form" data-form="start" autocomplete="off">
+          <p class="card-h">Diário do comandante</p>
+          <label>Nome<input name="nome" maxlength="40" required value="${esc(last.name || '')}" placeholder="Nome e sobrenome"></label>
+          <fieldset><legend>Turma</legend><div class="seg">${TURMAS.map((t) => `<label><input type="radio" name="turma" value="${t}" ${t === last.turma ? 'checked' : ''} required><span>${t}</span></label>`).join('')}</div></fieldset>
+          <fieldset><legend>Nível do computador</legend><div class="seg seg3">${Object.entries(DIFF).map(([k, d]) => `<label title="${d.txt}"><input type="radio" name="diff" value="${k}" ${k === (last.diff || 'capitao') ? 'checked' : ''}><span>${d.nome}</span></label>`).join('')}</div></fieldset>
+          <button class="btn red big" type="submit">Posicionar minha frota →</button>
+        </form>
+        <section class="card rows">
+          <p class="card-h">O mar é a prova</p>
+          <ol class="rowlist">${ROWS.map((r) => `<li><b>${r.L}</b><span>${r.nome}</span><i>Questão ${String(r.q).padStart(2, '0')}</i></li>`).join('')}</ol>
+          <p class="small">Todas as contas usam <b>π = 3</b>. As medidas mudam a cada pergunta.</p>
+        </section>
+      </div>
+      <p class="center"><button class="btn ghost" data-act="hall">Comandantes de destaque</button></p>
+    </main>`;
+  }
+
+  function gridHTML(board, opts) {
+    const shots = board === 'me' ? G.cpuShots : G.myShots; const ships = board === 'me' ? G.mine : G.cpu;
+    let h = `<div class="grid" data-board="${board}" role="grid" aria-label="${board === 'me' ? 'Sua frota' : 'Mar inimigo'}"><span class="corner"></span>${COLS.map((c) => `<span class="ch">${c}</span>`).join('')}`;
+    for (let r = 0; r < NR; r++) {
+      h += `<span class="rh" title="${ROWS[r].nome}"><b>${L(r)}</b>${opts.tags ? `<small>${ROWS[r].short}</small>` : ''}</span>`;
+      for (let c = 0; c < NC; c++) {
+        const v = shots[r][c]; const sh = shipAt(ships, r, c);
+        const showShip = board === 'me' || (sh && sunk(sh, shots)) || (opts.revealAll && sh);
+        let cls = 'cell'; if (v === 1) cls += ' miss'; if (v === 2) cls += ' hit'; if (showShip && sh) { cls += ' ship'; if (sunk(sh, shots)) cls += ' sunk'; }
+        if (showShip && sh) { const idx = sh.cells.findIndex(([a, b]) => a === r && b === c); const vert = sh.cells.length > 1 && sh.cells[0][1] === sh.cells[1][1]; cls += idx === 0 ? (vert ? ' st-t' : ' st-l') : idx === sh.cells.length - 1 ? (vert ? ' st-b' : ' st-r') : ' st-m'; }
+        if (opts.setupPrev && opts.setupPrev.has(r * NC + c)) cls += opts.setupOk ? ' prev' : ' prev bad';
+        const can = opts.clickable && !v;
+        h += `<button type="button" class="${cls}" data-r="${r}" data-c="${c}" data-act="${opts.act || ''}" ${can ? '' : 'tabindex="-1"'} aria-label="${cellName(r, c)}${v === 1 ? ', água' : v === 2 ? ', acerto' : ''}"><i></i></button>`;
+      }
+    }
+    return h + '</div>';
+  }
+
+  function setupView() {
+    const cur = FLEET.find((f) => f.id === setup.sel);
+    let prev = null; let okp = false;
+    if (setup.hover && cur) { const cells = cellsOf(setup.hover[0], setup.hover[1], cur.s, setup.vert); okp = fits(G.mine, cells, cur.id); prev = new Set(cells.filter(([r, c]) => r < NR && c < NC).map(([r, c]) => r * NC + c)); }
+    const placed = new Set(G.mine.map((s) => s.id));
+    return `<main class="setupscr">${header(`<span class="who">${esc(G.name)} · ${esc(G.turma)}</span>`)}
+      <h2>Posicione sua frota</h2>
+      <p class="lead small">Escolha um navio, toque no mar para colocá-lo e use “Girar” para deixá-lo na vertical. Toque num navio já posicionado para mudá-lo de lugar.</p>
+      <div class="setup-grid">
+        <section class="sea mine">${gridHTML('me', { clickable: true, act: 'place', setupPrev: prev, setupOk: okp })}</section>
+        <aside class="card dock">
+          <p class="card-h">Estaleiro</p>
+          <div class="ships">${FLEET.map((f) => `<button type="button" class="shipbtn ${setup.sel === f.id ? 'on' : ''} ${placed.has(f.id) ? 'done' : ''}" data-act="selship" data-id="${f.id}"><span class="hull">${'<i></i>'.repeat(f.s)}</span>${f.nome}<small>${f.s} casas${placed.has(f.id) ? ' · ✓' : ''}</small></button>`).join('')}</div>
+          <div class="row"><button class="btn ghost" data-act="rotate">⟳ Girar (${setup.vert ? 'vertical' : 'horizontal'})</button><button class="btn ghost" data-act="randfleet">Aleatório</button></div>
+          <button class="btn red big" data-act="startbattle" ${G.mine.length === FLEET.length ? '' : 'disabled'}>Zarpar para a batalha ⚓</button>
+        </aside>
+      </div>
+    </main>`;
+  }
+
+  function battleView() {
+    const ok = G.stats.reduce((s, x) => s + x.ok, 0); const er = G.stats.reduce((s, x) => s + x.err, 0);
+    const sunkCpu = G.cpu.filter((s) => sunk(s, G.myShots)).length; const sunkMe = G.mine.filter((s) => sunk(s, G.cpuShots)).length;
+    const status = busy ? '<span class="st cpu">⏳ Vez do computador…</span>' : G.pending > 0 ? `<span class="st fire">🚀 ${G.pending === 2 ? '2 torpedos' : 'Mais 1 torpedo'}: toque em qualquer casa do mar inimigo</span>` : '<span class="st you">🎯 Sua vez: escolha uma casa no mar inimigo</span>';
+    return `<main class="battlescr ${busy ? 'busy' : ''}">${header(`<span class="who">${esc(G.name)} · ${esc(G.turma)} · ${DIFF[G.diff].nome}</span><button class="lnk" data-act="quit">Sair</button>`)}
+      <div class="hud"><div><small>Pontos</small><b>${G.score}</b></div><div><small>Contas certas</small><b>${ok}</b></div><div><small>Erradas</small><b>${er}</b></div><div><small>Inimigos afundados</small><b>${sunkCpu}/4</b></div><div><small>Seus navios perdidos</small><b>${sunkMe}/4</b></div></div>
+      <div class="statusbar">${status}</div>
+      <div class="battle-grid">
+        <section class="sea enemy"><p class="sea-h">Mar inimigo · frota do Almirante π</p>${gridHTML('cpu', { clickable: !busy, act: 'aim', tags: true })}</section>
+        <aside class="side">
+          <section class="sea mine small"><p class="sea-h">Sua frota</p>${gridHTML('me', {})}</section>
+          <section class="card logbox"><p class="card-h">Diário de bordo</p><ol class="log">${G.log.slice(0, 7).map((l) => `<li class="${l.k}">${esc(l.t)}</li>`).join('') || '<li>Nenhum disparo ainda.</li>'}</ol></section>
+        </aside>
+      </div>
+      <div class="toast" id="toast" role="status"></div>
+    </main>`;
+  }
+
+  function endView() {
+    const win = G.result === 'win'; const ok = G.stats.reduce((s, x) => s + x.ok, 0); const er = G.stats.reduce((s, x) => s + x.err, 0);
+    const weak = ROWS.filter((r, i) => G.stats[i].err > 0).map((r) => r.nome);
+    return `<main class="endscr">${header()}
+      <section class="result ${win ? 'win' : 'lose'}">
+        <p class="eyebrow">${win ? 'Vitória' : 'Derrota'} · ${DIFF[G.diff].nome}</p>
+        <h1>${win ? 'Frota do Almirante π afundada!' : 'Sua frota foi afundada.'}</h1>
+        <p class="lead">${win ? `Parabéns, ${esc(G.name)}! ${G.bonus ? `Bônus de ${G.bonus} pontos pelos navios inteiros.` : ''}` : 'O computador venceu desta vez, mas as contas certas continuam valendo pontos. Revise e jogue de novo!'}</p>
+        <div class="bigscore"><b>${G.score}</b><span>pontos · ${ok} contas certas · ${er} erradas</span></div>
+      </section>
+      <div class="end-grid">
+        <section class="sea enemy small"><p class="sea-h">Onde estava a frota inimiga</p>${gridHTML('cpu', { revealAll: true })}</section>
+        <section class="card">
+          <p class="card-h">Raio-X da prova</p>
+          <table class="xray"><thead><tr><th>Linha</th><th>Conteúdo</th><th>Certas</th><th>Erradas</th></tr></thead><tbody>${ROWS.map((r, i) => `<tr class="${G.stats[i].err ? 'warn' : G.stats[i].ok ? 'good' : ''}"><td>${r.L} · Q${String(r.q).padStart(2, '0')}</td><td>${r.nome}</td><td>${G.stats[i].ok}</td><td>${G.stats[i].err}</td></tr>`).join('')}</tbody></table>
+          <p class="small">${weak.length ? `Revise antes da prova: <b>${weak.join(', ')}</b>.` : ok ? 'Nenhum erro nos conteúdos que você praticou. Experimente as linhas que ficaram em branco!' : 'Nenhuma conta resolvida.'}</p>
+        </section>
+      </div>
+      <p class="row center"><button class="btn red" data-act="copy">Copiar resultado</button><button class="btn ghost" data-act="again">Nova batalha</button><button class="btn ghost" data-act="hall">Comandantes de destaque</button><button class="btn ghost" data-act="home">Início</button></p>
+    </main>`;
+  }
+
+  const sortedHall = () => DB.hall.slice().sort((a, b) => b.pts - a.pts || a.t - b.t);
+  function hallList(rows) {
+    if (!rows.length) return '<p class="small">Nenhuma batalha terminada neste computador ainda.</p>';
+    return `<ol class="hall">${rows.map((h, k) => `<li><span class="pos">${k + 1}º</span><span class="nm">${esc(h.name)} <small>${esc(h.turma)} · ${DIFF[h.diff] ? DIFF[h.diff].nome : ''}</small></span><span class="pz">${h.pts} pts ${h.win ? '⚓' : ''}</span><span class="dt">${esc(h.date)}</span></li>`).join('')}</ol>`;
+  }
+  const back = () => (G ? (G.phase === 'end' ? 'end' : G.phase) : 'home');
+  function hallView() { return `<main class="page">${header()}<h2>Comandantes de destaque</h2><p class="small">Batalhas terminadas neste computador. ⚓ = vitória.</p>${hallList(sortedHall().slice(0, 20))}<p><button class="btn ghost" data-act="goback">← Voltar</button></p></main>`; }
+  function teacherView() {
+    return `<main class="page">${header()}<h2>Área do professor</h2>
+      <div class="tcards"><section class="card"><p class="card-h">Modo projeção</p><p class="small">Tabuleiro e questões maiores para jogar com a turma votando a casa e a resposta.</p><button class="btn red" data-act="proj">${projection ? 'Desligar' : 'Ligar'}</button></section>
+      <section class="card"><p class="card-h">Batalha da turma</p><p class="small">Começa uma batalha com o nome “Turma”.</p><div class="row">${TURMAS.map((t) => `<button class="btn ghost" data-act="classgame" data-t="${t}">Com a ${t}</button>`).join('')}</div></section></div>
+      ${TURMAS.map((t) => `<h3>${t}</h3>${hallList(sortedHall().filter((h) => h.turma === t))}`).join('')}
+      <details class="card gab"><summary>Como as questões são geradas</summary><ul>${ROWS.map((r) => `<li><b>Linha ${r.L} (questão ${String(r.q).padStart(2, '0')} da prova) · ${r.nome}.</b> ${GENINFO[r.L]}</li>`).join('')}</ul></details>
+      <p><button class="btn ghost" data-act="goback">← Voltar</button> <button class="btn ghost danger" data-act="wipe">Apagar batalha atual e destaques deste computador</button></p></main>`;
+  }
+  const GENINFO = {
+    A: 'Raio de 2 a 9 cm. Pede raio, altura, área total (18r²) ou volume (6r³) a partir da seção meridiana (4r²), do raio ou da área lateral (12r²).',
+    B: 'Diâmetro de 4 a 20 cm e altura de 5 a 30 cm. Pede a capacidade em litros ou quantos copos (100 a 300 mL) ficam cheios.',
+    C: 'Raio, altura e geratriz de ternos pitagóricos (3-4-5, 5-12-13, 8-15-17, 7-24-25…). Pede geratriz, área lateral, área total ou volume (r²h).',
+    D: 'Setores de 216° ou 288° com geratriz múltipla de 5 (raio, altura ou volume), ou setores de 90° a 300° (raio da base).',
+    E: 'Raio de 2 a 10 cm e altura de 3 a 15 cm. Pede o espaço entre os sólidos (2r²h), o volume do cone ou a altura.',
+    F: 'Raio de 1 a 6 cm (às vezes dado o diâmetro). Pede volume (4r³), massa em gramas ou a massa de várias esferas em kg, com densidades de aço, vidro, chumbo, madeira e borracha.',
+    G: 'Raio de 2 a 12 m. Pede a área curva (6r²), o custo da pintura (R$ 8 a R$ 25 por m²) ou o volume (2r³).',
+    H: 'Esfera de raio 1 a 6 cm derretida em cilindro ou cone de raio 1 a 8 cm, sempre com altura inteira; nunca usa as medidas da prova.',
+  };
+
+  function modalView() {
+    if (!modal) return '';
+    let inner = '';
+    if (modal.type === 'q') {
+      const q = modal.q; const r = modal.r;
+      inner = `<p class="kick">Torpedo para <b>${cellName(r, modal.c)}</b> · Linha ${L(r)} · ${ROWS[r].nome}</p>
+        <div class="qgrid"><div class="qfig">${q.fig || ''}</div><div><p class="qtxt">${q.txt}</p><p class="qask">${q.ask}</p></div></div>
+        <div id="kp"></div><div class="fb" id="fb"></div>
+        <div class="row end" id="qact"><button class="btn ghost" data-act="qcancel">Escolher outra casa</button><button class="btn red" data-act="qcheck">Confirmar</button></div>`;
+    }
+    if (modal.type === 'pin') inner = `<h3>Área do professor</h3><form data-form="pin" autocomplete="off"><label>Senha<input name="pin" type="password" required></label>${modal.err ? '<p class="err">Senha incorreta.</p>' : ''}<div class="row"><button class="btn red" type="submit">Entrar</button><button class="btn ghost" type="button" data-act="close">Cancelar</button></div></form>`;
+    if (modal.type === 'quit') inner = '<h3>Sair da batalha?</h3><p class="small">A batalha fica salva neste computador e você pode continuar depois.</p><div class="row"><button class="btn red" data-act="quitYes">Sair</button><button class="btn ghost" data-act="close">Continuar</button></div>';
+    return `<div class="veil" data-act="veil"><div class="modal ${modal.type}" role="dialog" aria-modal="true">${inner}</div></div>`;
+  }
+
+  function render() {
+    clearKeyHandlers(); kp = null;
+    document.body.classList.toggle('proj', projection);
+    const V = { home: homeView, setup: setupView, battle: battleView, end: endView, hall: hallView, teacher: teacherView }[screen];
+    $app.innerHTML = V() + modalView();
+    mountModal();
+  }
+  function mountModal() {
+    if (modal && modal.type === 'q') { kp = keypad(document.getElementById('kp'), { unit: modal.q.unit }); if (modal.done) showAnswer(); }
+    const f = $app.querySelector('.modal input[type=password]'); if (f) f.focus();
+  }
+  function renderModal() { clearKeyHandlers(); kp = null; const o = $app.querySelector('.veil'); if (o) o.remove(); if (modal) { $app.insertAdjacentHTML('beforeend', modalView()); mountModal(); } }
+  const go = (s) => { screen = s; modal = null; render(); window.scrollTo(0, 0); };
+
+  /* ---------- pergunta ---------- */
+  function ask(r, c) { modal = { type: 'q', r, c, q: ROWS[r].gen(), done: false }; renderModal(); }
+  function check() {
+    const q = modal.q; const x = kp.get(); const fb = document.getElementById('fb');
+    if (Number.isNaN(x)) { fb.className = 'fb warn'; fb.textContent = 'Digite a resposta no teclado.'; return; }
+    const tol = Math.max(0.006, Math.abs(q.ans) * 0.002);
+    modal.ok = Math.abs(x - q.ans) <= tol; modal.done = true;
+    const st = G.stats[modal.r];
+    if (modal.ok) { st.ok++; G.score += PTS.ok; G.pending = 2; logIt(`Conta certa na linha ${L(modal.r)} (+${PTS.ok}): 2 torpedos liberados.`, 'good'); } else { st.err++; logIt(`Conta errada na linha ${L(modal.r)}: torpedo perdido.`, 'bad'); }
+    save(); showAnswer();
+  }
+  function showAnswer() {
+    const q = modal.q; const fb = document.getElementById('fb'); kp.lock(); kp.set(modal.ok ? kp.raw() || String(q.ans) : kp.raw());
+    fb.className = 'fb ' + (modal.ok ? 'ok' : 'no');
+    fb.innerHTML = `<p class="fb-h">${modal.ok ? `✓ Certo! +${PTS.ok} pontos e 2 torpedos.` : `✗ A resposta era <b>${String(q.ans).replace('.', ',')} ${q.unit}</b>.`}</p><ol class="steps">${q.steps.map((s) => `<li>${s}</li>`).join('')}</ol>`;
+    document.getElementById('qact').innerHTML = modal.ok ? `<button class="btn red" data-act="qfire">🚀 Disparar em ${cellName(modal.r, modal.c)}</button>` : '<button class="btn red" data-act="qpass">Passar a vez ao computador</button>';
+  }
+
+  function act(a, el, e) {
+    switch (a) {
+      case 'veil': if (e.target === el && modal && modal.type !== 'q') { modal = null; renderModal(); } break;
+      case 'close': modal = null; renderModal(); break;
+      case 'teacher': modal = { type: 'pin' }; renderModal(); break;
+      case 'hall': go('hall'); break;
+      case 'home': go('home'); break;
+      case 'goback': go(back()); break;
+      case 'selship': setup.sel = el.dataset.id; render(); break;
+      case 'rotate': setup.vert = !setup.vert; render(); break;
+      case 'randfleet': G.mine = randomFleet(); save(); render(); break;
+      case 'place': {
+        const r = +el.dataset.r; const c = +el.dataset.c; const there = shipAt(G.mine, r, c);
+        if (there && there.id !== setup.sel) { setup.sel = there.id; render(); return; }
+        const f = FLEET.find((x) => x.id === setup.sel); if (!f) return;
+        const cells = cellsOf(r, c, f.s, setup.vert);
+        if (!fits(G.mine, cells, f.id)) { el.classList.add('nope'); setTimeout(() => el.classList.remove('nope'), 300); return; }
+        G.mine = G.mine.filter((s) => s.id !== f.id).concat([{ id: f.id, cells }]);
+        const next = FLEET.find((x) => !G.mine.some((s) => s.id === x.id)); if (next) setup.sel = next.id;
+        save(); render(); break;
+      }
+      case 'startbattle': G.phase = 'battle'; logIt('Frotas posicionadas. Boa caçada, comandante!', 'me'); save(); go('battle'); break;
+      case 'aim': {
+        if (busy) return; const r = +el.dataset.r; const c = +el.dataset.c; if (G.myShots[r][c]) return;
+        if (G.pending > 0) fire(r, c); else ask(r, c);
+        break;
+      }
+      case 'qcheck': check(); break;
+      case 'qcancel': modal = null; renderModal(); break;
+      case 'qfire': { const { r, c } = modal; modal = null; fire(r, c); break; }
+      case 'qpass': modal = null; G.pending = 0; save(); cpuTurn(); break;
+      case 'quit': modal = { type: 'quit' }; renderModal(); break;
+      case 'quitYes': go('home'); break;
+      case 'again': newGame(G.name, G.turma, G.diff); setup = { sel: 'pa', vert: false, hover: null }; go('setup'); break;
+      case 'copy': {
+        const ok = G.stats.reduce((s, x) => s + x.ok, 0); const er = G.stats.reduce((s, x) => s + x.err, 0);
+        const t = `Batalha Naval · Corpos Redondos\n${G.name} (${G.turma}) · nível ${DIFF[G.diff].nome}\n${G.result === 'win' ? 'Vitória' : 'Derrota'} · ${G.score} pontos · ${ok} certas, ${er} erradas\n${new Date().toLocaleString('pt-BR')}`;
+        const done = () => { el.textContent = 'Copiado!'; };
+        if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, () => window.prompt('Copie o resultado:', t)); else window.prompt('Copie o resultado:', t);
+        break;
+      }
+      case 'proj': projection = !projection; render(); break;
+      case 'classgame': newGame('Turma', el.dataset.t, 'capitao'); projection = true; go('setup'); break;
+      case 'wipe': if (window.confirm('Apagar a batalha atual e todos os destaques deste computador?')) { DB = { cur: null, hall: [], last: DB.last }; G = null; save(); go('home'); } break;
+      default: break;
+    }
+  }
+  $app.addEventListener('click', (e) => { const el = e.target.closest('[data-act]'); if (el && el.dataset.act && !el.disabled) act(el.dataset.act, el, e); });
+  $app.addEventListener('pointerover', (e) => {
+    if (screen !== 'setup') return; const el = e.target.closest('[data-act="place"]'); if (!el) return;
+    const h = [+el.dataset.r, +el.dataset.c]; if (setup.hover && setup.hover[0] === h[0] && setup.hover[1] === h[1]) return; setup.hover = h; render();
+  });
+  $app.addEventListener('submit', (e) => {
+    e.preventDefault(); const f = e.target;
+    if (f.dataset.form === 'start') {
+      const name = f.nome.value.trim().replace(/\s+/g, ' '); const tr = f.querySelector('input[name="turma"]:checked'); const df = f.querySelector('input[name="diff"]:checked');
+      if (!name || !tr) return; DB.last = { name, turma: tr.value, diff: df ? df.value : 'capitao' };
+      newGame(name, tr.value, df ? df.value : 'capitao'); setup = { sel: 'pa', vert: false, hover: null }; go('setup');
+    }
+    if (f.dataset.form === 'pin') { if (fnv('missao:' + norm(f.pin.value)) === PIN_HASH) go('teacher'); else { modal = { type: 'pin', err: true }; renderModal(); } }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (screen === 'setup' && (e.key === 'r' || e.key === 'R') && e.target.tagName !== 'INPUT') { setup.vert = !setup.vert; render(); }
+    if (e.key === 'Enter' && modal && modal.type === 'q') { const b = $app.querySelector('#qact .btn.red'); if (b) { e.preventDefault(); b.click(); } }
+    if (e.key === 'Escape' && modal && modal.type !== 'q') { modal = null; renderModal(); }
+  });
+  // continua a vez do computador se a página recarregou no meio dela
+  if (G && G.phase === 'battle' && G.pending < 0) G.pending = 0;
+  render();
+}());
+
+</script>
+</body>
+</html>

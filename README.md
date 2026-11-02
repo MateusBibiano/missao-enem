@@ -10,3 +10,9 @@ Revisão gamificada de Matemática para o ENEM das turmas **M21 e M22** do Curso
 - Sem login: o progresso fica salvo no navegador de cada aluno.
 
 O site é um único arquivo (`index.html`), sem dependências além das fontes do Google Fonts.
+
+## Batalha Naval · Corpos Redondos
+
+Batalha naval contra o computador para revisar a prova de cilindros, cones e esferas (M21/M22). Cada linha do mar (A a H) corresponde a uma questão da prova; a conta certa libera 2 torpedos. As medidas são sorteadas a cada pergunta (π = 3).
+
+**Acesse:** https://mateusbibiano.github.io/missao-enem/naval/
