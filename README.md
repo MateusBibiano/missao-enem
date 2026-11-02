@@ -16,3 +16,9 @@ O site é um único arquivo (`index.html`), sem dependências além das fontes d
 Batalha naval contra o computador para revisar a prova de cilindros, cones e esferas (M21/M22). Cada linha do mar (A a H) corresponde a uma questão da prova; a conta certa libera 2 torpedos. As medidas são sorteadas a cada pergunta (π = 3).
 
 **Acesse:** https://mateusbibiano.github.io/missao-enem/naval/
+
+## Chuva de Sólidos
+
+Arcade de revisão da prova de cilindros, cones e esferas (M21/M22): as contas caem do céu e o aluno digita a resposta antes que cheguem ao chão. Níveis, combos, itens dourados e modo treino por conteúdo (π = 3).
+
+**Acesse:** https://mateusbibiano.github.io/missao-enem/chuva/
