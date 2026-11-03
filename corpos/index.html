@@ -840,6 +840,21 @@ p { margin: 0; }
 .th-cards-1 { grid-template-columns: 1fr !important; }
 .hero-in { z-index: 1; } .hero::after { z-index: 0; }
 
+/* ---------- Modo foco ---------- */
+#guard { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; padding: 20px; background: rgba(16, 18, 40, 0.92); backdrop-filter: blur(6px); }
+#guard[hidden] { display: none; }
+.guard-box { width: min(420px, 100%); background: var(--surface); color: var(--ink); border-radius: 22px; padding: 26px 22px; display: grid; gap: 12px; text-align: center; justify-items: center; box-shadow: 0 30px 80px -20px rgba(0,0,0,.6); }
+.guard-box h2 { margin: 0; font: 800 24px/1.15 var(--f-display); }
+.guard-box p { margin: 0; color: var(--ink-2, var(--paper-muted)); line-height: 1.45; }
+.guard-ic { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; background: #FFE3DE; color: #C2372A; }
+.guard-ic svg { width: 28px; height: 28px; }
+.guard-box dl { margin: 4px 0; display: flex; gap: 10px; }
+.guard-box dl div { background: var(--surface-2); border-radius: 12px; padding: 8px 14px; }
+.guard-box dt { font: 500 11px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--paper-muted); }
+.guard-box dd { margin: 2px 0 0; font: 800 22px var(--f-display); }
+.guard-box .btn { width: 100%; }
+.cert-saidas { margin: 10px 0 0; font-size: 13px; color: var(--paper-muted); }
+
 [hidden]{display:none!important}
 
 </style>
@@ -1318,7 +1333,7 @@ const COURSE = {
   certSalt: 'g9-missao-corpos-2ano',
   certText: 'de revisão de corpos redondos: área e volume de cilindros, cones e esferas',
   heroTitle: 'Missão <span class="mark">Corpos</span><br><span class="hero-sub">Redondos</span>',
-  lede: 'Cilindros, cones e esferas em 3 fases de 10 questões inéditas. Acerte todas as questões de uma fase para liberar a próxima.',
+  lede: 'Cilindros, cones e esferas em 3 fases de 10 questões inéditas. Acerte todas as questões de uma fase para liberar a próxima. A trilha roda em tela cheia, e as saídas para outras guias ficam registradas.',
   howQ: 'Questões com figuras, situações do dia a dia e as fórmulas da revisão relâmpago. Use π = 3.',
   brandMini: 'Missão <b>Corpos</b>',
   levels: [
@@ -2455,6 +2470,7 @@ const QUESTIONS = [
             <div><dt>Estrelas</dt><dd>${stars}/${MAXSTARS}</dd></div>
             <div><dt>De primeira</dt><dd>${ft}/${TOTAL}</dd></div>
           </dl>
+          <p class="cert-saidas">Saídas da tela durante a trilha: <b>${foraTxt(P)}</b></p>
           <div class="cert-sheet" aria-hidden="true">${QUESTIONS.map((q) => `<span class="ph-${q.ph}"></span>`).join('')}</div>
         </div>
         <div class="cert-foot">
@@ -2781,12 +2797,13 @@ const QUESTIONS = [
     save();
     sfx('unlock');
     go('map');
+    enterFull();
     syncEvents(existing ? [] : [{ t: Date.now(), q: 'Entrou na missão', fase: '', res: 'Entrou na missão', tent: 0, xp: 0 }]);
     toast(existing ? `<b>Que bom te ver de novo, ${esc(firstName(P.name))}!</b>Seu progresso foi recuperado.` : `<b>Missão iniciada, ${esc(firstName(P.name))}!</b>Comece pela Fase 1: ${PHASES[0].name}.`, { icon: existing ? 'rotate' : 'flag', kind: 'info' });
   }
   function copyResult() {
     const lv = levelOf(P.xp);
-    const text = `${COURSE.nome} (${COURSE.serie})\nAluno(a): ${P.name} (${P.turma})\nQuestões concluídas: ${doneCount()}/${TOTAL}\nXP: ${fmt(P.xp)} · Nível: ${lv.name}\nEstrelas: ${totalStars()}/${MAXSTARS} · De primeira: ${ftCount()}/${TOTAL}\nCódigo de verificação: ${certCode(P.name, P.turma, P.xp, ftCount(), totalStars())}`;
+    const text = `${COURSE.nome} (${COURSE.serie})\nAluno(a): ${P.name} (${P.turma})\nQuestões concluídas: ${doneCount()}/${TOTAL}\nXP: ${fmt(P.xp)} · Nível: ${lv.name}\nEstrelas: ${totalStars()}/${MAXSTARS} · De primeira: ${ftCount()}/${TOTAL}\nSaídas da tela: ${foraTxt(P)}\nCódigo de verificação: ${certCode(P.name, P.turma, P.xp, ftCount(), totalStars())}`;
     const ok = () => toast('<b>Resultado copiado</b>Agora é só colar e enviar para o professor.', { icon: 'copy', kind: 'info' });
     const fallback = () => {
       const box = $('#copy-box');
@@ -2796,6 +2813,52 @@ const QUESTIONS = [
     };
     try { navigator.clipboard.writeText(text).then(ok, fallback); } catch (e) { fallback(); }
   }
+
+  /* ---------------- Modo foco: tela cheia + registro de saídas ---------------- */
+  const DOCEL = document.documentElement;
+  const fsOK = !!(DOCEL.requestFullscreen || DOCEL.webkitRequestFullscreen) && !inClaude;
+  const isFull = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+  const focusOn = () => !!P && !sandbox && route.view !== 'welcome' && route.view !== 'teacher';
+  function enterFull() {
+    if (!fsOK || isFull()) return;
+    try { const r = (DOCEL.requestFullscreen || DOCEL.webkitRequestFullscreen).call(DOCEL); if (r && r.catch) r.catch(() => {}); } catch (e) { /* ok */ }
+  }
+  let awayAt = 0;
+  function guard(kind, dur) {
+    let g = document.getElementById('guard');
+    if (!g) { g = document.createElement('div'); g.id = 'guard'; g.setAttribute('role', 'alertdialog'); g.setAttribute('aria-modal', 'true'); document.body.appendChild(g); }
+    const n = P.saidas || 0;
+    g.innerHTML = kind === 'away'
+      ? `<div class="guard-box"><span class="guard-ic">${ic('alert')}</span><h2>Você saiu da trilha</h2><p>Sair para outra guia ou aplicativo fica registrado e aparece no seu resultado para o professor.</p><dl><div><dt>Saídas registradas</dt><dd>${n}</dd></div><div><dt>Tempo fora agora</dt><dd>${dur} s</dd></div></dl><button type="button" class="btn btn-primary" id="guard-back">${fsOK ? 'Voltar para a tela cheia' : 'Voltar para a trilha'}</button></div>`
+      : `<div class="guard-box"><span class="guard-ic">${ic('zoom')}</span><h2>A trilha funciona em tela cheia</h2><p>Volte para a tela cheia para continuar. Saídas para outras guias ficam registradas.</p><dl><div><dt>Saídas registradas</dt><dd>${n}</dd></div></dl><button type="button" class="btn btn-primary" id="guard-back">Voltar para a tela cheia</button></div>`;
+    g.hidden = false;
+    const b = document.getElementById('guard-back');
+    b.onclick = () => { g.hidden = true; enterFull(); };
+    try { b.focus(); } catch (e) { /* ok */ }
+  }
+  function leave() {
+    if (!focusOn() || awayAt) return;
+    awayAt = Date.now();
+    P.saidas = (P.saidas || 0) + 1;
+    save();
+  }
+  function comeBack() {
+    if (!awayAt) return;
+    const dur = Math.max(1, Math.round((Date.now() - awayAt) / 1000));
+    awayAt = 0;
+    if (!P) return;
+    P.foraSeg = (P.foraSeg || 0) + dur;
+    save();
+    guard('away', dur);
+  }
+  document.addEventListener('visibilitychange', () => { if (document.hidden) leave(); else comeBack(); });
+  window.addEventListener('blur', () => { setTimeout(() => { if (!document.hasFocus()) leave(); }, 150); });
+  window.addEventListener('focus', comeBack);
+  const onFs = () => { if (!isFull() && fsOK && focusOn() && !awayAt) { const g = document.getElementById('guard'); if (!g || g.hidden) guard('fs'); } };
+  document.addEventListener('fullscreenchange', onFs);
+  document.addEventListener('webkitfullscreenchange', onFs);
+  document.addEventListener('click', (e) => { if (focusOn() && !e.target.closest('#guard')) enterFull(); }, true);
+  const foraTxt = (p) => { const n = p.saidas || 0; const t = p.foraSeg || 0; return n ? `${n} (${t >= 60 ? Math.round(t / 60) + ' min' : t + ' s'} fora)` : '0'; };
 
   document.addEventListener('click', (e) => {
     const el = e.target.closest('[data-act]');
