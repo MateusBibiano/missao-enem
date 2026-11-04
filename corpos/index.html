@@ -855,6 +855,35 @@ p { margin: 0; }
 .guard-box .btn { width: 100%; }
 .cert-saidas { margin: 10px 0 0; font-size: 13px; color: var(--paper-muted); }
 
+/* ---------- Modo prova ---------- */
+.prova-note { display: flex; gap: 10px; align-items: flex-start; margin: 0; padding: 12px 14px; border-radius: 14px; background: var(--brand-soft); color: var(--ink-2); font-size: 14px; line-height: 1.45; }
+.prova-note .ic { flex: none; width: 18px; height: 18px; margin-top: 2px; color: var(--brand-deep); }
+.fb-saved { background: var(--brand-soft); border: 1px solid var(--line); }
+.fb-saved .fb-ic { background: var(--brand-deep); }
+.opt.is-locked { opacity: 1; }
+.opts .opt[aria-disabled="true"]:not(.is-sel):not(.is-right):not(.is-wrong) { opacity: .62; }
+.qr-xp.miss { color: var(--bad-ink); }
+.res { display: grid; gap: 14px; padding-bottom: 60px; }
+.res-hero { display: grid; gap: 14px; justify-items: start; }
+.res-score { display: flex; align-items: baseline; gap: 10px; }
+.res-score b { font: 800 64px/1 var(--f-display); color: var(--brand-deep); letter-spacing: -0.03em; }
+.res-score span { font-weight: 700; color: var(--ink-2); }
+.res-pct { margin: 0; color: var(--ink-2); }
+.res-hero .pl-stats, .res-hero .mini-progress { width: 100%; }
+.res-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.res-ph { margin: 10px 0 0; font: 800 18px var(--f-display); color: var(--ph-deep); }
+.res-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.res-row { width: 100%; display: flex; align-items: center; gap: 12px; text-align: left; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; cursor: pointer; }
+.res-row:hover { border-color: var(--ph-deep, var(--brand)); }
+.res-row > .ic:last-child { margin-left: auto; color: var(--ink-3); flex: none; }
+.res-ic { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; color: #fff; }
+.res-ic .ic { width: 18px; height: 18px; }
+.is-ok .res-ic { background: var(--ok-deep); }
+.is-bad .res-ic { background: var(--bad-deep); }
+.res-t { display: grid; gap: 2px; min-width: 0; }
+.res-t span { font-size: 13px; color: var(--ink-2); }
+.is-bad .res-t span { color: var(--bad-ink); }
+
 [hidden]{display:none!important}
 
 </style>
@@ -1333,7 +1362,7 @@ const COURSE = {
   certSalt: 'g9-missao-corpos-2ano',
   certText: 'de revisão de corpos redondos: área e volume de cilindros, cones e esferas',
   heroTitle: 'Missão <span class="mark">Corpos</span><br><span class="hero-sub">Redondos</span>',
-  lede: 'Cilindros, cones e esferas em 3 fases de 10 questões inéditas. Acerte todas as questões de uma fase para liberar a próxima. A trilha roda em tela cheia, e as saídas para outras guias ficam registradas.',
+  lede: 'Cilindros, cones e esferas em 3 fases de 10 questões inéditas. Responda as 10 questões de uma fase para liberar a próxima. Os acertos só aparecem no final. As questões abrem em tela cheia, e as saídas para outras guias ficam registradas.',
   howQ: 'Questões com figuras, situações do dia a dia e as fórmulas da revisão relâmpago. Algumas pedem a resposta em função de π; outras dizem para usar π = 3.',
   brandMini: 'Missão <b>Corpos</b>',
   levels: [
@@ -1833,10 +1862,14 @@ const QUESTIONS = [
     } catch (e) { /* armazenamento indisponível */ }
     return { v: 1, cur: null, profiles: {}, sound: true };
   }
+  const PROVA = true;
   const store = loadStore();
   let P = null;
   let sandbox = false;
   let teacherOK = false;
+  const revealed = () => !!(P && P.done && !P.pending);
+  const shown = () => !PROVA || sandbox || revealed();
+  const hiddenRes = () => PROVA && !sandbox && !revealed();
   function save() {
     if (P && !sandbox) P.updated = Date.now();
     try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) { canStore = false; }
@@ -2046,6 +2079,32 @@ const QUESTIONS = [
     const lvBefore = levelOf(P.xp).idx;
     const badges = [];
     const award = (id) => { if (!P.badges[id]) { P.badges[id] = Date.now(); badges.push(BADGES.find((b) => b.id === id)); } };
+    if (PROVA && !sandbox) {
+      const ok = L === q.ans;
+      Object.assign(st, { done: true, pick: L, ok, ft: ok, xp: ok ? stakeOf(q, 0) : 0, at: Date.now() });
+      if (ok) { P.streak += 1; P.best = Math.max(P.best, P.streak); if (P.streak >= COMBO_MIN) st.xp += COMBO_BONUS; } else P.streak = 0;
+      P.xp += st.xp;
+      award('start');
+      if (P.streak >= 5) award('fire5');
+      if (P.streak >= 10) award('fire10');
+      if (doneCount() >= HALF) award('half');
+      let phaseJust = null;
+      if (phaseDone(q.ph) && !(P.ph[q.ph] && P.ph[q.ph].done)) {
+        const qs = phaseQs(q.ph);
+        const ft = qs.filter((x) => P.q[x.id].ok).length;
+        const stars = starsFor(ft, qs.length);
+        P.ph[q.ph] = { done: true, stars, ft, at: Date.now() };
+        P.xp += PHASE_BONUS;
+        P.pending = q.ph;
+        phaseJust = q.ph;
+        if (stars === 3) award('m_' + q.ph);
+        if (ft === qs.length) award('perfect');
+        if (doneCount() === TOTAL) { P.done = Date.now(); award('done'); }
+      }
+      if (levelOf(P.xp).idx === LEVELS.length - 1) award('legend');
+      save();
+      return { exam: true, ok, L, phaseJust };
+    }
     if (L !== q.ans) {
       st.w.push(L);
       P.streak = 0;
@@ -2087,6 +2146,9 @@ const QUESTIONS = [
     return { ok: true, L, wrongs, gained, combo, phaseJust, badges, levelUp: lv.idx > lvBefore ? lv : null };
   }
 
+  /* ---------------- Modo prova: resultado só no final ---------------- */
+  /* Fora do modo aula, cada questão tem uma única resposta e nada indica acerto
+     ou erro até o aluno concluir as 30 questões. */
   /* ---------------- Navegação ---------------- */
   const APP = document.getElementById('app');
   let route = { view: 'welcome', id: null };
@@ -2098,7 +2160,8 @@ const QUESTIONS = [
     if (route.view === 'teacher' && !teacherOK) route = { view: P ? 'map' : 'welcome', id: null };
     if (route.view === 'phase' && !(PH[route.id] && phaseUnlocked(route.id))) route = { view: 'map', id: null };
     if (route.view === 'question' && !(Q[route.id] && phaseUnlocked(Q[route.id].ph))) route = { view: 'map', id: null };
-    const views = { welcome: viewWelcome, map: viewMap, phase: viewPhase, question: viewQuestion, badges: viewBadges, cert: viewCert, teacher: viewTeacher };
+    if (route.view === 'result' && !(revealed() && !sandbox)) route = { view: 'map', id: null };
+    const views = { result: viewResult, welcome: viewWelcome, map: viewMap, phase: viewPhase, question: viewQuestion, badges: viewBadges, cert: viewCert, teacher: viewTeacher };
     if (route.view !== 'teacher') stopRankTimer();
     APP.innerHTML = (views[route.view] || viewWelcome)(route.id);
     document.body.setAttribute('data-view', route.view);
@@ -2144,7 +2207,7 @@ const QUESTIONS = [
       : `<div class="brand-mini"><span class="brand-dot">${ic('target')}</span><span class="bm-text">${COURSE.brandMini} <small class="bm-tag">${COURSE.serie}</small></span></div>`;
     const mid = opt.title ? `<div class="tb-title"><span class="tb-sub">${opt.sub || ''}</span><span class="tb-main">${opt.title}</span></div>` : '<div class="tb-spacer"></div>';
     const stats = P
-      ? `<div class="tb-stats"><span class="stat-chip xp" title="XP total">${ic('zap', 'ic-fill')}<b data-xp>${fmt(P.xp)}</b><span class="u">XP</span></span><span class="stat-chip streak${P.streak >= COMBO_MIN ? ' hot' : ''}" title="Acertos de primeira em sequência">${ic('flame')}<b>${P.streak}</b><span class="sr-only"> acertos de primeira em sequência</span></span><button type="button" class="icon-btn" data-act="menu" aria-label="Abrir menu">${avatar(P, 'sm')}</button></div>`
+      ? `<div class="tb-stats">${shown() ? `<span class="stat-chip xp" title="XP total">${ic('zap', 'ic-fill')}<b data-xp>${fmt(P.xp)}</b><span class="u">XP</span></span><span class="stat-chip streak${P.streak >= COMBO_MIN ? ' hot' : ''}" title="Acertos de primeira em sequência">${ic('flame')}<b>${P.streak}</b><span class="sr-only"> acertos de primeira em sequência</span></span>` : `<span class="stat-chip" title="Questões respondidas">${ic('clipboard')}<b>${doneCount()}</b><span class="u">/${TOTAL}</span></span>`}<button type="button" class="icon-btn" data-act="menu" aria-label="Abrir menu">${avatar(P, 'sm')}</button></div>`
       : '';
     return `${sandboxBar()}<header class="topbar${opt.ph ? ' ph-' + opt.ph : ''}"><div class="wrap topbar-in">${left}${mid}${stats}</div></header>`;
   }
@@ -2191,13 +2254,13 @@ const QUESTIONS = [
           <p class="fine">${syncOn() ? 'Sem login. Seu progresso fica salvo neste aparelho e é enviado ao Prof. Mateus para o ranking da turma.' : canStore ? 'Sem login: seu progresso fica salvo neste aparelho, neste navegador.' : 'Atenção: este navegador não está salvando o progresso (janela anônima?). Se fechar a página, você recomeça.'}</p>
         </form>
         <div class="welcome-side">
-          ${profs.length ? `<div class="card"><h3 class="h3">Continuar neste aparelho</h3><ul class="prof-list">${profs.map((p) => `<li><button type="button" class="prof-btn" data-act="use-profile" data-id="${esc(p.id)}">${avatar(p)}<span class="pb-main"><b>${esc(p.name)}</b><span>${esc(p.turma)} · ${fmt(p.xp)} XP · ${doneCount(p)}/${TOTAL} questões</span></span>${ic('chevronRight')}</button></li>`).join('')}</ul></div>` : ''}
+          ${profs.length ? `<div class="card"><h3 class="h3">Continuar neste aparelho</h3><ul class="prof-list">${profs.map((p) => `<li><button type="button" class="prof-btn" data-act="use-profile" data-id="${esc(p.id)}">${avatar(p)}<span class="pb-main"><b>${esc(p.name)}</b><span>${esc(p.turma)} · ${PROVA && !p.done ? '' : `${fmt(p.xp)} XP · `}${doneCount(p)}/${TOTAL} questões</span></span>${ic('chevronRight')}</button></li>`).join('')}</ul></div>` : ''}
           <div class="card">
             <h3 class="h3">Como funciona</h3>
             <ol class="how">
               <li class="ph-a"><span class="how-n">1</span><div><b>Responda</b><p>${COURSE.howQ}</p></div></li>
-              <li class="ph-b"><span class="how-n">2</span><div><b>Acerte para concluir</b><p>Errou? Tente de novo, mas a questão passa a valer menos XP. Depois do 2º erro, aparece uma dica.</p></div></li>
-              <li class="ph-c"><span class="how-n">3</span><div><b>Libere a próxima fase</b><p>Ganhe estrelas e medalhas e suba de nível até ${LEVELS[LEVELS.length - 1].name}.</p></div></li>
+              <li class="ph-b"><span class="how-n">2</span><div><b>Uma chance por questão</b><p>Escolha, confirme e siga. A trilha não mostra se você acertou e a resposta não pode ser trocada.</p></div></li>
+              <li class="ph-c"><span class="how-n">3</span><div><b>Resultado no final</b><p>Ao terminar as ${PHASES.length} fases, aparecem seus acertos, o gabarito comentado, XP, estrelas, medalhas e o certificado.</p></div></li>
             </ol>
           </div>
           <div class="teacher-link-row"><button type="button" class="link-btn" data-act="teacher">${ic('gradCap')} Área do professor</button></div>
@@ -2222,7 +2285,7 @@ const QUESTIONS = [
       ? (prev && !seqUnlocked(ph.id)
         ? `<p class="ph-lock">${ic('lock')} Conclua ${prev.name} para liberar: ${plural(left, 'falta', 'faltam')} ${left} ${plural(left, 'questão', 'questões')}</p>`
         : `<p class="ph-lock">${ic('lock')} Aguardando o professor liberar esta fase na aula.</p>`)
-      : `${complete ? starsHTML(stars) : `<span class="ph-status">${d ? `${d} de ${n} concluídas` : `${n} questões`}</span>`}<button type="button" class="btn btn-ph btn-sm" data-act="phase" data-id="${ph.id}">${complete ? 'Revisar' : d ? 'Continuar' : 'Começar'} ${ic('arrowRight')}</button>`;
+      : `${complete ? (shown() ? starsHTML(stars) : `<span class="ph-status">${ic('lock')} Respostas registradas</span>`) : `<span class="ph-status">${d ? `${d} de ${n} respondidas` : `${n} questões`}</span>`}<button type="button" class="btn btn-ph btn-sm" data-act="phase" data-id="${ph.id}">${complete ? 'Revisar' : d ? 'Continuar' : 'Começar'} ${ic('arrowRight')}</button>`;
     return `<li class="phase ph-${ph.id} is-${state}">
       <div class="ph-node" aria-hidden="true">${state === 'locked' ? ic('lock') : state === 'done' ? ic('check') : ph.n}</div>
       <article class="ph-card" aria-label="Fase ${ph.n}: ${ph.name}${state === 'locked' ? ' (bloqueada)' : ''}">
@@ -2244,24 +2307,28 @@ const QUESTIONS = [
     <main class="wrap map">
       <aside class="card player" aria-label="Seu perfil">
         <div class="pl-head">${avatar(P, 'lg')}<div><h1 class="pl-name">${esc(P.name)}</h1><span class="pl-turma">${sandbox ? 'Projeção em sala' : `Turma ${esc(P.turma)}`}</span></div></div>
-        <div>
+        ${shown() ? `<div>
           <div class="level-top"><span class="level-badge">${ic(lv.icon)} Nível ${lv.idx + 1}</span><b class="level-name">${lv.name}</b></div>
           <div class="xpbar" role="progressbar" aria-label="Progresso de nível" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pct)}"><span style="width:${pct.toFixed(1)}%"></span></div>
           <p class="level-note">${lv.next ? `<b>${fmt(P.xp)} XP</b> · faltam ${fmt(lv.next.min - P.xp)} para <b>${lv.next.name}</b>` : `<b>${fmt(P.xp)} XP</b> · nível máximo alcançado`}</p>
         </div>
         <dl class="pl-stats">
           <div><dt>Questões</dt><dd>${done}<small>/${TOTAL}</small></dd></div>
-          <div><dt>De primeira</dt><dd>${ftCount()}</dd></div>
+          <div><dt>${PROVA ? 'Acertos' : 'De primeira'}</dt><dd>${ftCount()}</dd></div>
           <div><dt>Estrelas</dt><dd>${totalStars()}<small>/${MAXSTARS}</small></dd></div>
           <div><dt>Melhor sequência</dt><dd>${P.best}</dd></div>
-        </dl>
+        </dl>` : `<p class="prova-note">${ic('lock')}<span><b>Modo prova:</b> cada questão tem uma única resposta. Seus acertos, XP e estrelas aparecem quando você terminar as ${TOTAL} questões.</span></p>
+        <dl class="pl-stats">
+          <div><dt>Respondidas</dt><dd>${done}<small>/${TOTAL}</small></dd></div>
+          <div><dt>Fases concluídas</dt><dd>${PHASES.filter((x) => phaseDone(x.id)).length}<small>/${PHASES.length}</small></dd></div>
+        </dl>`}
         ${nextPh
           ? (nextOk
             ? `<button type="button" class="btn btn-primary btn-lg btn-block" data-act="phase" data-id="${nextPh.id}">${done ? 'Continuar' : 'Começar'}: ${nextPh.name} ${ic('arrowRight')}</button>`
             : `<p class="wait-note">${ic('lock')}<span><b>Fase ${nextPh.n} · ${nextPh.name}</b> será liberada pelo professor na aula.</span></p>`)
-          : `<button type="button" class="btn btn-lime btn-lg btn-block" data-act="cert">${ic('award')} Ver meu certificado</button>`}
+          : (PROVA && !sandbox ? `<button type="button" class="btn btn-lime btn-lg btn-block" data-act="result">${ic('chart')} Ver meu desempenho</button>` : `<button type="button" class="btn btn-lime btn-lg btn-block" data-act="cert">${ic('award')} Ver meu certificado</button>`)}
         <div class="pl-links">
-          <button type="button" class="pill-btn" data-act="badges">${ic('award')} Medalhas <b>${badgeCount()}/${BADGES.length}</b></button>
+          ${shown() ? `<button type="button" class="pill-btn" data-act="badges">${ic('award')} Medalhas <b>${badgeCount()}/${BADGES.length}</b></button>` : ''}
           <button type="button" class="pill-btn" data-act="cert"${P.done ? '' : ' aria-disabled="true"'}>${ic(P.done ? 'trophy' : 'lock')} Certificado</button>
         </div>
         ${syncNoteHTML()}
@@ -2279,17 +2346,20 @@ const QUESTIONS = [
     const rec = P.ph[pid] || { stars: 1, ft: 0 };
     const n = phaseQs(pid).length;
     const nx = PHASES[ph.n];
-    return `<section class="ph-done ph-${pid}"><span class="ph-done-trophy">${ic('trophy')}</span><div><h2>Fase concluída</h2><p>${starsHTML(rec.stars)} ${rec.ft} de ${n} acertos de primeira</p></div>${nx && !phaseUnlocked(nx.id) ? `<p class="wait-note">${ic('lock')}<span>A Fase ${nx.n} será liberada pelo professor.</span></p>` : nx ? `<button type="button" class="btn btn-primary" data-act="phase" data-id="${nx.id}">Ir para a Fase ${nx.n} ${ic('arrowRight')}</button>` : `<button type="button" class="btn btn-lime" data-act="cert">${ic('award')} Ver certificado</button>`}</section>`;
+    return `<section class="ph-done ph-${pid}"><span class="ph-done-trophy">${ic('trophy')}</span><div><h2>Fase concluída</h2><p>${shown() ? `${starsHTML(rec.stars)} ${rec.ft} de ${n} acertos` : `${n} respostas registradas. O resultado sai no fim da trilha.`}</p></div>${nx && !phaseUnlocked(nx.id) ? `<p class="wait-note">${ic('lock')}<span>A Fase ${nx.n} será liberada pelo professor.</span></p>` : nx ? `<button type="button" class="btn btn-primary" data-act="phase" data-id="${nx.id}">Ir para a Fase ${nx.n} ${ic('arrowRight')}</button>` : (PROVA && !sandbox ? `<button type="button" class="btn btn-lime" data-act="result">${ic('chart')} Ver desempenho</button>` : `<button type="button" class="btn btn-lime" data-act="cert">${ic('award')} Ver certificado</button>`)}</section>`;
   }
   function qRow(q, i) {
     const s = P.q[q.id];
     const t = tierOf(q);
     const state = s && s.done ? 'done' : s && s.w && s.w.length ? 'tried' : 'new';
+    const exam = PROVA && !sandbox;
     const right = state === 'done'
-      ? `<span class="qr-xp done">${ic('check')} +${s.xp} XP</span>`
-      : `<span class="tier tier-${t.cls}">${t.label}</span><span class="qr-xp">${ic('zap')} ${stakeOf(q, (s && s.w && s.w.length) || 0)} XP</span>`;
+      ? (!exam ? `<span class="qr-xp done">${ic('check')} +${s.xp} XP</span>`
+        : !revealed() ? `<span class="qr-xp">${ic('lock')} Respondida</span>`
+          : s.ok ? `<span class="qr-xp done">${ic('check')} +${s.xp} XP</span>` : `<span class="qr-xp miss">${ic('x')} Errou</span>`)
+      : `<span class="tier tier-${t.cls}">${t.label}</span>${exam ? '' : `<span class="qr-xp">${ic('zap')} ${stakeOf(q, (s && s.w && s.w.length) || 0)} XP</span>`}`;
     return `<li><button type="button" class="qrow is-${state}" data-act="q" data-id="${q.id}">
-      <span class="qr-b" aria-hidden="true">${state === 'done' ? q.ans : String(i + 1).padStart(2, '0')}</span>
+      <span class="qr-b" aria-hidden="true">${state === 'done' ? (PROVA && !sandbox ? s.pick : q.ans) : String(i + 1).padStart(2, '0')}</span>
       <span class="qr-main"><span class="qr-title">${q.title}</span><span class="qr-meta">${q.src}${q.rate != null ? ` · ${q.rate}% acertaram` : ''}${state === 'tried' ? ` · ${s.w.length} ${plural(s.w.length, 'erro', 'erros')}` : ''}</span></span>
       <span class="qr-right">${right}</span>
     </button></li>`;
@@ -2307,7 +2377,7 @@ const QUESTIONS = [
         <div class="ph-hero-icon">${ic(ph.icon)}</div>
         <div><span class="eyebrow on-dark">Fase ${ph.n} · ${ph.aula}</span><h1 class="ph-hero-title">${ph.name}</h1><ul class="ph-hero-topics">${ph.topics.map((t) => `<li>${t}</li>`).join('')}</ul></div>
         <div class="ph-hero-side">
-          <div class="ph-progress"><div class="ph-progress-bar" role="progressbar" aria-label="Questões concluídas na fase" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${d}"><span style="width:${((d / n) * 100).toFixed(1)}%"></span></div><span>${d}/${n} concluídas · ${fmt(xpPh)} XP nesta fase</span></div>
+          <div class="ph-progress"><div class="ph-progress-bar" role="progressbar" aria-label="Questões concluídas na fase" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${d}"><span style="width:${((d / n) * 100).toFixed(1)}%"></span></div><span>${shown() ? `${d}/${n} concluídas · ${fmt(xpPh)} XP nesta fase` : `${d}/${n} respondidas`}</span></div>
           <div class="ph-hero-actions">
             <button type="button" class="btn btn-onhero" data-act="theory" data-id="${pid}">${ic('book')} Revisão relâmpago</button>
             ${next ? `<button type="button" class="btn btn-lime" data-act="q" data-id="${next.id}">${d ? 'Continuar' : 'Começar'} ${ic('arrowRight')}</button>` : ''}
@@ -2323,6 +2393,16 @@ const QUESTIONS = [
 
   /* ---------------- Tela: questão ---------------- */
   function optHTML(q, L, s, finished) {
+    if (PROVA && !sandbox && s.done) {
+      const rev = revealed();
+      const picked = s.pick === L;
+      const right = rev && L === q.ans;
+      const wrong = rev && picked && !s.ok;
+      const cls = `opt${wrong ? ' is-wrong' : ''}${right ? ' is-right' : ''}${!rev && picked ? ' is-sel is-locked' : ''}`;
+      const mark = wrong ? `<span class="opt-mark">${ic('x')}</span>` : right ? `<span class="opt-mark">${ic('check')}</span>` : !rev && picked ? `<span class="opt-mark">${ic('lock')}</span>` : '';
+      const label = `Alternativa ${L}${picked ? ', sua resposta' : ''}${right ? ', correta' : ''}`;
+      return `<button type="button" class="${cls}" data-act="pick" data-l="${L}" aria-pressed="${picked}" aria-disabled="true"><span class="bubble" aria-hidden="true">${L}</span><span class="opt-text"><span class="sr-only">${label}: </span>${q.opts[L]}</span>${mark}</button>`;
+    }
     const wrong = s.w.indexOf(L) !== -1;
     const right = finished && L === q.ans;
     const sel = !finished && !wrong && ui.sel === L;
@@ -2347,6 +2427,12 @@ const QUESTIONS = [
   }
   function feedbackHTML(q, s) {
     const r = ui.res;
+    if (PROVA && !sandbox && s.done) {
+      if (!revealed()) return `<div class="fb fb-saved" role="status"><div class="fb-head"><span class="fb-ic">${ic('lock')}</span><div><b>Resposta registrada: alternativa ${s.pick}</b><span>O resultado e a resolução aparecem quando você terminar as ${TOTAL} questões.</span></div></div></div>`;
+      return (s.ok
+        ? `<div class="fb fb-ok" role="status"><div class="fb-head"><span class="fb-ic">${ic('check')}</span><div><b>Você acertou</b><span>Marcou ${s.pick} · +${s.xp} XP</span></div></div></div>`
+        : `<div class="fb fb-bad" role="status"><div class="fb-head"><span class="fb-ic">${ic('x')}</span><div><b>Você marcou ${s.pick}</b><span>A resposta correta é a ${q.ans}.</span></div></div></div>`) + solutionHTML(q);
+    }
     if (s.done) {
       const fresh = r && r.ok;
       const tries = s.w.length + 1;
@@ -2384,6 +2470,7 @@ const QUESTIONS = [
   function actionsHTML(q, s) {
     const finished = s.done || (sandbox && ui.reveal);
     if (finished) {
+      if (PROVA && !sandbox && P.done && !P.pending) return `<button type="button" class="btn btn-ghost btn-lg" data-act="phase" data-id="${q.ph}">Fase</button><button type="button" class="btn btn-primary btn-lg grow" data-act="result">${ic('chart')} Voltar ao desempenho</button>`;
       if (P.pending === q.ph) return `<button type="button" class="btn btn-lime btn-lg btn-block" data-act="celebrate" data-id="${q.ph}">${ic('trophy')} Concluir fase</button>`;
       const nx = nextQuestion(q);
       return nx
@@ -2391,7 +2478,7 @@ const QUESTIONS = [
         : `<button type="button" class="btn btn-primary btn-lg btn-block" data-act="phase" data-id="${q.ph}">Voltar para a fase ${ic('arrowRight')}</button>`;
     }
     const reveal = sandbox ? `<button type="button" class="btn btn-ghost btn-lg" data-act="reveal">${ic('eye')} Resposta</button>` : '';
-    return `${reveal}<button type="button" class="btn btn-primary btn-lg grow" data-act="submit"${ui.sel ? '' : ' disabled'}>${ui.sel ? `Responder ${ui.sel}` : sandbox ? 'Responder' : 'Escolha uma alternativa'}</button>`;
+    return `${reveal}<button type="button" class="btn btn-primary btn-lg grow" data-act="submit"${ui.sel ? '' : ' disabled'}>${ui.sel ? `${PROVA && !sandbox ? 'Confirmar' : 'Responder'} ${ui.sel}` : sandbox ? 'Responder' : 'Escolha uma alternativa'}</button>`;
   }
   function viewQuestion(qid) {
     const q = Q[qid];
@@ -2408,7 +2495,7 @@ const QUESTIONS = [
         <span class="chip chip-src">${q.src}</span>
         ${q.rate != null ? `<span class="chip">${ic('users')} ${q.rate}% acertaram no ENEM</span>` : ''}
         <span class="tier tier-${t.cls}">${t.label}</span>
-        <span class="chip chip-xp">${ic('zap', 'ic-fill')} ${s.done ? `+${s.xp} XP ganhos` : `Vale ${stakeOf(q, s.w.length)} XP`}</span>
+        ${hiddenRes() ? (s.done ? `<span class="chip">${ic('lock')} Resposta registrada</span>` : `<span class="chip">${ic('alert')} Resposta única</span>`) : PROVA && !sandbox ? (s.ok ? `<span class="chip chip-xp">${ic('zap', 'ic-fill')} +${s.xp} XP ganhos</span>` : '') : `<span class="chip chip-xp">${ic('zap', 'ic-fill')} ${s.done ? `+${s.xp} XP ganhos` : `Vale ${stakeOf(q, s.w.length)} XP`}</span>`}
       </div>
       <article class="q-card" data-qid="${q.id}">
         <div class="q-body">${q.body}</div>
@@ -2417,7 +2504,33 @@ const QUESTIONS = [
       <div class="opts${q.imgOpts ? ' opts-img' : ''}${finished ? ' is-finished' : ''}" role="group" aria-label="Alternativas">${lettersOf(q).map((L) => optHTML(q, L, s, finished)).join('')}</div>
       <div class="q-feedback" id="feedback" aria-live="polite">${feedbackHTML(q, s)}</div>
     </main>
-    <div class="actionbar"><div class="wrap"><p class="kbd-hint">Atalhos: teclas A a ${lettersOf(q).slice(-1)[0]} para escolher · Enter para responder</p><div class="actionbar-in">${actionsHTML(q, s)}</div></div></div>`;
+    <div class="actionbar"><div class="wrap"><p class="kbd-hint">Atalhos: teclas A a ${lettersOf(q).slice(-1)[0]} para escolher · Enter para responder${PROVA && !sandbox ? ' · a resposta não pode ser alterada' : ''}</p><div class="actionbar-in">${actionsHTML(q, s)}</div></div></div>`;
+  }
+
+  /* ---------------- Tela: desempenho (só no fim da trilha) ---------------- */
+  function viewResult() {
+    const ok = ftCount();
+    const pct = Math.round((ok / TOTAL) * 100);
+    const lv = levelOf(P.xp);
+    const msg = pct >= 80 ? 'Excelente! Você está pronto para a prova.' : pct >= 60 ? 'Bom resultado. Revise as questões que errou.' : 'Vale revisar: abra cada questão errada e leia a resolução.';
+    const phases = PHASES.map((ph) => { const qs = phaseQs(ph.id); const k = qs.filter((q) => P.q[q.id] && P.q[q.id].ok).length; return `<div class="ph-${ph.id}"><span>${ph.name}</span><span>${k}/${qs.length}</span><span class="bar"><span style="width:${((k / qs.length) * 100).toFixed(1)}%"></span></span></div>`; }).join('');
+    const lists = PHASES.map((ph) => `<h3 class="res-ph ph-${ph.id}">Fase ${ph.n} · ${ph.name}</h3><ol class="res-list">${phaseQs(ph.id).map((q, i) => {
+      const s = P.q[q.id] || {};
+      return `<li><button type="button" class="res-row ${s.ok ? 'is-ok' : 'is-bad'}" data-act="q" data-id="${q.id}"><span class="res-ic">${ic(s.ok ? 'check' : 'x')}</span><span class="res-t"><b>${i + 1}. ${q.title}</b><span>${s.ok ? `Marcou ${s.pick} · correta` : `Marcou ${s.pick || '—'} · correta: ${q.ans}`}</span></span>${ic('chevronRight')}</button></li>`;
+    }).join('')}</ol>`).join('');
+    return `${topbar({ back: { act: 'map', label: 'Voltar à trilha' }, title: 'Seu desempenho', sub: COURSE.nome })}
+    <main class="wrap page res">
+      <section class="card res-hero">
+        <span class="eyebrow">Trilha concluída</span>
+        <div class="res-score"><b>${ok}</b><span>de ${TOTAL} acertos</span></div>
+        <p class="res-pct"><b>${pct}%</b> de aproveitamento · ${msg}</p>
+        <dl class="pl-stats"><div><dt>XP</dt><dd>${fmt(P.xp)}</dd></div><div><dt>Nível</dt><dd>${lv.name}</dd></div><div><dt>Estrelas</dt><dd>${totalStars()}<small>/${MAXSTARS}</small></dd></div><div><dt>Melhor sequência</dt><dd>${P.best}</dd></div></dl>
+        <div class="mini-progress">${phases}</div>
+        <div class="res-actions"><button type="button" class="btn btn-lime" data-act="cert">${ic('award')} Certificado</button><button type="button" class="btn btn-ghost" data-act="badges">${ic('award')} Medalhas ${badgeCount()}/${BADGES.length}</button></div>
+      </section>
+      <div class="page-head"><h2 class="h2">Gabarito comentado</h2><p>Toque em uma questão para ver sua resposta, a correta e a resolução.</p></div>
+      ${lists}
+    </main>`;
   }
 
   /* ---------------- Tela: medalhas ---------------- */
@@ -2471,7 +2584,7 @@ const QUESTIONS = [
             <div><dt>XP</dt><dd>${fmt(P.xp)}</dd></div>
             <div><dt>Nível</dt><dd>${lv.name}</dd></div>
             <div><dt>Estrelas</dt><dd>${stars}/${MAXSTARS}</dd></div>
-            <div><dt>De primeira</dt><dd>${ft}/${TOTAL}</dd></div>
+            <div><dt>${PROVA ? 'Acertos' : 'De primeira'}</dt><dd>${ft}/${TOTAL}</dd></div>
           </dl>
           <p class="cert-saidas">Saídas da tela durante a trilha: <b>${foraTxt(P)}</b></p>
           <div class="cert-sheet" aria-hidden="true">${QUESTIONS.map((q) => `<span class="ph-${q.ph}"></span>`).join('')}</div>
@@ -2520,7 +2633,7 @@ const QUESTIONS = [
           <div class="field half"><label for="v-turma">Turma</label><select class="input" id="v-turma">${COURSE.turmas.map((t) => `<option>${t}</option>`).join('')}</select></div>
           <div class="field half"><label for="v-xp">XP</label><input class="input" id="v-xp" inputmode="numeric" placeholder="Ex.: 4.850"></div>
           <div class="field half"><label for="v-stars">Estrelas</label><input class="input" id="v-stars" inputmode="numeric" placeholder="0 a ${MAXSTARS}"></div>
-          <div class="field half"><label for="v-ft">De primeira</label><input class="input" id="v-ft" inputmode="numeric" placeholder="0 a ${TOTAL}"></div>
+          <div class="field half"><label for="v-ft">${PROVA ? 'Acertos' : 'De primeira'}</label><input class="input" id="v-ft" inputmode="numeric" placeholder="0 a ${TOTAL}"></div>
           <button class="btn btn-primary" type="submit">Gerar código</button>
           <output class="verify-out" id="verify-out" hidden></output>
         </form>
@@ -2569,11 +2682,26 @@ const QUESTIONS = [
     const nx = PHASES[ph.n];
     P.pending = null;
     save();
+    if (!shown()) {
+      openModal(`<div class="celebrate ph-${pid}">
+      <div class="cel-stars"><span class="cel-star on" style="--i:1">${ic('trophy')}</span></div>
+      <h2 class="cel-title">Fase concluída!</h2>
+      <p class="cel-sub">${ph.name} · ${n} respostas registradas</p>
+      <p class="cel-sub">Seus acertos aparecem no fim da trilha.</p>
+      ${nx ? (phaseUnlocked(nx.id)
+        ? `<div class="cel-unlock ph-${nx.id}"><span class="lock-anim">${ic('unlock')}</span><div><b>Fase ${nx.n} liberada</b><span>${nx.name}</span></div></div>`
+        : `<div class="cel-unlock ph-${nx.id}"><span class="lock-anim">${ic('lock')}</span><div><b>Próxima: Fase ${nx.n} · ${nx.name}</b><span>O professor vai liberar esta fase na aula.</span></div></div>`) : ''}
+      <div class="cel-actions">${nx && phaseUnlocked(nx.id) ? `<button type="button" class="btn btn-primary btn-lg btn-block" data-act="phase" data-id="${nx.id}" data-autofocus>Ir para a Fase ${nx.n} ${ic('arrowRight')}</button>` : ''}
+        <button type="button" class="btn btn-ghost btn-block" data-act="map">Ver a trilha</button></div>
+    </div>`, { label: 'Fase concluída' });
+      sfx('unlock');
+      return;
+    }
     openModal(`<div class="celebrate ph-${pid}">
       <div class="cel-stars">${[1, 2, 3].map((i) => `<span class="cel-star${i <= rec.stars ? ' on' : ''}" style="--i:${i}">${ic('star', 'ic-fill')}</span>`).join('')}</div>
       <h2 class="cel-title">${nx ? 'Fase concluída!' : 'Missão cumprida!'}</h2>
       <p class="cel-sub">${ph.name} · ${n} de ${n} questões</p>
-      <dl class="cel-stats"><div><dt>De primeira</dt><dd>${rec.ft}/${n}</dd></div><div><dt>Bônus da fase</dt><dd>+${PHASE_BONUS}</dd></div><div><dt>XP total</dt><dd>${fmt(P.xp)}</dd></div></dl>
+      <dl class="cel-stats">${PROVA && !sandbox ? `<div><dt>Acertos</dt><dd>${ftCount()}/${TOTAL}</dd></div><div><dt>Estrelas</dt><dd>${totalStars()}/${MAXSTARS}</dd></div>` : `<div><dt>De primeira</dt><dd>${rec.ft}/${n}</dd></div><div><dt>Bônus da fase</dt><dd>+${PHASE_BONUS}</dd></div>`}<div><dt>XP total</dt><dd>${fmt(P.xp)}</dd></div></dl>
       ${nx
         ? (phaseUnlocked(nx.id)
           ? `<div class="cel-unlock ph-${nx.id}"><span class="lock-anim">${ic('unlock')}</span><div><b>Fase ${nx.n} liberada</b><span>${nx.name}</span></div></div>`
@@ -2581,7 +2709,7 @@ const QUESTIONS = [
         : `<div class="cel-unlock final"><span class="lock-anim">${ic('trophy')}</span><div><b>Certificado liberado</b><span>Você concluiu as ${TOTAL} questões da ${COURSE.nome}.</span></div></div>`}
       <div class="cel-actions">${nx && phaseUnlocked(nx.id)
         ? `<button type="button" class="btn btn-primary btn-lg btn-block" data-act="phase" data-id="${nx.id}" data-autofocus>Ir para a Fase ${nx.n} ${ic('arrowRight')}</button>`
-        : nx ? '' : `<button type="button" class="btn btn-lime btn-lg btn-block" data-act="cert" data-autofocus>${ic('award')} Ver meu certificado</button>`}
+        : nx ? '' : (PROVA && !sandbox ? `<button type="button" class="btn btn-lime btn-lg btn-block" data-act="result" data-autofocus>${ic('chart')} Ver meu desempenho</button>` : `<button type="button" class="btn btn-lime btn-lg btn-block" data-act="cert" data-autofocus>${ic('award')} Ver meu certificado</button>`)}
         <button type="button" class="btn btn-ghost btn-block" data-act="map">Ver a trilha</button></div>
     </div>`, { label: nx ? 'Fase concluída' : 'Missão cumprida' });
     sfx('unlock');
@@ -2593,12 +2721,13 @@ const QUESTIONS = [
       ? `<button type="button" class="menu-item" data-act="exit-sandbox">${ic('logout')} Sair do modo aula</button>
          <button type="button" class="menu-item" data-act="toggle-sound">${ic(store.sound ? 'volume' : 'mute')} Efeitos sonoros <span class="menu-val">${store.sound ? 'Ligados' : 'Desligados'}</span></button>`
       : `<button type="button" class="menu-item" data-act="toggle-sound">${ic(store.sound ? 'volume' : 'mute')} Efeitos sonoros <span class="menu-val">${store.sound ? 'Ligados' : 'Desligados'}</span></button>
-         <button type="button" class="menu-item" data-act="badges">${ic('award')} Minhas medalhas <span class="menu-val">${badgeCount()}/${BADGES.length}</span></button>
+         ${P.done && PROVA ? `<button type="button" class="menu-item" data-act="result">${ic('chart')} Meu desempenho</button>` : ''}
+         ${shown() ? '' : '<!--'}<button type="button" class="menu-item" data-act="badges">${ic('award')} Minhas medalhas <span class="menu-val">${badgeCount()}/${BADGES.length}</span></button>${shown() ? '' : '-->'}
          <button type="button" class="menu-item" data-act="cert">${ic('trophy')} Certificado <span class="menu-val">${P.done ? 'Liberado' : 'Bloqueado'}</span></button>
          <button type="button" class="menu-item" data-act="switch">${ic('users')} Trocar de aluno</button>
          <button type="button" class="menu-item danger" data-act="ask-reset">${ic('rotate')} Recomeçar do zero</button>
          <button type="button" class="menu-item" data-act="teacher">${ic('gradCap')} Área do professor</button>`;
-    openModal(`<div class="menu"><div class="menu-head">${avatar(P, 'lg')}<div><b>${esc(P.name)}</b><span>${sandbox ? 'Projeção em sala' : `Turma ${esc(P.turma)}`} · ${fmt(P.xp)} XP</span></div></div>${items}</div>`, { label: 'Menu', cls: 'sheetish' });
+    openModal(`<div class="menu"><div class="menu-head">${avatar(P, 'lg')}<div><b>${esc(P.name)}</b><span>${sandbox ? 'Projeção em sala' : `Turma ${esc(P.turma)}`}${shown() ? ` · ${fmt(P.xp)} XP` : ''}</span></div></div>${items}</div>`, { label: 'Menu', cls: 'sheetish' });
   }
   function confirmBox(title, text, act, id, btn) {
     openModal(`<div class="confirm"><h2>${title}</h2><p>${text}</p><div class="confirm-actions"><button type="button" class="btn btn-ghost" data-act="close-modal">Cancelar</button><button type="button" class="btn btn-danger" data-act="${act}"${id ? ` data-id="${esc(id)}"` : ''}>${btn}</button></div></div>`, { label: title, cls: 'sheetish' });
@@ -2748,6 +2877,22 @@ const QUESTIONS = [
     const from = P.xp;
     const res = answer(q.id, L);
     if (!res) return;
+    if (res.exam) {
+      ui.sel = null; ui.res = res; ui.hint = false; ui.xpFrom = null;
+      const ph = PH[q.ph];
+      const now = Date.now();
+      const evs = [{ t: now, q: `${ph.n}.${phaseQs(q.ph).indexOf(q) + 1} · ${q.title}`, fase: ph.name, res: res.ok ? 'Acertou' : 'Errou', tent: 1, xp: P.q[q.id].xp }];
+      if (res.phaseJust) {
+        evs.push({ t: now, q: `Fase ${ph.n} · ${ph.name} (${P.ph[q.ph].stars} ★)`, fase: ph.name, res: 'Concluiu a fase', tent: 0, xp: PHASE_BONUS });
+        if (P.done) evs.push({ t: now, q: 'Missão concluída', fase: ph.name, res: 'Concluiu a missão', tent: 0, xp: 0 });
+      }
+      syncEvents(evs);
+      render();
+      sfx('tick');
+      const fb = $('#feedback');
+      if (fb) { const r = fb.getBoundingClientRect(); if (r.bottom > window.innerHeight - 90) fb.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' }); }
+      return;
+    }
     ui.sel = null;
     ui.res = res;
     ui.hint = false;
@@ -2805,7 +2950,7 @@ const QUESTIONS = [
   }
   function copyResult() {
     const lv = levelOf(P.xp);
-    const text = `${COURSE.nome} (${COURSE.serie})\nAluno(a): ${P.name} (${P.turma})\nQuestões concluídas: ${doneCount()}/${TOTAL}\nXP: ${fmt(P.xp)} · Nível: ${lv.name}\nEstrelas: ${totalStars()}/${MAXSTARS} · De primeira: ${ftCount()}/${TOTAL}\nSaídas da tela: ${foraTxt(P)}\nCódigo de verificação: ${certCode(P.name, P.turma, P.xp, ftCount(), totalStars())}`;
+    const text = `${COURSE.nome} (${COURSE.serie})\nAluno(a): ${P.name} (${P.turma})\nQuestões concluídas: ${doneCount()}/${TOTAL}\nXP: ${fmt(P.xp)} · Nível: ${lv.name}\nEstrelas: ${totalStars()}/${MAXSTARS} · ${PROVA ? 'Acertos' : 'De primeira'}: ${ftCount()}/${TOTAL}\nSaídas da tela: ${foraTxt(P)}\nCódigo de verificação: ${certCode(P.name, P.turma, P.xp, ftCount(), totalStars())}`;
     const ok = () => toast('<b>Resultado copiado</b>Agora é só colar e enviar para o professor.', { icon: 'copy', kind: 'info' });
     const fallback = () => {
       const box = $('#copy-box');
@@ -2820,7 +2965,7 @@ const QUESTIONS = [
   const DOCEL = document.documentElement;
   const fsOK = !!(DOCEL.requestFullscreen || DOCEL.webkitRequestFullscreen) && !inClaude;
   const isFull = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
-  const focusOn = () => !!P && !sandbox && route.view === 'question';
+  const focusOn = () => !!P && !sandbox && route.view === 'question' && !revealed();
   function enterFull() {
     if (!fsOK || isFull()) return;
     try { const r = (DOCEL.requestFullscreen || DOCEL.webkitRequestFullscreen).call(DOCEL); if (r && r.catch) r.catch(() => {}); } catch (e) { /* ok */ }
@@ -2909,6 +3054,7 @@ const QUESTIONS = [
       case 'theory': openTheory(id); break;
       case 'badges': go('badges'); break;
       case 'cert': go('cert'); break;
+      case 'result': go('result'); break;
       case 'menu': openMenu(); break;
       case 'close-modal': closeModal(); break;
       case 'toggle-sound': store.sound = !store.sound; save(); openMenu(); if (store.sound) sfx('right'); break;
