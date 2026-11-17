@@ -1,0 +1,1290 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Laboratório dos Troncos</title>
+<meta name="description" content="Revisão de tronco de cone e tronco de pirâmide: 5 bancadas e 30 análises de volume, geratriz, apótema e áreas. Turmas M21 e M22 · Prof. Mateus Bibiano.">
+<meta name="theme-color" content="#0A1A1F">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Laboratório dos Troncos · 2º ano">
+<meta property="og:description" content="Revisão de tronco de cone e tronco de pirâmide: 5 bancadas e 30 análises de volume, geratriz, apótema e áreas. Turmas M21 e M22 · Prof. Mateus Bibiano.">
+<meta property="og:url" content="https://mateusbibiano.github.io/missao-enem/laboratorio/">
+<meta property="og:image" content="https://mateusbibiano.github.io/missao-enem/laboratorio/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A1A1F'/%3E%3Ccircle cx='32' cy='32' r='19' fill='none' stroke='%2338BDF8' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%2338BDF8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@700&display=swap">
+<style>
+:root {
+  --bg: #0A1A1F; --bg2: #0E2228; --panel: #10262D; --panel2: #153039; --line: #1F3E47; --line2: #2C5560;
+  --ink: #ECF6F6; --mute: #9FBCC0; --dim: #6A8A90;
+  --lux: #5EEAD4; --lux2: #A7F3E8; --win: #4ADE80; --lose: #FB7185; --chalk: #F2F7F6; --grass: #153039;
+  --fd: "Sora", "Trebuchet MS", sans-serif; --fk: "Atkinson Hyperlegible", system-ui, sans-serif; --fb: "Atkinson Hyperlegible", system-ui, sans-serif; --fm: "JetBrains Mono", ui-monospace, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; overflow-x: hidden; background: var(--bg); color: var(--ink); font: 17px/1.5 var(--fb); }
+body { min-height: 100vh; background: radial-gradient(900px 480px at 80% -10%, rgba(94, 234, 212, .13), transparent 62%), radial-gradient(700px 420px at 0% 20%, rgba(167, 139, 250, .10), transparent 60%), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px) 0 0 / 100% 36px, var(--bg); }
+button { font: inherit; color: inherit; cursor: pointer; }
+.ic { width: 1.1em; height: 1.1em; flex: none; vertical-align: -0.18em; }
+.muted { color: var(--mute); }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 16px; }
+.row.center, .center .row { justify-content: center; }
+.row.sm { margin-top: 8px; gap: 16px; }
+.err { color: #FFC2C4; background: rgba(255, 90, 95, .12); border: 1px solid rgba(255, 90, 95, .4); padding: 8px 12px; border-radius: 6px; margin: 0; font-size: 15px; }
+.eyebrow { margin: 0 0 6px; font: 600 13px var(--fk); letter-spacing: .14em; text-transform: uppercase; color: var(--lux); display: flex; align-items: center; gap: 6px; }
+[style*="--fc"] .eyebrow { color: var(--fc); }
+h2 { font: 800 28px/1.1 var(--fd); letter-spacing: .02em; margin: 0 0 10px; display: flex; align-items: center; gap: 10px; text-transform: uppercase; }
+h3 { font: 700 18px var(--fk); letter-spacing: .06em; text-transform: uppercase; margin: 18px 0 8px; }
+:focus-visible { outline: 3px solid var(--lux); outline-offset: 2px; }
+
+/* botões */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 8px; padding: 11px 18px; font: 700 17px var(--fk); letter-spacing: .06em; text-transform: uppercase; border: 1px solid var(--line2); background: var(--panel2); color: var(--ink); transition: transform .12s, filter .12s; }
+.btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
+.btn:active { transform: translateY(1px); }
+.btn.hot { background: linear-gradient(180deg, var(--lux2), var(--lux)); color: #05201C; border-color: #B9F7EC; box-shadow: 0 8px 24px -10px rgba(94, 234, 212, .8), inset 0 1px 0 rgba(255,255,255,.5); }
+.btn.big { padding: 14px 24px; font-size: 19px; }
+.btn.wide { width: 100%; }
+.btn.ghost { background: transparent; }
+.btn.danger { border-color: rgba(255, 90, 95, .5); color: #FFC2C4; }
+.link { background: none; border: 0; color: var(--lux2); text-decoration: underline; text-underline-offset: 3px; padding: 4px 0; font-size: 15px; }
+.link.sm { font-size: 14px; }
+
+/* capa */
+.cover { position: relative; min-height: 100vh; overflow: hidden; display: grid; place-items: center; padding: 28px 16px 40px; }
+.lab-bg { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; gap: 2vw; opacity: .22; pointer-events: none; padding-bottom: 2vh; }
+.lab-bg svg { width: min(30vw, 340px); height: auto; }
+.cover-in { position: relative; width: min(600px, 100%); }
+.cover-brand { display: flex; align-items: center; gap: 12px; font: 600 14px var(--fk); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.logo { height: 34px; background: #fff; padding: 4px 8px; border-radius: 6px; }
+.kicker { margin: 24px 0 2px; font: 600 15px var(--fk); color: var(--lux); letter-spacing: .18em; text-transform: uppercase; }
+.title { margin: 0; font: 800 clamp(44px, 10vw, 86px)/.95 var(--fd); letter-spacing: -.03em; text-transform: uppercase; letter-spacing: .01em; }
+.title span { display: block; color: var(--lux); font-size: .6em; }
+.lede { color: var(--mute); max-width: 52ch; }
+.lede b { color: var(--ink); }
+.resume { background: rgba(59, 224, 122, .08); border: 1px solid rgba(59, 224, 122, .35); border-radius: 10px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.resume p { margin: 0; font-size: 15px; }
+.crew { margin-top: 18px; display: grid; gap: 14px; background: rgba(16, 19, 24, .88); backdrop-filter: blur(6px); border: 1px solid var(--line2); border-radius: 14px; padding: 18px; }
+.fld { display: grid; gap: 6px; }
+.fld span, .seg legend { font: 600 14px var(--fk); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.fld input { background: var(--bg); border: 1px solid var(--line2); border-radius: 8px; padding: 12px; color: var(--ink); font: 17px var(--fb); }
+.seg { border: 0; padding: 0; margin: 0; display: flex; gap: 8px; flex-wrap: wrap; }
+.seg legend { margin-bottom: 6px; }
+.seg label { position: relative; }
+.seg input { position: absolute; opacity: 0; }
+.seg span { display: inline-flex; align-items: center; padding: 9px 20px; border: 1px solid var(--line2); border-radius: 8px; font: 700 18px var(--fk); letter-spacing: .06em; }
+.seg input:checked + span { background: var(--lux); color: #05201C; border-color: var(--lux); }
+.seg input:focus-visible + span { outline: 3px solid var(--lux); outline-offset: 2px; }
+.seg.cores span { padding: 4px; border-radius: 10px; }
+.seg.cores input:checked + span { background: rgba(94, 234, 212, .18); border-color: var(--lux); box-shadow: 0 0 0 2px var(--lux) inset; }
+.seg.cores .shirt { width: 40px; height: 40px; }
+.cover-links { display: flex; gap: 18px; margin-top: 14px; }
+.shirt { width: 48px; height: 48px; flex: none; filter: drop-shadow(0 3px 4px rgba(0,0,0,.4)); }
+.shirt.mini { width: 24px; height: 24px; filter: none; }
+
+/* HUD */
+.hud { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px; padding: 8px 16px; background: rgba(10, 12, 15, .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.hud-brand { display: flex; align-items: center; gap: 8px; background: none; border: 0; padding: 0; color: var(--lux); }
+.hud-brand .ic { width: 26px; height: 26px; }
+.hud-brand span { display: grid; font: 800 17px/1 var(--fd); letter-spacing: .04em; text-align: left; }
+.hud-brand small { font: 600 11px var(--fk); letter-spacing: .16em; color: var(--mute); }
+.hud-cells { display: flex; gap: 4px; margin-left: auto; }
+.hud-cell { display: grid; padding: 2px 10px; border-left: 1px solid var(--line); min-width: 62px; text-align: center; }
+.hud-cell span { font: 600 11px var(--fk); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.hud-cell b { font: 600 17px var(--fm); }
+.hud-menu { background: none; border: 1px solid var(--line2); border-radius: 8px; width: 40px; height: 40px; font-size: 18px; }
+.proj-tag { font: 700 12px var(--fk); letter-spacing: .14em; color: #05201C; background: var(--lux); padding: 3px 8px; border-radius: 4px; }
+@media (max-width: 640px) { .hud { flex-wrap: wrap; gap: 6px; padding: 8px 12px; } .hud-cells { order: 3; width: 100%; margin: 0; justify-content: space-between; } .hud-cell { min-width: 0; flex: 1; padding: 0 4px; } .hud-menu { margin-left: auto; } .hide-s { display: none; } }
+
+/* páginas e cartões */
+.wrap { width: min(980px, calc(100% - 32px)); margin: 20px auto 48px; display: grid; gap: 18px; }
+.card { background: linear-gradient(180deg, var(--panel2), var(--panel)); border: 1px solid var(--line); border-radius: 16px; padding: 20px; position: relative; min-width: 0; }
+.card[style*="--fc"] { border-top: 4px solid var(--fc); }
+.card.center { text-align: center; }
+.card.center .eyebrow { justify-content: center; }
+.card.center h2 { justify-content: center; }
+.next { overflow: hidden; }
+.next::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 60px, rgba(255,255,255,.025) 60px 120px); pointer-events: none; }
+.vs { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; margin: 10px 0 4px; position: relative; }
+.vs-t { display: grid; justify-items: center; gap: 6px; text-align: center; }
+.vs-t .shirt { width: 72px; height: 72px; }
+.vs-t b { font: 800 22px/1.05 var(--fd); text-transform: uppercase; letter-spacing: .02em; }
+.vs-x { font: 800 40px var(--fd); color: var(--lux); }
+.vs-sub { text-align: center; color: var(--mute); margin: 6px 0 14px; position: relative; }
+.next .btn { display: flex; margin: 0 auto; position: relative; }
+.fire { color: #FFB067; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 14px; }
+.stats div { background: rgba(0,0,0,.22); border: 1px solid var(--line); border-radius: 10px; padding: 10px; text-align: center; display: grid; }
+.stats b { font: 800 30px/1 var(--fd); }
+.stats span { font: 600 13px var(--fk); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.stats.big b { font-size: 40px; color: var(--lux); }
+@media (max-width: 560px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+/* trilha de fases */
+.trilha { display: grid; gap: 8px; }
+.fase { display: grid; grid-template-columns: minmax(140px, 1.1fr) 2fr auto; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-left: 4px solid var(--fc); border-radius: 10px; background: rgba(0,0,0,.18); }
+.fase.atual { background: rgba(94, 234, 212, .07); border-color: rgba(94, 234, 212, .4); border-left-color: var(--fc); }
+.fase-h { display: grid; line-height: 1.15; }
+.fase-h b { font: 800 17px var(--fd); text-transform: uppercase; color: var(--fc); }
+.fase-h span { font-weight: 600; }
+.fase-h small { color: var(--mute); font-size: 14px; }
+.jogos { display: flex; gap: 6px; flex-wrap: wrap; }
+.jg { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font: 600 13px var(--fm); border: 1px dashed var(--line2); color: var(--dim); }
+.jg.v { background: var(--win); color: #04210F; border: 0; font-weight: 700; }
+.jg.d { background: var(--lose); color: #2A0405; border: 0; font-weight: 700; }
+.jg.prox { border: 2px solid var(--lux); color: var(--lux); animation: pulse 1.6s infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(94, 234, 212, .15); } }
+@media (max-width: 600px) { .fase { grid-template-columns: 1fr auto; } .jogos { grid-column: 1 / -1; order: 3; } .jg { width: 38px; height: 38px; } }
+
+/* tabela da liga */
+.tscroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table.liga { width: 100%; border-collapse: collapse; font: 15px var(--fb); }
+.liga th { font: 600 13px var(--fk); letter-spacing: .1em; color: var(--dim); text-align: center; padding: 6px 6px; border-bottom: 1px solid var(--line2); }
+.liga th:nth-child(2) { text-align: left; }
+.liga td { padding: 7px 6px; border-bottom: 1px solid var(--line); text-align: center; font-family: var(--fm); font-size: 14px; }
+.liga td.tm { text-align: left; font-family: var(--fb); font-size: 15px; white-space: nowrap; }
+.liga td.tm .tmi { display: flex; align-items: center; gap: 8px; }
+.liga td.tm span { overflow: hidden; text-overflow: ellipsis; max-width: 46vw; }
+.liga tr.eu td { background: rgba(94, 234, 212, .12); font-weight: 700; }
+.liga tr.eu td.tm span { color: var(--lux); }
+.pos { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; font-weight: 700; }
+.z1 .pos { background: var(--lux); color: #05201C; } .z2 .pos { background: #2F8CFF; color: #fff; } .z3 .pos { background: #18A0A0; color: #fff; } .z5 .pos { background: var(--lose); color: #fff; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font: 600 13px var(--fk); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); margin: 10px 0 0; }
+.legend span::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: 0; }
+.legend .z1::before { background: var(--lux); } .legend .z2::before { background: #2F8CFF; } .legend .z3::before { background: #18A0A0; } .legend .z5::before { background: var(--lose); }
+
+/* preleção */
+.quadro { background: #161B21; border: 2px solid #36404B; border-radius: 12px; padding: 16px 18px; font-size: 17px; background-image: radial-gradient(rgba(255,255,255,.04) 1px, transparent 1px); background-size: 14px 14px; }
+.quadro p { margin: 0 0 10px; } .quadro ul { margin: 0 0 10px; padding-left: 20px; }
+.formula { font: 600 20px var(--fm); text-align: center; background: rgba(0,0,0,.28); border-radius: 10px; padding: 12px; margin: 10px 0 12px; color: var(--lux2); display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.fr { display: inline-grid; text-align: center; font-size: 15px; } .fr i { font-style: normal; padding: 2px 6px; } .fr i:first-child { border-bottom: 2px solid currentColor; }
+
+/* partida */
+.placar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; background: #06080A; border: 2px solid #252C35; border-radius: 14px; padding: 10px 14px; box-shadow: inset 0 0 30px rgba(0,0,0,.6); position: sticky; top: 60px; z-index: 5; }
+.pl-t { display: flex; align-items: center; gap: 8px; font: 800 24px var(--fd); letter-spacing: .04em; }
+.pl-t.r { justify-content: flex-end; }
+.pl-t .shirt.mini { width: 30px; height: 30px; }
+.pl-s { display: grid; justify-items: center; }
+.pl-s span { font: 600 38px/1 var(--fm); color: var(--lux); text-shadow: 0 0 14px rgba(94, 234, 212, .55); letter-spacing: .04em; }
+.pl-s span i { font-style: normal; color: var(--dim); font-size: .7em; padding: 0 4px; }
+.pl-s small { font: 600 12px var(--fk); letter-spacing: .12em; color: var(--dim); text-transform: uppercase; margin-top: 4px; }
+.placar.win .pl-s span { color: var(--win); text-shadow: 0 0 14px rgba(59, 224, 122, .6); }
+.placar.lose .pl-s span { color: var(--lose); text-shadow: 0 0 14px rgba(255, 90, 95, .5); }
+@media (max-width: 640px) { .placar { top: 92px; padding: 8px 10px; } .pl-s span { font-size: 30px; } .pl-t { font-size: 20px; } }
+.campo { display: grid; grid-template-columns: 1.25fr 1fr; gap: 18px; align-items: start; }
+@media (max-width: 820px) { .campo { grid-template-columns: 1fr; } }
+.lance { background: linear-gradient(180deg, var(--panel2), var(--panel)); border: 1px solid var(--line); border-top: 4px solid var(--fc); border-radius: 16px; padding: 18px; min-width: 0; }
+.ctx { margin: 0 0 8px; }
+.ask { font-size: 19px; margin: 12px 0 0; padding: 12px 14px; border-left: 4px solid var(--fc); background: rgba(0,0,0,.2); border-radius: 0 10px 10px 0; }
+.viz { margin: 10px 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: grid; justify-items: center; min-width: 64px; padding: 6px 10px; background: var(--chalk); color: #1E1A12; border-radius: 10px; box-shadow: 0 3px 0 #BFB59C; }
+.chip small { font: 600 11px var(--fk); letter-spacing: .08em; text-transform: uppercase; color: #6B6250; }
+.chip b { font: 600 20px var(--fm); }
+.viz svg { width: 100%; max-width: 460px; height: auto; display: block; background: rgba(0,0,0,.2); border-radius: 10px; }
+.viz .gl { stroke: rgba(255,255,255,.08); } .viz .ax { fill: var(--mute); font: 12px var(--fm); } .viz .axt { fill: var(--mute); font: 600 12px var(--fk); letter-spacing: .06em; }
+.viz .bar { fill: var(--fc, var(--lux)); } .viz .bv { fill: var(--ink); font: 600 12px var(--fm); }
+.dt { border-collapse: collapse; min-width: 220px; background: rgba(0,0,0,.2); border-radius: 10px; overflow: hidden; }
+.dt th { font: 600 13px var(--fk); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); padding: 8px 14px; background: rgba(0,0,0,.25); }
+.dt td { font: 600 17px var(--fm); text-align: center; padding: 6px 14px; border-top: 1px solid var(--line); }
+.doc { display: grid; gap: 0; background: var(--chalk); color: #1E1A12; border-radius: 10px; padding: 6px 14px; box-shadow: 0 3px 0 #BFB59C; max-width: 460px; }
+.doc div { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px dashed #BFB59C; }
+.doc div:last-child { border: 0; }
+.doc span { font: 600 14px var(--fk); letter-spacing: .06em; text-transform: uppercase; color: #6B6250; }
+.doc b { font: 600 17px var(--fm); text-align: right; }
+.chute, .result { background: linear-gradient(180deg, var(--panel2), var(--panel)); border: 1px solid var(--line); border-radius: 16px; padding: 16px; position: sticky; top: 150px; }
+@media (max-width: 820px) { .chute, .result { position: static; } }
+.hint { font-size: 14px; margin: 8px 0 0; }
+
+/* teclado */
+.kp { display: grid; gap: 10px; }
+.kp-screen { background: #06080A; border: 2px solid #252C35; border-radius: 12px; padding: 8px 12px; }
+.kp-l { font: 600 12px var(--fk); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.kp-v { display: flex; align-items: baseline; gap: 6px; min-height: 44px; }
+.kp-num { font: 600 34px var(--fm); color: var(--lux); }
+.kp-num.empty { font-size: 0; }
+.kp-num.empty::after { content: '_'; font-size: 34px; color: var(--dim); animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.kp-u { font: 600 15px var(--fk); color: var(--mute); }
+.kp-keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.kp-keys button { font: 600 24px var(--fm); padding: 12px 0; border-radius: 10px; background: var(--panel2); border: 1px solid var(--line2); box-shadow: 0 3px 0 #05070A; }
+.kp-keys button:active { transform: translateY(2px); box-shadow: none; }
+.kp.locked { opacity: .5; pointer-events: none; }
+
+/* resultado */
+.result h2 { justify-content: center; font-size: 34px; margin-top: 8px; }
+.result.win h2 { color: var(--win); } .result.lose h2 { color: var(--lose); }
+.result > p { text-align: center; }
+.sol { background: rgba(0,0,0,.22); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-top: 12px; text-align: left; }
+.passos { margin: 0; padding-left: 22px; } .passos li { margin: 4px 0; }
+.lanceanim { width: 100%; max-width: 360px; display: block; margin: 0 auto; border-radius: 12px; }
+.lanceanim .bola { transform: translate(110px, 104px); }
+.lanceanim.gol .bola { animation: chuteGol 1.1s cubic-bezier(.2,.7,.3,1) forwards; }
+.lanceanim.gol .goleiro { animation: pulaErrado 1.1s ease-out forwards; transform-origin: 110px 92px; }
+.lanceanim.gol .trave g { animation: rede .5s 1s ease-out; }
+.lanceanim.def .bola { animation: chuteDef 1.1s cubic-bezier(.2,.7,.3,1) forwards; }
+.lanceanim.def .goleiro { animation: pulaCerto 1.1s ease-out forwards; transform-origin: 110px 92px; }
+@keyframes chuteGol { 0% { transform: translate(110px, 104px) scale(1.4); } 70% { transform: translate(146px, 40px) scale(.8); } 100% { transform: translate(150px, 46px) scale(.8); } }
+@keyframes pulaErrado { 0% { transform: none; } 60%, 100% { transform: translateX(-14px) rotate(-55deg); } }
+@keyframes chuteDef { 0% { transform: translate(110px, 104px) scale(1.4); } 55% { transform: translate(84px, 48px) scale(.85); } 100% { transform: translate(30px, 20px) scale(.7); } }
+@keyframes pulaCerto { 0% { transform: none; } 45%, 100% { transform: translateX(-8px) rotate(-40deg); } }
+@keyframes rede { 50% { transform: translateY(3px); } }
+@media (prefers-reduced-motion: reduce) { .lanceanim * { animation-duration: .01s !important; } }
+
+/* fim de fase e final */
+.pod-h { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.podium { list-style: none; padding: 0; margin: 8px auto 0; max-width: 560px; text-align: left; }
+.podium li { display: grid; grid-template-columns: 36px 1fr auto auto; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 10px; background: rgba(0,0,0,.2); margin-bottom: 6px; border: 1px solid var(--line); }
+.podium li.top { border-color: rgba(94, 234, 212, .35); }
+.podium li.me { background: rgba(94, 234, 212, .14); border-color: var(--lux); }
+.p-n { font: 600 18px var(--fm); text-align: center; }
+.p-t { font: 600 13px var(--fk); letter-spacing: .1em; color: var(--mute); }
+.p-r { grid-column: 2 / 4; font-size: 13px; color: var(--mute); }
+.podium .p-r { order: 5; }
+.p-p { font: 600 18px var(--fm); color: var(--lux); }
+.p-p small { font-size: 12px; color: var(--mute); }
+.p-mine { text-align: center; margin: 8px 0 0; }
+.final .taca { width: 88px; height: 88px; margin: 0 auto 6px; display: grid; place-items: center; border-radius: 50%; background: radial-gradient(circle, rgba(94, 234, 212, .3), transparent 70%); color: var(--lux); animation: brilho 2s infinite; }
+.final .taca .ic { width: 64px; height: 64px; stroke-width: 1.6; }
+@keyframes brilho { 50% { box-shadow: 0 0 40px rgba(94, 234, 212, .5); } }
+.final .zona { font: 800 26px var(--fd); color: var(--lux); text-transform: uppercase; margin: 0; }
+.porfase { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.porfase div { border: 1px solid var(--line); border-top: 4px solid var(--fc); border-radius: 10px; padding: 8px; display: grid; background: rgba(0,0,0,.2); }
+.porfase b { font: 800 26px var(--fd); }
+.porfase span { font-size: 13px; color: var(--mute); }
+@media (max-width: 600px) { .porfase { grid-template-columns: repeat(2, 1fr); } }
+.copy-box { width: 100%; min-height: 150px; margin-top: 10px; background: var(--bg); color: var(--ink); border: 1px solid var(--line2); border-radius: 8px; padding: 10px; font: 14px var(--fm); }
+.hall { list-style: none; padding: 0; margin: 0; }
+.hall li { display: grid; grid-template-columns: 28px 1fr auto auto; gap: 10px; padding: 8px 10px; border-bottom: 1px solid var(--line); align-items: center; }
+.hall li > span:nth-child(3) { color: var(--mute); font-size: 14px; }
+.hall li > span:nth-child(4) { grid-column: 2; font-size: 13px; color: var(--mute); order: 5; }
+.h-n { font: 600 15px var(--fm); color: var(--dim); }
+.h-p { font: 600 16px var(--fm); color: var(--lux); }
+
+/* professor */
+.tcards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.tcards > div { background: rgba(0,0,0,.2); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.tcards h3 { margin-top: 0; }
+@media (max-width: 680px) { .tcards { grid-template-columns: 1fr; } }
+.live-h { display: flex; align-items: center; gap: 8px; }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--dim); }
+.dot.on { background: var(--win); box-shadow: 0 0 0 3px rgba(59, 224, 122, .2); animation: pulse 1.6s infinite; }
+.dot.fim { background: var(--lux); }
+.prof-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.seg-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+.seg-tabs button { background: var(--panel2); border: 1px solid var(--line2); border-radius: 8px; padding: 6px 12px; font: 600 15px var(--fk); letter-spacing: .04em; }
+.seg-tabs button.on { background: var(--lux); color: #05201C; border-color: var(--lux); }
+.seg-tabs.big button { padding: 8px 14px; font-size: 16px; }
+.live-tag { font-size: 13px; display: flex; align-items: center; gap: 6px; }
+table.live { width: 100%; border-collapse: collapse; font-size: 14px; }
+.live th { font: 600 12px var(--fk); letter-spacing: .1em; text-transform: uppercase; color: var(--dim); text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line2); }
+.live td { padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.live td small { display: block; color: var(--mute); font-size: 12px; }
+.live td.num { font-family: var(--fm); text-align: right; }
+.live tr.on td { background: rgba(59, 224, 122, .05); }
+.ok { color: var(--win); } .warn { color: #FFB067; font-weight: 700; }
+.feed-h { margin-top: 18px; }
+.feed { list-style: none; padding: 0; margin: 0; font-size: 14px; max-height: 340px; overflow: auto; }
+.feed li { padding: 5px 0; border-bottom: 1px solid var(--line); }
+.local { margin-top: 18px; } .local summary { cursor: pointer; color: var(--mute); }
+.pulse { animation: pulse 1.4s infinite; }
+
+/* modal, toast e alerta */
+.veil { position: fixed; inset: 0; z-index: 50; background: rgba(4, 5, 7, .74); display: grid; place-items: center; padding: 16px; }
+.modal { width: min(560px, 100%); max-height: calc(100vh - 32px); overflow: auto; background: var(--panel2); border: 1px solid var(--line2); border-radius: 16px; padding: 20px; }
+.modal h3 { margin-top: 0; }
+.menu { display: grid; gap: 8px; }
+.toast { position: fixed; left: 50%; bottom: 22px; transform: translate(-50%, 140%); background: var(--chalk); color: #1E1A12; padding: 10px 16px; border-radius: 10px; font-weight: 600; z-index: 60; transition: transform .25s, opacity .25s; max-width: calc(100% - 32px); opacity: 0; pointer-events: none; }
+.toast.on { transform: translate(-50%, 0); opacity: 1; }
+#guard { position: fixed; inset: 0; z-index: 80; background: rgba(4, 5, 7, .94); display: grid; place-items: center; padding: 16px; }
+.guard-box { width: min(480px, 100%); text-align: center; background: var(--panel2); border: 2px solid var(--lux); border-radius: 16px; padding: 24px; }
+.guard-ic { font-size: 40px; color: var(--lux); }
+.guard-box small { display: block; font: 600 13px var(--fk); letter-spacing: .16em; color: var(--lux); }
+.guard-box h2 { justify-content: center; margin-top: 6px; }
+.guard-box dl { display: flex; justify-content: center; gap: 24px; margin: 14px 0; }
+.guard-box dt { font: 600 12px var(--fk); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.guard-box dd { margin: 0; font: 600 26px var(--fm); }
+body.proj .placar { position: static; }
+
+/* ===== cofre ===== */
+.hud-cell.clock b { color: var(--win); }
+.hud-cell.clock.late b, .hud-cell.late b { color: var(--lose); }
+.hud-cell b { white-space: nowrap; }
+.stats b { font-size: 26px; }
+.planta { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: auto auto; gap: 10px; margin: 8px 0 4px; padding: 12px; border: 2px solid #2B3540; border-radius: 12px; background: linear-gradient(rgba(70, 194, 242, .05) 1px, transparent 1px) 0 0 / 22px 22px, linear-gradient(90deg, rgba(70, 194, 242, .05) 1px, transparent 1px) 0 0 / 22px 22px, #0E1217; }
+.room { grid-row: 1; grid-column: span 2; display: grid; gap: 2px; text-align: left; padding: 14px; border-radius: 10px; border: 2px solid var(--line2); background: rgba(0,0,0,.3); color: var(--ink); min-height: 120px; align-content: start; }
+.room.r4, .room.r5 { grid-row: 2; grid-column: span 3; }
+.room-n { font: 700 12px var(--fk); letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+.room b { font: 800 22px/1.05 var(--fd); text-transform: uppercase; letter-spacing: .03em; }
+.room small { color: var(--mute); }
+.room-st { margin-top: 8px; display: flex; align-items: center; gap: 6px; font: 700 13px var(--fk); }
+.room.trancada { opacity: .55; cursor: not-allowed; border-style: dashed; }
+.room.atual { border-color: var(--fc); box-shadow: 0 0 0 4px color-mix(in srgb, var(--fc) 22%, transparent), inset 0 0 40px color-mix(in srgb, var(--fc) 12%, transparent); animation: pulse 2s infinite; }
+.room.atual .room-st { color: var(--fc); }
+.room.aberta { border-color: color-mix(in srgb, var(--win) 60%, transparent); }
+.room.aberta .room-st { color: var(--win); }
+
+.corredor { grid-row: 2; grid-column: 1 / -1; display: grid; place-items: center; font: 700 11px var(--fk); letter-spacing: .3em; color: var(--dim); border-top: 1px dashed var(--line2); border-bottom: 1px dashed var(--line2); }
+@media (max-width: 640px) { .planta { grid-template-columns: 1fr 1fr; grid-template-rows: none; } .room, .room.r4, .room.r5 { grid-row: auto; grid-column: span 1; min-height: 0; } .room.r5 { grid-column: 1 / -1; } .corredor { display: none; } }
+.intro { font-size: 18px; }
+.sala-h { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.btn.sm { padding: 8px 12px; font-size: 14px; }
+.porta-mini { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 14px; border-radius: 12px; background: #0B0E12; border: 2px solid #2B3540; margin: 10px 0 14px; }
+.porta-mini > .ic { width: 26px; height: 26px; color: var(--lux); }
+.porta-mini > span { font: 700 13px var(--fk); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.slots { display: flex; gap: 6px; justify-content: center; }
+.slot { width: 38px; height: 48px; display: grid; place-items: center; border-radius: 8px; background: #06080A; border: 2px solid var(--line2); font: 700 24px var(--fm); color: var(--dim); }
+.slot.on { color: var(--win); border-color: color-mix(in srgb, var(--win) 50%, transparent); text-shadow: 0 0 10px rgba(70, 242, 138, .6); }
+.objs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+@media (max-width: 720px) { .objs { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 420px) { .objs { grid-template-columns: 1fr; } }
+.obj { position: relative; display: grid; gap: 4px; text-align: left; padding: 14px 14px 12px 50px; border-radius: 12px; border: 1px solid var(--line2); background: linear-gradient(180deg, #1C222A, #151A20); color: var(--ink); min-height: 86px; align-content: center; }
+.obj:hover { border-color: var(--fc); }
+.obj-n { position: absolute; left: 12px; top: 14px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font: 700 14px var(--fm); background: #0B0E12; border: 1px solid var(--line2); }
+.obj b { font: 700 16px var(--fb); }
+.obj small { display: flex; align-items: center; gap: 5px; color: var(--mute); font-size: 13px; }
+.obj.ok { border-color: color-mix(in srgb, var(--win) 45%, transparent); } .obj.ok small { color: var(--win); } .obj.ok .obj-n { background: var(--win); color: #03140A; border: 0; }
+.obj.fail { border-color: color-mix(in srgb, var(--lose) 45%, transparent); } .obj.fail small { color: var(--lose); } .obj.fail .obj-n { background: var(--lose); color: #fff; border: 0; }
+.obj.meio small { color: #FFB067; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; transform: none; filter: none; box-shadow: none; }
+.tent { display: flex; align-items: center; gap: 8px; font: 700 13px var(--fk); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); margin-bottom: 10px; }
+.tent i { width: 14px; height: 14px; border-radius: 50%; background: var(--win); box-shadow: 0 0 8px rgba(70, 242, 138, .6); }
+.tent i.usada { background: var(--lose); box-shadow: 0 0 8px rgba(255, 77, 94, .6); }
+.warnbox { margin: 0 0 10px; padding: 10px 12px; border-radius: 10px; background: rgba(255, 77, 94, .12); border: 1px solid rgba(255, 77, 94, .45); font-size: 15px; }
+.big-ic { display: grid; place-items: center; }
+.big-ic .ic { width: 64px; height: 64px; }
+.result.win .big-ic { color: var(--win); } .result.lose .big-ic { color: var(--lose); animation: sirene .5s 3; }
+@keyframes sirene { 50% { filter: drop-shadow(0 0 16px var(--lose)); transform: scale(1.1); } }
+.digit { display: grid; justify-items: center; gap: 2px; margin: 12px auto 0; padding: 10px; border-radius: 12px; background: #06080A; border: 2px solid var(--line2); max-width: 280px; font: 700 13px var(--fk); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+.digit b { font: 700 40px var(--fm); color: var(--win); text-shadow: 0 0 14px rgba(70, 242, 138, .6); }
+.digit small { text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--dim); }
+.porta .slots { margin: 6px 0 14px; }
+.cofre { width: min(340px, 100%); margin: 0 auto; }
+.shake { animation: shake .4s; }
+@keyframes shake { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+.door-anim { perspective: 600px; display: grid; place-items: center; margin: 4px 0 10px; }
+.door { width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, #3A434E 0 30%, #2A313A 31% 60%, #1E242B 61%); border: 6px solid var(--lux); position: relative; animation: abre 1.6s .2s ease-in-out forwards; box-shadow: 0 0 30px rgba(94, 234, 212, .3); }
+.door i { position: absolute; inset: 38%; border-radius: 50%; border: 4px solid var(--lux); }
+.door i::before, .door i::after { content: ''; position: absolute; left: 50%; top: -40%; width: 4px; height: 180%; background: var(--lux); transform: translateX(-50%); }
+.door i::after { transform: translateX(-50%) rotate(90deg); }
+@keyframes abre { 70% { transform: rotate(270deg); } 100% { transform: rotate(270deg); border-color: var(--win); box-shadow: 0 0 50px rgba(70, 242, 138, .55); } }
+@media (prefers-reduced-motion: reduce) { .door { animation: none; } }
+.final .taca .ic { stroke-width: 1.4; }
+
+/* ===== laboratório ===== */
+h2 { text-transform: none; letter-spacing: -.01em; }
+.hud-brand span, .room b, .stats b, .porfase b, .final .zona { text-transform: none; }
+.lab-fig { display: grid; justify-items: center; gap: 4px; margin: 10px 0; }
+.lab-fig svg.shape { width: 100%; max-width: 320px; height: auto; background: radial-gradient(circle at 50% 40%, rgba(94,234,212,.07), transparent 70%); border-radius: 14px; }
+.lab-fig figcaption { font: 700 13px var(--fk); color: var(--mute); }
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.duo .lab-fig { margin: 4px 0; }
+.shape .face { fill: rgba(94, 234, 212, .10); stroke: #CDEFEA; stroke-width: 2; stroke-linejoin: round; }
+.shape .face.side { fill: rgba(94, 234, 212, .05); }
+.shape .liq { fill: var(--lc); opacity: .35; }
+.shape .edge { fill: none; stroke: #CDEFEA; stroke-width: 2; }
+.shape .hid { fill: none; stroke: #CDEFEA; stroke-width: 1.4; stroke-dasharray: 5 5; opacity: .55; }
+.shape .dim { stroke: var(--lux); stroke-width: 2; stroke-dasharray: 6 4; fill: none; }
+.shape .dim.r { stroke: #FBBF24; }
+.shape .dim.g { stroke: #F472B6; stroke-dasharray: none; stroke-width: 3; }
+.shape .lb { font: 700 14px var(--fm); fill: #fff; paint-order: stroke; stroke: var(--bg); stroke-width: 4px; }
+.frascos { display: flex; gap: 5px; }
+.fr-ic { width: 26px; color: #9FBCC0; display: block; }
+.fr-ic svg { width: 100%; height: auto; display: block; }
+.fr-ic .lv { fill: var(--lc); }
+.fr-ic.perdido { color: var(--lose); }
+.fr-ic.perdido .lv { fill: var(--lose); opacity: .5; }
+.room .frascos { margin-top: 10px; }
+.room .fr-ic { width: 20px; }
+.porta-mini .fr-ic { width: 30px; }
+.rel-fr { display: flex; justify-content: center; margin-bottom: 8px; }
+.rel-fr .fr-ic { width: 42px; }
+.big-flask { display: grid; place-items: center; color: #CDEFEA; }
+.big-flask svg { width: 110px; height: auto; }
+.big-flask .lvg { fill: var(--lc); transform: translateY(100%); }
+.big-flask .enche .lvg { animation: enche 1.2s .15s ease-out forwards; }
+.big-flask .derrama .lvg { fill: var(--lose); opacity: .55; transform: translateY(82%); }
+.big-flask .bolhas circle { fill: #fff; opacity: .7; animation: bolha 1.6s 1s ease-in infinite; }
+.big-flask .bolhas circle:nth-child(2) { animation-delay: 1.4s; } .big-flask .bolhas circle:nth-child(3) { animation-delay: 1.8s; }
+.big-flask .poca { fill: var(--lose); opacity: .6; }
+.result.lose .big-flask svg { animation: sirene .5s 2; }
+@keyframes enche { to { transform: translateY(42%); } }
+@keyframes bolha { 0% { transform: translateY(0); opacity: .7; } 100% { transform: translateY(-40px); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .big-flask .enche .lvg { animation: none; transform: translateY(42%); } .big-flask .bolhas circle { animation: none; } }
+.final .taca .ic { stroke-width: 1.5; }
+
+.passos .fr, .ctx .fr { vertical-align: middle; font-size: .82em; margin: 0 2px; }
+.passos .fr i:first-child, .ctx .fr i:first-child { border-bottom-width: 1.5px; }
+.planta { min-width: 0; }
+.room { min-width: 0; }
+@media (max-width: 640px) { .planta { grid-template-columns: 1fr; } .room, .room.r4, .room.r5 { grid-column: auto; } .room .fr-ic { width: 18px; } }
+
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<noscript><p style="padding:20px">Este jogo precisa de JavaScript.</p></noscript>
+<script>
+(function(){
+const IMG = {"logo": {"uri": "data:image/webp;base64,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"}};
+const r2 = (v) => Math.round(v * 100) / 100;
+const fmt = (v, d) => Number(r2(v)).toLocaleString('pt-BR', { minimumFractionDigits: d || 0, maximumFractionDigits: 2 });
+const brl = (v) => 'R$ ' + Number(r2(v)).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const brl0 = (v) => 'R$ ' + Number(v).toLocaleString('pt-BR');
+const pct = (v) => fmt(v) + '%';
+const fx = (v) => String(+Number(v).toFixed(6)).replace('.', ',');
+function rngTools(rng) {
+  const ri = (a, b) => a + Math.floor(rng() * (b - a + 1));
+  const pick = (arr) => arr[Math.floor(rng() * arr.length)];
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  return { ri, pick, shuffle };
+}
+const sum = (a) => a.reduce((s, x) => s + x, 0);
+const sorted = (a) => a.slice().sort((x, y) => x - y);
+const lista = (a, u) => a.map((x) => fmt(x) + (u || '')).join(', ');
+
+/* ---------- visualizações ---------- */
+function chips(vals, cap, unit) {
+  return `<figure class="viz"><div class="chips">${vals.map((v, i) => `<span class="chip"><small>${cap ? cap(i) : i + 1}</small><b>${fmt(v)}${unit || ''}</b></span>`).join('')}</div></figure>`;
+}
+function bars(cats, freqs, xl, yl) {
+  const W = 340; const H = 190; const L = 34; const B = 34; const T = 14; const R = 8;
+  const mx = Math.max(...freqs); const top = Math.max(4, mx + (mx % 2 ? 1 : 2));
+  const bw = (W - L - R) / cats.length;
+  const y = (v) => H - B - (v / top) * (H - B - T);
+  let g = '';
+  for (let v = 0; v <= top; v += top > 10 ? 2 : 1) g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" class="gl"/><text x="${L - 6}" y="${y(v) + 4}" class="ax" text-anchor="end">${v}</text>`;
+  cats.forEach((c, i) => {
+    const x = L + i * bw + bw * 0.18; const w = bw * 0.64;
+    g += `<rect x="${x}" y="${y(freqs[i])}" width="${w}" height="${H - B - y(freqs[i])}" rx="3" class="bar"/><text x="${x + w / 2}" y="${y(freqs[i]) - 5}" class="bv" text-anchor="middle">${freqs[i]}</text><text x="${x + w / 2}" y="${H - B + 16}" class="ax" text-anchor="middle">${c}</text>`;
+  });
+  return `<figure class="viz"><svg viewBox="0 0 ${W} ${H + 4}" role="img" aria-label="Gráfico de barras: ${esc(yl)} por ${esc(xl)}">${g}<text x="${(L + W) / 2}" y="${H + 2}" class="axt" text-anchor="middle">${xl}</text><text x="10" y="${(H - B) / 2 + 10}" class="axt" text-anchor="middle" transform="rotate(-90 10 ${(H - B) / 2 + 10})">${yl}</text></svg></figure>`;
+}
+function tabela(head, rows) {
+  return `<figure class="viz"><table class="dt"><thead><tr>${head.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></figure>`;
+}
+function contrato(linhas) {
+  return `<figure class="viz"><div class="doc">${linhas.map(([k, v]) => `<div><span>${k}</span><b>${v}</b></div>`).join('')}</div></figure>`;
+}
+const passo = (arr) => `<ol class="passos">${arr.map((p) => `<li>${p}</li>`).join('')}</ol>`;
+
+/* =========================================================
+   LABORATÓRIO DOS TRONCOS — bancadas e as 30 análises
+   Tronco de cone e tronco de pirâmide, só com fórmulas diretas
+   e Pitágoras (sem semelhança). Cada aluno recebe números sorteados.
+   ========================================================= */
+const TURMAS = ['M21', 'M22'];
+
+const FASES = [
+  { n: 1, id: 'b1', nome: 'Béqueres', tema: 'Volume do tronco de cone', cor: '#38BDF8', liq: '#38BDF8',
+    intro: 'Os béqueres e copos do laboratório têm forma de tronco de cone. Descubra quanto cabe em cada um.',
+    prelecao: `<p>O <b>tronco de cone</b> tem duas bases circulares: a maior, de raio <b>R</b>, e a menor, de raio <b>r</b>. A distância entre elas é a altura <b>h</b>.</p>
+      <div class="formula">V = <span class="fr"><i>π · h</i><i>3</i></span> · (R² + R·r + r²)</div>
+      <p>Quando a questão pedir <b>π = 3</b>, a fórmula fica V = h · (R² + R·r + r²).</p>
+      <p>Quando pedir a resposta <b>em função de π</b>, digite só o número que multiplica π.</p>
+      <p>1 cm³ = 1 mL &nbsp;·&nbsp; 1 000 cm³ = 1 L.</p>` },
+  { n: 2, id: 'b2', nome: 'Funis e filtros', tema: 'Geratriz e área do tronco de cone', cor: '#A78BFA', liq: '#A78BFA',
+    intro: 'Funis e cúpulas de papel-filtro: aqui o que importa é a superfície do tronco de cone.',
+    prelecao: `<p>A <b>geratriz g</b> é a medida da lateral. Ela forma um triângulo retângulo com a altura <b>h</b> e a diferença dos raios <b>R − r</b>:</p>
+      <div class="formula">g² = h² + (R − r)²</div>
+      <div class="formula">A<sub>lateral</sub> = π · (R + r) · g</div>
+      <p>Área total = área lateral + π·R² + π·r² (as duas bases). Se o recipiente é aberto em cima, some só a base que existe.</p>` },
+  { n: 3, id: 'b3', nome: 'Frascos quadrados', tema: 'Volume do tronco de pirâmide', cor: '#34D399', liq: '#34D399',
+    intro: 'Frascos e reservatórios de base quadrada, com a boca menor que o fundo (ou o contrário): troncos de pirâmide.',
+    prelecao: `<p>O <b>tronco de pirâmide</b> tem duas bases paralelas: a maior, de área <b>B</b>, e a menor, de área <b>b</b>.</p>
+      <div class="formula">V = <span class="fr"><i>h</i><i>3</i></span> · (B + b + √(B · b))</div>
+      <p>Bases quadradas de lados <b>L</b> e <b>ℓ</b>: B = L², b = ℓ² e √(B·b) = L·ℓ.</p>
+      <p>Então V = <span class="fr"><i>h</i><i>3</i></span> · (L² + L·ℓ + ℓ²).</p>` },
+  { n: 4, id: 'b4', nome: 'Embalagens', tema: 'Apótema e áreas do tronco de pirâmide', cor: '#FBBF24', liq: '#FBBF24',
+    intro: 'Hora de embalar os reagentes: caixas e capas em forma de tronco de pirâmide de base quadrada.',
+    prelecao: `<p>Cada face lateral do tronco de pirâmide é um <b>trapézio</b>. A altura desse trapézio é o <b>apótema do tronco a</b>.</p>
+      <div class="formula">a² = h² + <span class="fr"><i>(L − ℓ)</i><i>2</i></span>²</div>
+      <p>Área de uma face: <span class="fr"><i>(L + ℓ) · a</i><i>2</i></span>. Com base quadrada são 4 faces:</p>
+      <div class="formula">A<sub>lateral</sub> = 2 · (L + ℓ) · a</div>
+      <p>Área total = área lateral + L² + ℓ².</p>` },
+  { n: 5, id: 'b5', nome: 'Transferências', tema: 'Desafio final', cor: '#F472B6', liq: '#F472B6',
+    intro: 'Agora os líquidos mudam de recipiente: vai transbordar? Quanto tempo leva para encher? Quanto sobra?',
+    prelecao: `<p>Primeiro calcule o volume de cada recipiente; depois compare ou converta.</p>
+      <ul><li>Cilindro: V = π · r² · h.</li><li>Sobra (ou o que transborda) = volume despejado − capacidade.</li><li>Tempo para encher = volume ÷ vazão.</li><li>1 L = 1 000 cm³.</li></ul>
+      <p>Leia com atenção se a questão usa <b>π = 3</b> ou pede a resposta <b>em função de π</b>.</p>` },
+];
+
+/* ---------- desenhos ---------- */
+// tronco de cone: rt = raio em cima, rb = raio embaixo
+function cone(rt, rb, h, lab, liq) {
+  const W = 300; const H = 230; const k = 105 / Math.max(rt, rb); const hv = Math.max(80, Math.min(150, h * k));
+  const cx = 150; const yb = 196; const yt = yb - hv; const at = rt * k; const ab = rb * k; const e = 0.26;
+  const L = lab || {};
+  const fill = liq ? `<path class="liq" d="M${cx - ab} ${yb} L${cx - at} ${yt} A${at} ${at * e} 0 0 0 ${cx + at} ${yt} L${cx + ab} ${yb} A${ab} ${ab * e} 0 0 1 ${cx - ab} ${yb} Z" style="--lc:${liq}"/>` : '';
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="shape" role="img" aria-label="Tronco de cone">${fill}
+    <path class="face" d="M${cx - ab} ${yb} L${cx - at} ${yt} A${at} ${at * e} 0 0 0 ${cx + at} ${yt} L${cx + ab} ${yb} A${ab} ${ab * e} 0 0 1 ${cx - ab} ${yb} Z"/>
+    <ellipse class="edge" cx="${cx}" cy="${yt}" rx="${at}" ry="${at * e}"/>
+    <path class="edge" d="M${cx - ab} ${yb} A${ab} ${ab * e} 0 0 0 ${cx + ab} ${yb}"/><path class="hid" d="M${cx - ab} ${yb} A${ab} ${ab * e} 0 0 1 ${cx + ab} ${yb}"/>`;
+  if (L.h) s += `<path class="dim" d="M${cx} ${yb} V${yt}"/><text class="lb" x="${cx + 6}" y="${(yb + yt) / 2 + 5}">${L.h}</text>`;
+  if (L.rb) s += `<path class="dim r" d="M${cx} ${yb} H${cx + ab}"/><text class="lb" x="${cx + ab / 2}" y="${yb + 22}" text-anchor="middle">${L.rb}</text>`;
+  if (L.rt) s += `<path class="dim r" d="M${cx} ${yt} H${cx + at}"/><text class="lb" x="${cx + at / 2}" y="${yt - 8}" text-anchor="middle">${L.rt}</text>`;
+  if (L.g) s += `<path class="dim g" d="M${cx - ab} ${yb} L${cx - at} ${yt}"/><text class="lb" x="${(2 * cx - ab - at) / 2 - 10}" y="${(yb + yt) / 2}" text-anchor="end">${L.g}</text>`;
+  return s + '</svg>';
+}
+// tronco de pirâmide de base quadrada: lt = lado em cima, lb = lado embaixo
+function pir(lt, lb, h, lab, liq) {
+  const W = 300; const H = 230; const k = 150 / Math.max(lt, lb); const hv = Math.max(85, Math.min(140, h * k));
+  const cx = 130; const yb = 200; const yt = yb - hv; const B = lb * k; const T = lt * k; const dx = 0.42; const dy = 0.3;
+  const P = (s, y) => ({ fl: [cx - s / 2, y], fr: [cx + s / 2, y], br: [cx + s / 2 + s * dx, y - s * dy], bl: [cx - s / 2 + s * dx, y - s * dy] });
+  const b = P(B, yb); const t = P(T, yt); const sh = (p) => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`;
+  const shift = (B - T) * dx / 2; const sy = (B - T) * dy / 2;
+  Object.keys(t).forEach((key) => { t[key] = [t[key][0] + shift, t[key][1] - sy]; });
+  const L = lab || {};
+  const front = `M${sh(b.fl)} L${sh(b.fr)} L${sh(t.fr)} L${sh(t.fl)} Z`;
+  const right = `M${sh(b.fr)} L${sh(b.br)} L${sh(t.br)} L${sh(t.fr)} Z`;
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="shape" role="img" aria-label="Tronco de pirâmide de base quadrada">
+    ${liq ? `<path class="liq" d="${front}" style="--lc:${liq}"/><path class="liq" d="${right}" style="--lc:${liq}"/>` : ''}
+    <path class="face" d="${front}"/><path class="face side" d="${right}"/>
+    <path class="edge" d="M${sh(t.fl)} L${sh(t.fr)} L${sh(t.br)} L${sh(t.bl)} Z"/>
+    <path class="hid" d="M${sh(b.fl)} L${sh(b.bl)} L${sh(b.br)} M${sh(b.bl)} L${sh(t.bl)}"/>`;
+  const mfb = [(b.fl[0] + b.fr[0]) / 2, yb]; const mft = [(t.fl[0] + t.fr[0]) / 2, t.fl[1]];
+  if (L.lb) s += `<text class="lb" x="${mfb[0]}" y="${yb + 22}" text-anchor="middle">${L.lb}</text>`;
+  if (L.lt) s += `<text class="lb" x="${(t.bl[0] + t.br[0]) / 2}" y="${t.bl[1] - 8}" text-anchor="middle">${L.lt}</text>`;
+  if (L.a) s += `<path class="dim g" d="M${sh(mfb)} L${sh(mft)}"/><text class="lb" x="${(mfb[0] + mft[0]) / 2 - 8}" y="${(yb + mft[1]) / 2 + 16}" text-anchor="end">${L.a}</text>`;
+  if (L.h) { const cb = [cx + B * dx / 2, yb - B * dy / 2]; s += `<path class="dim" d="M${sh(cb)} V${(cb[1] - hv).toFixed(1)}"/><text class="lb" x="${Math.max(cb[0] + 8, t.br[0] + 8)}" y="${cb[1] - hv / 2}">${L.h}</text>`; }
+  return s + '</svg>';
+}
+const fig = (svg, legenda) => `<figure class="viz lab-fig">${svg}${legenda ? `<figcaption>${legenda}</figcaption>` : ''}</figure>`;
+
+/* ---------- sorteios auxiliares ---------- */
+const TRIPLES = [[3, 4, 5], [6, 8, 10], [5, 12, 13], [9, 12, 15], [8, 15, 17], [12, 16, 20], [7, 24, 25]];
+const PI3 = '<b>Use π = 3.</b>';
+const PIF = '<b>Responda em função de π</b> (digite só o número que multiplica π).';
+
+const ENIGMAS = [
+  /* ===== BANCADA 1 · VOLUME DO TRONCO DE CONE ===== */
+  { s: 1, nome: 'Béquer de vidro', gen(t) {
+    const r = t.ri(2, 5); const R = r + t.ri(1, 4); const h = t.ri(4, 12); const S = R * R + R * r + r * r; const V = h * S;
+    return { ctx: `Um béquer tem a forma de tronco de cone, com a boca maior que o fundo. ${PI3}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
+      q: 'Qual é a <b>capacidade</b> do béquer, em mL?', unit: 'mL', ans: V,
+      sol: passo([`V = <span class="fr"><i>πh</i><i>3</i></span> · (R² + R·r + r²). Com π = 3: V = h · (R² + R·r + r²).`, `R² + R·r + r² = ${R * R} + ${R * r} + ${r * r} = ${S}.`, `V = ${h} · ${S} = <b>${V} cm³ = ${V} mL</b>.`]) };
+  } },
+  { s: 1, nome: 'Copo graduado', gen(t) {
+    const r = t.ri(2, 4); const R = r + t.ri(1, 3); const h = 3 * t.ri(2, 5); const S = R * R + R * r + r * r; const c = h / 3 * S;
+    return { ctx: `Um copo graduado tem forma de tronco de cone. ${PIF}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
+      q: 'Qual é o <b>volume</b> do copo, em cm³?', unit: 'π cm³', ans: c,
+      sol: passo([`V = <span class="fr"><i>π · ${h}</i><i>3</i></span> · (${R}² + ${R}·${r} + ${r}²) = ${h / 3}π · (${R * R} + ${R * r} + ${r * r}).`, `${h / 3} · ${S} = ${c}.`, `V = <b>${c}π cm³</b>. Digite ${c}.`]) };
+  } },
+  { s: 1, nome: 'Balde de gelo', gen(t) {
+    let r; let R; let h; let V; do { r = t.ri(4, 8); R = r + t.ri(2, 5); h = t.ri(10, 20); V = h * (R * R + R * r + r * r); } while (V % 10 !== 0);
+    return { ctx: `Um balde de gelo é um tronco de cone. ${PI3}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
+      q: 'Quantos <b>litros</b> cabem no balde?', unit: 'L', ans: V / 1000,
+      sol: passo([`V = ${h} · (${R * R} + ${R * r} + ${r * r}) = ${h} · ${R * R + R * r + r * r} = ${V} cm³.`, `${V} cm³ ÷ 1000 = <b>${fmt(V / 1000)} L</b>.`]) };
+  } },
+  { s: 1, nome: 'Altura do recipiente', gen(t) {
+    const r = t.ri(2, 5); const R = r + t.ri(1, 4); const h = t.ri(4, 12); const S = R * R + R * r + r * r; const V = h * S;
+    return { ctx: `Um recipiente em tronco de cone tem capacidade de <b>${V} mL</b>. ${PI3}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: 'h = ?' })),
+      q: 'Qual é a <b>altura</b> do recipiente, em cm?', unit: 'cm', ans: h,
+      sol: passo([`Com π = 3: V = h · (R² + R·r + r²).`, `${V} = h · (${R * R} + ${R * r} + ${r * r}) = h · ${S}.`, `h = ${V} ÷ ${S} = <b>${h} cm</b>.`]) };
+  } },
+  { s: 1, nome: 'Dois béqueres', gen(t) {
+    let a; let b; do { const r1 = t.ri(2, 4); const R1 = r1 + t.ri(1, 3); const h1 = t.ri(5, 10); const r2 = t.ri(2, 4); const R2 = r2 + t.ri(1, 3); const h2 = t.ri(5, 10); a = [R1, r1, h1, h1 * (R1 * R1 + R1 * r1 + r1 * r1)]; b = [R2, r2, h2, h2 * (R2 * R2 + R2 * r2 + r2 * r2)]; } while (a[3] === b[3]);
+    const d = Math.abs(a[3] - b[3]);
+    return { ctx: `Dois béqueres em tronco de cone estão na bancada. ${PI3}`, viz: `<div class="duo">${fig(cone(a[0], a[1], a[2], { rt: `${a[0]}`, rb: `${a[1]}`, h: `${a[2]}` }), 'Béquer A (cm)')}${fig(cone(b[0], b[1], b[2], { rt: `${b[0]}`, rb: `${b[1]}`, h: `${b[2]}` }), 'Béquer B (cm)')}</div>`,
+      q: 'Quantos mL o béquer <b>maior</b> comporta a mais que o outro?', unit: 'mL', ans: d,
+      sol: passo([`A: ${a[2]} · (${a[0] ** 2} + ${a[0] * a[1]} + ${a[1] ** 2}) = ${a[3]} mL.`, `B: ${b[2]} · (${b[0] ** 2} + ${b[0] * b[1]} + ${b[1] ** 2}) = ${b[3]} mL.`, `Diferença: <b>${d} mL</b>.`]) };
+  } },
+  { s: 1, nome: 'Frasco pela metade', gen(t) {
+    const r = t.ri(3, 6); const R = r + t.ri(1, 3); const h = t.ri(6, 12); const V = h * (R * R + R * r + r * r); const ocup = t.ri(2, 4) * 50; const liv = V - ocup;
+    return { ctx: `Um frasco em tronco de cone (boca maior) já tem <b>${ocup} mL</b> de solução dentro. ${PI3}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
+      q: 'Quantos mL ainda cabem no frasco?', unit: 'mL', ans: liv,
+      sol: passo([`Capacidade: ${h} · (${R * R} + ${R * r} + ${r * r}) = ${V} mL.`, `Cabem ainda: ${V} − ${ocup} = <b>${liv} mL</b>.`]) };
+  } },
+
+  /* ===== BANCADA 2 · GERATRIZ E ÁREAS DO TRONCO DE CONE ===== */
+  { s: 2, nome: 'Lateral do funil', gen(t) {
+    const [p, q, g] = t.pick(TRIPLES.slice(0, 5)); const [d, h] = t.ri(0, 1) ? [p, q] : [q, p]; const r = t.ri(1, 4); const R = r + d;
+    return { ctx: 'Um funil de vidro tem a forma de tronco de cone (sem as bases).', viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm`, g: 'g = ?' })),
+      q: 'Qual é a <b>geratriz</b> do funil, em cm?', unit: 'cm', ans: g,
+      sol: passo([`g² = h² + (R − r)² = ${h}² + (${R} − ${r})² = ${h * h} + ${d * d} = ${g * g}.`, `g = √${g * g} = <b>${g} cm</b>.`]) };
+  } },
+  { s: 2, nome: 'Filtro de papel', gen(t) {
+    const g = t.ri(5, 15); const r = t.ri(2, 5); const R = r + t.ri(1, 4); const A = 3 * (R + r) * g;
+    return { ctx: `Um filtro de papel cobre só a lateral de um tronco de cone. ${PI3}`, viz: fig(cone(R, r, Math.max(3, g - 1), { rt: `R = ${R} cm`, rb: `r = ${r} cm`, g: `g = ${g} cm` })),
+      q: 'Quantos cm² de papel tem o filtro?', unit: 'cm²', ans: A,
+      sol: passo([`A<sub>lateral</sub> = π · (R + r) · g = 3 · (${R} + ${r}) · ${g}.`, `= 3 · ${R + r} · ${g} = <b>${A} cm²</b>.`]) };
+  } },
+  { s: 2, nome: 'Rótulo do frasco', gen(t) {
+    const [d, h, g] = t.pick(TRIPLES.slice(0, 4)); const r = t.ri(2, 6); const R = r + d; const c = (R + r) * g;
+    return { ctx: `O rótulo cobre toda a lateral de um frasco em tronco de cone. ${PIF}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
+      q: 'Qual é a <b>área do rótulo</b>, em cm²?', unit: 'π cm²', ans: c,
+      sol: passo([`Primeiro a geratriz: g² = ${h}² + (${R} − ${r})² = ${h * h} + ${d * d} = ${g * g} → g = ${g} cm.`, `A<sub>lateral</sub> = π · (${R} + ${r}) · ${g} = ${c}π cm².`, `Digite <b>${c}</b>.`]) };
+  } },
+  { s: 2, nome: 'Peça fechada', gen(t) {
+    const g = t.ri(4, 12); const r = t.ri(1, 4); const R = r + t.ri(1, 4); const AL = (R + r) * g; const AT = AL + R * R + r * r;
+    return { ctx: `Uma peça maciça em tronco de cone vai ser pintada inteira, incluindo as duas bases. ${PIF}`, viz: fig(cone(R, r, Math.max(3, g - 1), { rt: `R = ${R} cm`, rb: `r = ${r} cm`, g: `g = ${g} cm` })),
+      q: 'Qual é a <b>área total</b> da peça, em cm²?', unit: 'π cm²', ans: AT,
+      sol: passo([`Lateral: π · (${R} + ${r}) · ${g} = ${AL}π.`, `Bases: π · ${R}² + π · ${r}² = ${R * R}π + ${r * r}π.`, `Total: ${AL}π + ${R * R}π + ${r * r}π = <b>${AT}π cm²</b>.`]) };
+  } },
+  { s: 2, nome: 'Copo sem tampa', gen(t) {
+    const [d, h, g] = t.pick(TRIPLES.slice(0, 4)); const r = t.ri(2, 5); const R = r + d; const A = 3 * ((R + r) * g + r * r);
+    return { ctx: `Um copo descartável (boca maior, fundo menor) é aberto em cima. ${PI3}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
+      q: 'Quantos cm² de plástico são usados no copo (lateral + fundo)?', unit: 'cm²', ans: A,
+      sol: passo([`Geratriz: g² = ${h * h} + ${d * d} = ${g * g} → g = ${g}.`, `Lateral: 3 · (${R} + ${r}) · ${g} = ${3 * (R + r) * g}.`, `Fundo: 3 · ${r}² = ${3 * r * r}.`, `Total: <b>${A} cm²</b>.`]) };
+  } },
+  { s: 2, nome: 'Altura pelo funil', gen(t) {
+    const [p, q, g] = t.pick(TRIPLES.slice(0, 5)); const [d, h] = t.ri(0, 1) ? [p, q] : [q, p]; const r = t.ri(1, 4); const R = r + d;
+    return { ctx: 'A geratriz de um funil em tronco de cone foi medida com uma régua flexível.', viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, g: `g = ${g} cm`, h: 'h = ?' })),
+      q: 'Qual é a <b>altura</b> do funil, em cm?', unit: 'cm', ans: h,
+      sol: passo([`g² = h² + (R − r)² → ${g * g} = h² + ${d * d}.`, `h² = ${g * g} − ${d * d} = ${h * h}.`, `h = <b>${h} cm</b>.`]) };
+  } },
+
+  /* ===== BANCADA 3 · VOLUME DO TRONCO DE PIRÂMIDE ===== */
+  { s: 3, nome: 'Frasco de base quadrada', gen(t) {
+    const l = t.ri(2, 6); const L = l + t.ri(2, 6); const h = 3 * t.ri(1, 5); const S = L * L + L * l + l * l; const V = h / 3 * S;
+    return { ctx: 'Um frasco tem a forma de tronco de pirâmide de bases quadradas.', viz: fig(pir(l, L, h, { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, h: `h = ${h} cm` })),
+      q: 'Qual é o <b>volume</b> do frasco, em cm³?', unit: 'cm³', ans: V,
+      sol: passo([`V = <span class="fr"><i>h</i><i>3</i></span> · (L² + L·ℓ + ℓ²).`, `L² + L·ℓ + ℓ² = ${L * L} + ${L * l} + ${l * l} = ${S}.`, `V = ${h / 3} · ${S} = <b>${V} cm³</b>.`]) };
+  } },
+  { s: 3, nome: 'Bases dadas pela área', gen(t) {
+    const pr = t.pick([[4, 1], [9, 4], [16, 9], [25, 16], [36, 9], [64, 25], [100, 36], [49, 16], [81, 25]]); const [B, b] = pr; const h = 3 * t.ri(1, 6); const rq = Math.sqrt(B * b); const V = h / 3 * (B + b + rq);
+    return { ctx: `Um reservatório em tronco de pirâmide tem base maior de área <b>${B} dm²</b>, base menor de área <b>${b} dm²</b> e altura <b>${h} dm</b>.`, viz: contrato([['Base maior (B)', `${B} dm²`], ['Base menor (b)', `${b} dm²`], ['Altura (h)', `${h} dm`]]),
+      q: 'Qual é a capacidade do reservatório, em <b>litros</b>? (1 dm³ = 1 L)', unit: 'L', ans: V,
+      sol: passo([`√(B · b) = √(${B} · ${b}) = √${B * b} = ${rq}.`, `V = <span class="fr"><i>${h}</i><i>3</i></span> · (${B} + ${b} + ${rq}) = ${h / 3} · ${B + b + rq} = <b>${V} dm³ = ${V} L</b>.`]) };
+  } },
+  { s: 3, nome: 'Pirâmide invertida', gen(t) {
+    const l = t.ri(2, 5); const L = l + t.ri(2, 5); const h = 3 * t.ri(2, 5); const S = L * L + L * l + l * l; const V = h / 3 * S;
+    return { ctx: 'Um recipiente de base quadrada é mais largo em cima (boca) do que embaixo (fundo).', viz: fig(pir(L, l, h, { lt: `L = ${L} cm`, lb: `ℓ = ${l} cm`, h: `h = ${h} cm` })),
+      q: 'Quantos mL cabem no recipiente?', unit: 'mL', ans: V,
+      sol: passo(['A posição não muda a fórmula: B é sempre a base maior.', `V = <span class="fr"><i>${h}</i><i>3</i></span> · (${L * L} + ${L * l} + ${l * l}) = ${h / 3} · ${S} = <b>${V} cm³ = ${V} mL</b>.`]) };
+  } },
+  { s: 3, nome: 'Altura do reservatório', gen(t) {
+    const l = t.ri(2, 6); const L = l + t.ri(2, 6); const h = 3 * t.ri(1, 5); const S = L * L + L * l + l * l; const V = h / 3 * S;
+    return { ctx: `Um reservatório em tronco de pirâmide de bases quadradas tem volume de <b>${V} cm³</b>.`, viz: fig(pir(l, L, h, { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, h: 'h = ?' })),
+      q: 'Qual é a <b>altura</b>, em cm?', unit: 'cm', ans: h,
+      sol: passo([`${V} = <span class="fr"><i>h</i><i>3</i></span> · (${L * L} + ${L * l} + ${l * l}) = <span class="fr"><i>h</i><i>3</i></span> · ${S}.`, `h = 3 · ${V} ÷ ${S} = <b>${h} cm</b>.`]) };
+  } },
+  { s: 3, nome: 'Tronco ou prisma?', gen(t) {
+    const l = t.ri(2, 5); const L = l + 2 * t.ri(1, 3); const h = 3 * t.ri(1, 4); const V = h / 3 * (L * L + L * l + l * l); const m = (L + l) / 2; const Vp = m * m * h; const d = V - Vp;
+    return { ctx: `Um técnico estimou o volume de um tronco de pirâmide (L = ${L} cm, ℓ = ${l} cm, h = ${h} cm) como se fosse um prisma de base quadrada com lado igual à média dos lados, ${m} cm.`, viz: fig(pir(l, L, h, { lb: `L = ${L}`, lt: `ℓ = ${l}`, h: `h = ${h}` })),
+      q: 'A estimativa ficou <b>abaixo</b> do volume verdadeiro. Por quantos cm³?', unit: 'cm³', ans: d,
+      sol: passo([`Estimativa (prisma): ${m}² · ${h} = ${Vp} cm³.`, `Verdadeiro: <span class="fr"><i>${h}</i><i>3</i></span> · (${L * L} + ${L * l} + ${l * l}) = ${V} cm³.`, `Diferença: ${V} − ${Vp} = <b>${d} cm³</b>. A média dos lados não serve para o tronco: use a fórmula.`]) };
+  } },
+  { s: 3, nome: 'Massa da solução', gen(t) {
+    const l = t.ri(2, 5); const L = l + t.ri(2, 4); const h = 3 * t.ri(1, 4); const V = h / 3 * (L * L + L * l + l * l); const dens = t.pick([1.2, 1.5, 0.8]); const m = V * dens;
+    return { ctx: `Um frasco em tronco de pirâmide quadrada (L = ${L} cm, ℓ = ${l} cm, h = ${h} cm) está cheio de uma solução de densidade <b>${fmt(dens)} g/cm³</b>.`, viz: fig(pir(l, L, h, { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, h: `h = ${h} cm` })),
+      q: 'Qual é a <b>massa</b> da solução, em gramas?', unit: 'g', ans: m,
+      sol: passo([`V = ${h / 3} · (${L * L} + ${L * l} + ${l * l}) = ${V} cm³.`, `Massa = densidade · volume = ${fmt(dens)} · ${V} = <b>${fmt(m)} g</b>.`]) };
+  } },
+
+  /* ===== BANCADA 4 · APÓTEMA E ÁREAS DO TRONCO DE PIRÂMIDE ===== */
+  { s: 4, nome: 'Apótema da caixa', gen(t) {
+    const [p, q, a] = t.pick(TRIPLES.slice(0, 5)); const [d, h] = t.ri(0, 1) ? [p, q] : [q, p]; const l = t.ri(2, 6); const L = l + 2 * d;
+    return { ctx: 'Uma caixa de reagentes tem forma de tronco de pirâmide de bases quadradas.', viz: fig(pir(l, L, h, { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, h: `h = ${h} cm`, a: 'a = ?' })),
+      q: 'Qual é o <b>apótema do tronco</b> (altura de cada face lateral), em cm?', unit: 'cm', ans: a,
+      sol: passo([`(L − ℓ) ÷ 2 = (${L} − ${l}) ÷ 2 = ${d}.`, `a² = h² + ${d}² = ${h * h} + ${d * d} = ${a * a}.`, `a = <b>${a} cm</b>.`]) };
+  } },
+  { s: 4, nome: 'Uma face lateral', gen(t) {
+    const a = t.ri(4, 15); const l = t.ri(2, 8); const L = l + 2 * t.ri(1, 4); const A = (L + l) * a / 2;
+    return { ctx: 'Cada face lateral de um tronco de pirâmide quadrada é um trapézio.', viz: fig(pir(l, L, Math.max(3, a - 1), { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, a: `a = ${a} cm` })),
+      q: 'Qual é a área de <b>uma</b> face lateral, em cm²?', unit: 'cm²', ans: A,
+      sol: passo([`Trapézio: <span class="fr"><i>(L + ℓ) · a</i><i>2</i></span> = <span class="fr"><i>(${L} + ${l}) · ${a}</i><i>2</i></span>.`, `= <span class="fr"><i>${(L + l) * a}</i><i>2</i></span> = <b>${fmt(A)} cm²</b>.`]) };
+  } },
+  { s: 4, nome: 'Capa lateral', gen(t) {
+    const a = t.ri(4, 15); const l = t.ri(2, 8); const L = l + 2 * t.ri(1, 4); const A = 2 * (L + l) * a;
+    return { ctx: 'Uma capa de acrílico cobre as 4 faces laterais de um tronco de pirâmide quadrada.', viz: fig(pir(l, L, Math.max(3, a - 1), { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, a: `a = ${a} cm` })),
+      q: 'Quantos cm² de acrílico tem a capa?', unit: 'cm²', ans: A,
+      sol: passo([`Uma face: <span class="fr"><i>(${L} + ${l}) · ${a}</i><i>2</i></span> = ${(L + l) * a / 2}.`, `4 faces: 4 · ${(L + l) * a / 2} = 2 · (L + ℓ) · a = <b>${A} cm²</b>.`]) };
+  } },
+  { s: 4, nome: 'Embalagem completa', gen(t) {
+    const [d, h, a] = t.pick(TRIPLES.slice(0, 4)); const l = t.ri(2, 6); const L = l + 2 * d; const AL = 2 * (L + l) * a; const AT = AL + L * L + l * l;
+    return { ctx: 'Uma embalagem fechada (com as duas bases) tem forma de tronco de pirâmide quadrada.', viz: fig(pir(l, L, h, { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, h: `h = ${h} cm` })),
+      q: 'Qual é a <b>área total</b> da embalagem, em cm²?', unit: 'cm²', ans: AT,
+      sol: passo([`Apótema: a² = ${h}² + ((${L} − ${l}) ÷ 2)² = ${h * h} + ${d * d} = ${a * a} → a = ${a}.`, `Lateral: 2 · (${L} + ${l}) · ${a} = ${AL}.`, `Bases: ${L}² + ${l}² = ${L * L + l * l}.`, `Total: <b>${AT} cm²</b>.`]) };
+  } },
+  { s: 4, nome: 'Altura pelo apótema', gen(t) {
+    const [p, q, a] = t.pick(TRIPLES.slice(0, 5)); const [d, h] = t.ri(0, 1) ? [p, q] : [q, p]; const l = t.ri(2, 6); const L = l + 2 * d;
+    return { ctx: 'Em uma caixa em tronco de pirâmide quadrada, o apótema de cada face lateral foi medido.', viz: fig(pir(l, L, h, { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, a: `a = ${a} cm`, h: 'h = ?' })),
+      q: 'Qual é a <b>altura</b> da caixa, em cm?', unit: 'cm', ans: h,
+      sol: passo([`(L − ℓ) ÷ 2 = ${d}.`, `a² = h² + ${d}² → ${a * a} = h² + ${d * d} → h² = ${h * h}.`, `h = <b>${h} cm</b>.`]) };
+  } },
+  { s: 4, nome: 'Bandeja sem tampa', gen(t) {
+    const [d, h, a] = t.pick(TRIPLES.slice(0, 4)); const l = t.ri(4, 10); const L = l + 2 * d; const A = 2 * (L + l) * a + l * l;
+    return { ctx: 'Uma bandeja aberta em cima tem forma de tronco de pirâmide quadrada invertido: a boca (lado L) é maior que o fundo (lado ℓ).', viz: fig(pir(L, l, h, { lt: `L = ${L} cm`, lb: `ℓ = ${l} cm`, h: `h = ${h} cm` })),
+      q: 'Quantos cm² de chapa formam a bandeja (laterais + fundo)?', unit: 'cm²', ans: A,
+      sol: passo([`a² = ${h * h} + ${d * d} = ${a * a} → a = ${a}.`, `Laterais: 2 · (${L} + ${l}) · ${a} = ${2 * (L + l) * a}.`, `Fundo: ${l}² = ${l * l}. Total: <b>${A} cm²</b>.`]) };
+  } },
+
+  /* ===== BANCADA 5 · TRANSFERÊNCIAS ===== */
+  { s: 5, nome: 'Do béquer para a proveta', gen(t) {
+    let r; let R; let h; let V; let rc; let hc; do { r = t.ri(2, 4); R = r + t.ri(1, 3); h = t.ri(5, 10); V = h * (R * R + R * r + r * r); rc = t.pick([2, 3, 4, 5]); hc = V / (3 * rc * rc); } while (Math.abs(hc * 100 - Math.round(hc * 100)) > 1e-6);
+    return { ctx: `Todo o líquido de um béquer cheio (tronco de cone) foi despejado numa proveta cilíndrica de raio <b>${rc} cm</b>. ${PI3}`, viz: fig(cone(R, r, h, { rt: `R = ${R}`, rb: `r = ${r}`, h: `h = ${h}` }, FASES[4].liq), 'Béquer (medidas em cm)'),
+      q: 'Que <b>altura</b> o líquido atinge na proveta, em cm?', unit: 'cm', ans: r2(hc),
+      sol: passo([`Béquer: ${h} · (${R * R} + ${R * r} + ${r * r}) = ${V} cm³.`, `Proveta: V = 3 · ${rc}² · H = ${3 * rc * rc} · H.`, `H = ${V} ÷ ${3 * rc * rc} = <b>${fmt(hc)} cm</b>.`]) };
+  } },
+  { s: 5, nome: 'Vai transbordar?', gen(t) {
+    let a; let b; do { const r1 = t.ri(3, 5); const R1 = r1 + t.ri(1, 3); const h1 = t.ri(6, 10); a = [R1, r1, h1, h1 * (R1 * R1 + R1 * r1 + r1 * r1)]; const l = t.ri(2, 5); const L = l + t.ri(2, 4); const h2 = 3 * t.ri(2, 4); b = [L, l, h2, h2 / 3 * (L * L + L * l + l * l)]; } while (a[3] <= b[3]);
+    const x = a[3] - b[3];
+    return { ctx: `Um béquer cheio (tronco de cone) será esvaziado num frasco em tronco de pirâmide quadrada, inicialmente vazio. ${PI3}`, viz: `<div class="duo">${fig(cone(a[0], a[1], a[2], { rt: `${a[0]}`, rb: `${a[1]}`, h: `${a[2]}` }), 'Béquer (cm)')}${fig(pir(b[1], b[0], b[2], { lb: `${b[0]}`, lt: `${b[1]}`, h: `${b[2]}` }), 'Frasco (cm)')}</div>`,
+      q: 'Quantos mL vão <b>transbordar</b>?', unit: 'mL', ans: x,
+      sol: passo([`Béquer: ${a[2]} · (${a[0] ** 2} + ${a[0] * a[1]} + ${a[1] ** 2}) = ${a[3]} mL.`, `Frasco: <span class="fr"><i>${b[2]}</i><i>3</i></span> · (${b[0] ** 2} + ${b[0] * b[1]} + ${b[1] ** 2}) = ${b[3]} mL.`, `Transborda: ${a[3]} − ${b[3]} = <b>${x} mL</b>.`]) };
+  } },
+  { s: 5, nome: 'Torneira dosadora', gen(t) {
+    const l = t.ri(2, 5); const L = l + t.ri(2, 5); const h = 3 * t.ri(2, 5); const V = h / 3 * (L * L + L * l + l * l); const Q = t.pick([2, 4, 5, 10]);
+    return { ctx: `Uma torneira dosadora despeja <b>${Q} mL por segundo</b> num reservatório vazio em tronco de pirâmide quadrada.`, viz: fig(pir(l, L, h, { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, h: `h = ${h} cm` })),
+      q: 'Em quantos <b>segundos</b> o reservatório fica cheio?', unit: 's', ans: r2(V / Q),
+      sol: passo([`V = ${h / 3} · (${L * L} + ${L * l} + ${l * l}) = ${V} cm³ = ${V} mL.`, `Tempo = ${V} ÷ ${Q} = <b>${fmt(V / Q)} s</b>.`]) };
+  } },
+  { s: 5, nome: 'Garrafões', gen(t) {
+    const r = t.ri(5, 10); const R = r + t.ri(2, 5); const h = t.ri(10, 25); const V = h * (R * R + R * r + r * r); const cap = t.pick([250, 500]); const n = Math.floor(V / cap);
+    return { ctx: `Um tanque de solução tem forma de tronco de cone. Ele será dividido em frascos de <b>${cap} mL</b>. ${PI3}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
+      q: 'Quantos frascos ficam <b>completamente cheios</b>?', unit: 'frascos', ans: n,
+      sol: passo([`V = ${h} · (${R * R} + ${R * r} + ${r * r}) = ${V} mL.`, `${V} ÷ ${cap} = ${fmt(V / cap)}.`, `Frascos cheios: <b>${n}</b> (a parte decimal é o frasco incompleto).`]) };
+  } },
+  { s: 5, nome: 'Cone ou pirâmide?', gen(t) {
+    let c; let p; do { const r = t.ri(2, 4); const R = r + t.ri(1, 3); const h = 3 * t.ri(2, 4); c = [R, r, h, h * (R * R + R * r + r * r)]; const l = t.ri(2, 5); const L = l + t.ri(1, 4); p = [L, l, h, h / 3 * (L * L + L * l + l * l)]; } while (c[3] === p[3]);
+    const d = Math.abs(c[3] - p[3]);
+    return { ctx: `Dois recipientes de mesma altura <b>${c[2]} cm</b>: um tronco de cone (R = ${c[0]} cm, r = ${c[1]} cm) e um tronco de pirâmide quadrada (L = ${p[0]} cm, ℓ = ${p[1]} cm). ${PI3}`, viz: `<div class="duo">${fig(cone(c[0], c[1], c[2], { rt: `${c[0]}`, rb: `${c[1]}`, h: `${c[2]}` }), 'Tronco de cone')}${fig(pir(p[1], p[0], p[2], { lb: `${p[0]}`, lt: `${p[1]}`, h: `${p[2]}` }), 'Tronco de pirâmide')}</div>`,
+      q: 'Qual é a <b>diferença</b> entre as capacidades, em mL?', unit: 'mL', ans: d,
+      sol: passo([`Cone: ${c[2]} · (${c[0] ** 2} + ${c[0] * c[1]} + ${c[1] ** 2}) = ${c[3]} mL.`, `Pirâmide: <span class="fr"><i>${p[2]}</i><i>3</i></span> · (${p[0] ** 2} + ${p[0] * p[1]} + ${p[1] ** 2}) = ${p[3]} mL.`, `Diferença: <b>${d} mL</b>.`]) };
+  } },
+  { s: 5, nome: 'O grande reservatório', gen(t) {
+    const pr = t.pick([[16, 4], [36, 16], [25, 9], [64, 16], [100, 25], [49, 9]]); const [B, b] = pr; const h = 3 * t.ri(1, 4); const V = h / 3 * (B + b + Math.sqrt(B * b)); const m = h === 3 ? 2 : 3; const custo = V * m;
+    return { ctx: `O reservatório principal do laboratório é um tronco de pirâmide de bases com áreas <b>${B} m²</b> e <b>${b} m²</b> e altura <b>${h} m</b>. Encher 1 m³ de água destilada custa <b>R$ ${m},00</b>.`, viz: contrato([['Base maior', `${B} m²`], ['Base menor', `${b} m²`], ['Altura', `${h} m`], ['Custo', `R$ ${m},00 por m³`]]),
+      q: 'Quanto custa encher o reservatório, em reais?', unit: 'R$', ans: custo,
+      sol: passo([`√(${B} · ${b}) = ${Math.sqrt(B * b)}.`, `V = <span class="fr"><i>${h}</i><i>3</i></span> · (${B} + ${b} + ${Math.sqrt(B * b)}) = ${V} m³.`, `Custo: ${V} · ${m} = <b>${brl(custo)}</b>.`]) };
+  } },
+];
+
+const numFmt = (v, d) => Number(v).toLocaleString('pt-BR', { maximumFractionDigits: d == null ? 2 : d });
+const parseBR = (s) => { const t = String(s).replace(/\s/g, '').replace(',', '.'); return t === '' || t === '.' ? NaN : Number(t); };
+
+/* ---------- teclado numérico ---------- */
+function keypad(host, o) {
+  const opt = Object.assign({ unit: '', pi: false, int: false, label: 'Sua resposta' }, o || {});
+  let val = ''; let locked = false;
+  host.innerHTML = `<div class="kp">
+    <div class="kp-screen"><span class="kp-l">${opt.label}</span><div class="kp-v"><b class="kp-num">&nbsp;</b>${opt.pi ? '<i class="kp-pi">π</i>' : ''}<span class="kp-u">${opt.unit}</span></div></div>
+    <div class="kp-keys">${['7', '8', '9', '4', '5', '6', '1', '2', '3', opt.int ? '' : ',', '0', '⌫'].map((k) => (k ? `<button type="button" data-k="${k}" ${k === '⌫' ? 'aria-label="Apagar"' : ''}>${k}</button>` : '<span></span>')).join('')}</div>
+  </div>`;
+  const num = host.querySelector('.kp-num');
+  const show = () => { num.textContent = val || ' '; num.classList.toggle('empty', !val); };
+  const press = (k) => {
+    if (locked) return;
+    if (k === '⌫') val = val.slice(0, -1);
+    else if (k === ',') { if (!val.includes(',')) val = (val || '0') + ','; } else if (val.replace(',', '').length < (opt.code ? 6 : 9)) val = val === '0' && !opt.code ? k : val + k;
+    show(); if (opt.onChange) opt.onChange(val);
+  };
+  host.querySelector('.kp-keys').addEventListener('click', (e) => { const b = e.target.closest('button[data-k]'); if (b) press(b.dataset.k); });
+  const kb = (e) => {
+    if (locked || e.target.tagName === 'INPUT' || document.querySelector('.veil')) return;
+    if (/^[0-9]$/.test(e.key)) press(e.key); else if ((e.key === ',' || e.key === '.') && !opt.int) press(','); else if (e.key === 'Backspace') press('⌫'); else return;
+    e.preventDefault();
+  };
+  document.addEventListener('keydown', kb);
+  KEYHANDLERS.push(() => document.removeEventListener('keydown', kb));
+  show();
+  return { get: () => parseBR(val), raw: () => val, set: (v) => { val = String(v).replace('.', ','); show(); }, lock: () => { locked = true; host.classList.add('locked'); }, unlock: () => { locked = false; host.classList.remove('locked'); }, clear: () => { val = ''; show(); } };
+}
+const KEYHANDLERS = [];
+function clearKeyHandlers() { while (KEYHANDLERS.length) KEYHANDLERS.pop()(); }
+
+
+function buzz() { try { if (navigator.vibrate) navigator.vibrate(8); } catch (e) { /* */ } }
+
+/* =========================================================
+   LABORATÓRIO DOS TRONCOS — ranking online e painel ao vivo
+   (servidor Apps Script, projeto p = 'lab')
+   ========================================================= */
+const SYNC_URL = 'https://script.google.com/macros/s/AKfycbzYd8FOYRRHc4YmuPpa1jbLA6UvFyTrqyZy0cbdCebQs22HiBGS7kv6wGJZ2DZ2wVRxZg/exec';
+const urlOk = () => /^https:\/\/script\.google\.com\//.test(SYNC_URL) && !/claude/i.test(location.hostname);
+let srvOk = null; // o servidor só recebe dados depois de confirmar que conhece este jogo
+const syncOn = () => urlOk() && srvOk === true;
+let teacherKey = '';
+let onlineWhere = '';
+let hbTimer = 0; let profTimer = 0;
+let pubCache = null; let pubAt = 0;
+let prof = { data: null, filtro: 'todas', aba: 'vivo', pod: 0, err: false };
+
+const slugOf = (s) => norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50);
+function snapshot() {
+  const solsArr = FASES.map((f) => ({ pts: ptsSala(f.n), em: (S.salaAt && S.salaAt[f.n]) || 0 }));
+  return {
+    id: S.sid, nome: S.name, turma: S.turma, tent: S.seed.toString(36), pts: pontos(), rank: rankLabel(),
+    pecas: feitos(), ft: dePrimeira(), o2: minRest(), sol: salaAtual(), peca: onlineWhere || 'Na planta', sols: solsArr, fim: S.finished ? S.t1 || Date.now() : 0, saidas: S.saidas || 0,
+  };
+}
+function syncPost(ev, batida) {
+  if (!syncOn() || !S || !S.sid || projection) return;
+  try {
+    fetch(SYNC_URL, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ p: 'lab', s: snapshot(), ev: (ev || []).map((x) => Object.assign({ t: Date.now() }, x)), batida: !!batida }) }).catch(() => {});
+  } catch (e) { /* sem rede */ }
+}
+const syncEv = (ev) => syncPost(ev, false);
+function heartbeat() {
+  clearInterval(hbTimer); hbTimer = 0;
+  if (!syncOn() || !S || S.finished) return;
+  hbTimer = setInterval(() => { if (!document.hidden && S && !S.finished) syncPost([], true); }, 30000);
+}
+let jsonpN = 0;
+function jsonp(params) {
+  return new Promise((res, rej) => {
+    const cb = '__lab' + (++jsonpN) + '_' + Date.now();
+    const tag = document.createElement('script');
+    const done = (v, err) => { clearTimeout(tm); try { delete window[cb]; } catch (e) { window[cb] = undefined; } tag.remove(); err ? rej(err) : res(v); };
+    const tm = setTimeout(() => done(null, new Error('tempo')), 15000);
+    window[cb] = (d) => done(d);
+    tag.onerror = () => done(null, new Error('rede'));
+    tag.src = `${SYNC_URL}?${new URLSearchParams(Object.assign({ p: 'lab', callback: cb, _: Date.now() }, params))}`;
+    document.head.appendChild(tag);
+  });
+}
+function probe() {
+  if (!urlOk() || srvOk !== null) return;
+  srvOk = false;
+  jsonp({ acao: 'publico' }).then((d) => { srvOk = !!(d && d.ok && Array.isArray(d.sois)); if (srvOk && S && !S.finished) { syncPost([], false); heartbeat(); } }).catch(() => { srvOk = null; });
+}
+setTimeout(probe, 300);
+async function getPub(force) {
+  if (!force && pubCache && Date.now() - pubAt < 15000) return pubCache;
+  const d = await jsonp({ acao: 'publico' });
+  if (d && d.ok) { pubCache = d; pubAt = Date.now(); }
+  return d;
+}
+const MEDAL = ['🥇', '🥈', '🥉'];
+const shortName = (n) => { const p = String(n).trim().split(/\s+/); return p[0] + (p.length > 1 ? ' ' + p[p.length - 1].charAt(0).toUpperCase() + '.' : ''); };
+const isMe = (r) => S && r.turma === S.turma && r.nome === shortName(S.name);
+const hhmm = (t) => (t ? new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '');
+function podiumHTML(rows, kind, limit) {
+  if (!rows || !rows.length) return '<p class="muted">Ninguém concluiu esta bancada ainda. Você pode ser o primeiro!</p>';
+  const lim = limit || 10; let list = rows.slice(0, lim);
+  const mine = rows.findIndex(isMe);
+  const li = (r, i) => `<li class="${isMe(r) ? 'me' : ''} ${i < 3 ? 'top' : ''}"><span class="p-n">${MEDAL[i] || i + 1}</span><b>${esc(r.nome)}</b><span class="p-t">${esc(r.turma)}</span>${kind === 'final' ? `<span class="p-r">${esc(r.rank || '')} · ${r.o2} frascos cheios</span>` : ''}<b class="p-p">${r.pts}<small> pts</small></b></li>`;
+  let h = `<ol class="podium">${list.map(li).join('')}</ol>`;
+  if (mine >= lim) h += `<p class="p-mine">Sua posição: <b>${mine + 1}º</b> de ${rows.length}, com ${rows[mine].pts} pontos.</p>`;
+  else if (mine >= 0) h += `<p class="p-mine">Você está em <b>${mine + 1}º</b> lugar de ${rows.length}!</p>`;
+  return h;
+}
+async function fillPodium(el, idx, kind, limit) {
+  if (!el) return;
+  if (!syncOn()) { el.innerHTML = `<p class="muted">${urlOk() ? 'O ranking online deste jogo ainda vai ser ativado pelo professor. Seu resultado fica salvo neste aparelho.' : 'O ranking online aparece no site publicado.'}</p>`; return; }
+  el.innerHTML = '<p class="muted pulse">Buscando a classificação geral…</p>';
+  try {
+    const d = await getPub(true);
+    if (!el.isConnected) return;
+    el.innerHTML = podiumHTML(kind === 'final' ? d.final : d.sois[idx], kind, limit);
+  } catch (e) { if (el.isConnected) el.innerHTML = '<p class="muted">Sem conexão com a central do laboratório. Tente de novo em instantes.</p>'; }
+}
+
+/* ---------- painel do professor ---------- */
+const agoTxt = (t, now) => { if (!t) return '—'; const s = Math.max(0, Math.round((now - t) / 1000)); return s < 60 ? 'agora' : s < 3600 ? `há ${Math.round(s / 60)} min` : `há ${Math.round(s / 3600)} h`; };
+function profHTML() {
+  if (!syncOn()) return urlOk() ? '<p class="muted">O servidor do ranking ainda não conhece este jogo. Publique a nova versão do Apps Script (Implantar → Gerenciar implantações → Nova versão) e recarregue esta página.</p>' : '<p class="muted">O painel ao vivo funciona no site publicado (mateusbibiano.github.io).</p>';
+  if (!teacherKey) return '<p class="muted">Entre de novo pela senha para ver o painel ao vivo.</p>';
+  const d = prof.data;
+  if (!d) return `<p class="muted pulse">${prof.err ? 'Sem conexão com o servidor. Tentando de novo…' : 'Conectando à central do laboratório…'}</p>`;
+  if (!d.ok) return '<p class="err">O servidor recusou a senha. Saia e entre de novo.</p>';
+  const now = d.agora; const f = prof.filtro;
+  const byT = (a) => f === 'todas' || a.turma === f;
+  const alunos = d.alunos.filter(byT).sort((a, b) => (b.visto || 0) - (a.visto || 0));
+  const online = alunos.filter((a) => !a.fim && a.visto && now - a.visto < 90000);
+  const tabs = [['vivo', `Ao vivo (${online.length})`], ['pod', 'Pódios das bancadas'], ['final', `Ranking final (${d.final.filter(byT).length})`], ['todos', `Todos (${alunos.length})`]];
+  let body = '';
+  const row = (a) => {
+    const on = !a.fim && a.visto && now - a.visto < 90000;
+    return `<tr class="${on ? 'on' : ''}"><td><span class="dot ${on ? 'on' : a.fim ? 'fim' : ''}"></span></td><td><b>${esc(a.nome)}</b><small>${esc(a.turma)}</small></td>
+      <td>${a.fim ? `<b class="ok">Concluiu o laboratório</b> <small>${esc(a.rank || '')}</small>` : `Bancada ${a.sol} <small>${esc(a.peca || '')}</small>`}</td><td class="num">${a.pecas}/30</td><td class="num">${a.ft}</td><td class="num">${a.pts}</td><td class="num">${a.o2}</td><td class="num ${a.saidas ? 'warn' : ''}">${a.saidas || 0}</td><td class="muted">${agoTxt(a.visto, now)}</td></tr>`;
+  };
+  const table = (arr) => (arr.length ? `<div class="tscroll"><table class="live"><thead><tr><th></th><th>Aluno</th><th>Onde está</th><th>Análises</th><th>De primeira</th><th>Pontos</th><th>Frascos cheios</th><th>Saídas</th><th>Visto</th></tr></thead><tbody>${arr.map(row).join('')}</tbody></table></div>` : '<p class="muted">Ninguém por aqui ainda.</p>');
+  if (prof.aba === 'vivo') body = `${table(online)}<h3 class="feed-h">Atividade recente</h3><ul class="feed">${d.eventos.filter(byT).slice(0, 18).map((e) => `<li><span class="muted">${hhmm(e.t)}</span> <b>${esc(e.nome)}</b> (${esc(e.turma)}) · ${esc(e.ev)}${e.det ? ` · ${esc(e.det)}` : ''}${e.ev === 'Concluiu a bancada' || e.ev === 'Concluiu o laboratório' ? ` · <b>${e.pts} pts</b>` : ''}</li>`).join('') || '<li class="muted">Nada ainda.</li>'}</ul>`;
+  if (prof.aba === 'todos') body = table(alunos);
+  if (prof.aba === 'pod') {
+    body = `<div class="seg-tabs">${FASES.map((s, i) => `<button class="${prof.pod === i ? 'on' : ''}" data-act="prof-pod" data-i="${i}">Bancada ${s.n}</button>`).join('')}</div>
+      <p class="muted">${FASES[prof.pod].nome} · ${FASES[prof.pod].tema}. Pontos na bancada (100 de primeira, 50 na segunda tentativa). Melhor tentativa de cada aluno; no empate, quem terminou primeiro.</p>
+      ${profRank(d.sois[prof.pod].filter(byT), false)}`;
+  }
+  if (prof.aba === 'final') body = profRank(d.final.filter(byT), true);
+  return `<div class="prof-bar"><div class="seg-tabs">${['todas'].concat(TURMAS).map((t) => `<button class="${f === t ? 'on' : ''}" data-act="prof-filtro" data-id="${t}">${t === 'todas' ? 'Todas' : t}</button>`).join('')}</div>
+    <span class="muted live-tag"><span class="dot on"></span> atualiza sozinho · ${hhmm(now)}</span></div>
+    <div class="seg-tabs big">${tabs.map(([k, t]) => `<button class="${prof.aba === k ? 'on' : ''}" data-act="prof-aba" data-id="${k}">${t}</button>`).join('')}</div>
+    <div class="prof-body">${body}</div>
+    ${d.planilha ? `<p><a class="link" href="${esc(d.planilha)}" target="_blank" rel="noopener">Abrir a planilha completa</a></p>` : ''}`;
+}
+function profRank(rows, fin) {
+  if (!rows.length) return '<p class="muted">Ninguém concluiu ainda.</p>';
+  return `<ol class="podium prof">${rows.map((r, i) => `<li class="${i < 3 ? 'top' : ''}"><span class="p-n">${MEDAL[i] || i + 1}</span><b>${esc(r.nome)}</b><span class="p-t">${esc(r.turma)}</span>${fin ? `<span class="p-r">${esc(r.rank)} · ${r.ft}/30 de primeira · ${r.o2} frascos cheios${r.saidas ? ` · <span class="warn">${r.saidas} ${r.saidas === 1 ? 'saída' : 'saídas'} da tela</span>` : ''}</span>` : ''}<span class="muted">${hhmm(r.em)}</span><b class="p-p">${r.pts}</b></li>`).join('')}</ol>`;
+}
+function renderProf() { const el = document.getElementById('prof-live'); if (el) el.innerHTML = profHTML(); }
+async function loadProf() {
+  if (!syncOn() || !teacherKey) { renderProf(); return; }
+  try { prof.data = await jsonp({ chave: teacherKey }); prof.err = false; } catch (e) { prof.err = true; }
+  renderProf();
+}
+function startProf() { clearInterval(profTimer); renderProf(); loadProf(); profTimer = setInterval(() => { if (!document.hidden) loadProf(); }, 8000); }
+function stopProf() { clearInterval(profTimer); profTimer = 0; }
+
+/* =========================================================
+   MODO SEGURANÇA — tela cheia durante a missão e registro de saídas
+   ========================================================= */
+const DOCEL = document.documentElement;
+const fsOK = () => !!(DOCEL.requestFullscreen || DOCEL.webkitRequestFullscreen) && !/claude/i.test(location.hostname);
+const isFull = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+const focoOn = () => !!S && !S.finished && !projection && ['mapa', 'sala', 'enigma', 'porta'].includes(screen);
+let awayAt = 0;
+function enterFull() { if (!fsOK() || isFull()) return; try { const r = (DOCEL.requestFullscreen || DOCEL.webkitRequestFullscreen).call(DOCEL); if (r && r.catch) r.catch(() => {}); } catch (e) { /* ok */ } }
+function exitFull() { if (!isFull()) return; try { const r = (document.exitFullscreen || document.webkitExitFullscreen).call(document); if (r && r.catch) r.catch(() => {}); } catch (e) { /* ok */ } }
+function guard(kind, dur) {
+  let g = document.getElementById('guard');
+  if (!g) { g = document.createElement('div'); g.id = 'guard'; g.setAttribute('role', 'alertdialog'); g.setAttribute('aria-modal', 'true'); document.body.appendChild(g); }
+  const n = (S && S.saidas) || 0;
+  g.innerHTML = `<div class="guard-box"><span class="guard-ic">⚠</span>
+    <small>ALERTA DA SEGURANÇA</small>
+    <h2>${kind === 'away' ? 'Você saiu do banco' : 'O banco só abre em tela cheia'}</h2>
+    <p>${kind === 'away' ? 'Sair para outra guia ou aplicativo fica registrado e aparece para o professor.' : 'Volte para a tela cheia para continuar a missão. Saídas para outras guias ficam registradas.'}</p>
+    <dl><div><dt>Saídas registradas</dt><dd>${n}</dd></div>${kind === 'away' ? `<div><dt>Tempo fora</dt><dd>${dur} s</dd></div>` : ''}</dl>
+    <button type="button" class="btn hot big" id="guard-back">${fsOK() ? 'Voltar para a tela cheia' : 'Voltar para a missão'}</button></div>`;
+  g.hidden = false;
+  const b = document.getElementById('guard-back');
+  b.onclick = () => { g.hidden = true; enterFull(); };
+  try { b.focus(); } catch (e) { /* ok */ }
+}
+function hideGuard() { const g = document.getElementById('guard'); if (g) g.hidden = true; }
+function leaveStation() {
+  if (!focoOn() || awayAt) return;
+  awayAt = Date.now(); S.saidas = (S.saidas || 0) + 1; save();
+}
+function backToStation() {
+  if (!awayAt) return;
+  const dur = Math.max(1, Math.round((Date.now() - awayAt) / 1000)); awayAt = 0;
+  if (!S) return;
+  S.foraSeg = (S.foraSeg || 0) + dur; save();
+  syncEv([{ ev: 'Saiu da tela', det: `Sala ${salaAtual()} · ${dur} s fora`, pts: 0 }]);
+  guard('away', dur);
+}
+function syncFull() {
+  if (focoOn()) enterFull();
+  else { exitFull(); hideGuard(); awayAt = 0; }
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden) leaveStation(); else backToStation(); });
+window.addEventListener('blur', () => { setTimeout(() => { if (!document.hasFocus()) leaveStation(); }, 150); });
+window.addEventListener('focus', backToStation);
+const onFsChange = () => { if (!isFull() && fsOK() && focoOn() && !awayAt) { const g = document.getElementById('guard'); if (!g || g.hidden) guard('fs'); } };
+document.addEventListener('fullscreenchange', onFsChange);
+document.addEventListener('webkitfullscreenchange', onFsChange);
+const foraTxt = () => { const n = (S && S.saidas) || 0; const t = (S && S.foraSeg) || 0; return n ? `${n} (${t >= 60 ? Math.round(t / 60) + ' min' : t + ' s'} fora)` : '0'; };
+
+/* =========================================================
+   LABORATÓRIO DOS TRONCOS — telas e fluxo
+   ========================================================= */
+const KEY = 'laboratorio-troncos-2ano-v1';
+const PIN_HASH = 2392177968;
+const $app = document.getElementById('app');
+const norm = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return h >>> 0; }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+function mulberry(a) { return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const store = {
+  get() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } },
+  set(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) { /* sem armazenamento */ } },
+};
+let DB = Object.assign({ cur: null, hall: [] }, store.get());
+const save = () => store.set(DB);
+let S = DB.cur;
+let screen = S ? (S.finished ? 'final' : 'mapa') : 'cover';
+let modal = null; let projection = false; let reveal = false; let kp = null; let cur = 0; let salaV = 1; let shake = false;
+
+/* ---------- estado da missão ---------- */
+function newGame(name, turma) {
+  const seed = (Date.now() ^ fnv(name + turma)) >>> 0;
+  S = { name, turma, seed, e: {}, salaAt: {}, pre: {}, t0: Date.now(), finished: false, saidas: 0, foraSeg: 0 };
+  S.sid = `${slugOf(name)}-${turma.toLowerCase()}-${seed.toString(36)}`;
+  DB.cur = S; save();
+  syncEv([{ ev: 'Entrou no laboratório', det: 'Bancada 1 · Béqueres', pts: 0 }]);
+}
+const qOf = (k) => ENIGMAS[k].gen(rngTools(mulberry((S.seed + k * 7919) >>> 0)));
+const salaOf = (k) => FASES[Math.floor(k / 6)];
+const ks = (n) => [0, 1, 2, 3, 4, 5].map((j) => (n - 1) * 6 + j);
+const st = (k) => S.e[k] || { tries: 0 };
+const done = (k) => { const x = S.e[k]; return !!x && (x.ok || x.tries >= 2); };
+const salaFeita = (n) => ks(n).every(done);
+const salaAberta = (n) => !!(S.salaAt && S.salaAt[n]);
+const salaAtual = () => { for (let n = 1; n <= 5; n++) if (!salaAberta(n)) return n; return 5; };
+const feitos = () => Object.keys(S.e).filter((k) => done(+k)).length;
+const dePrimeira = () => Object.values(S.e).filter((x) => x.ok && x.tries === 1).length;
+const ptsOf = (k) => { const x = S.e[k]; return x && x.ok ? (x.tries === 1 ? 100 : 50) : 0; };
+const ptsSala = (n) => sum(ks(n).map(ptsOf));
+const pontos = () => sum([1, 2, 3, 4, 5].map(ptsSala));
+const acertos = () => Object.values(S.e).filter((x) => x.ok).length;
+const minRest = () => acertos();
+const patente = (p) => (p >= 2700 ? 'Cientista-chefe' : p >= 2200 ? 'Pesquisador' : p >= 1600 ? 'Técnico de laboratório' : p >= 1000 ? 'Estagiário' : 'Calouro');
+const rankLabel = () => patente(pontos());
+function certCode() { const base = `${norm(S.name)}|${S.turma}|${pontos()}|${minRest()}|g9-lab`; return (fnv(base) % 46656).toString(36).toUpperCase().padStart(3, '0') + '-' + (fnv(base + '#') % 46656).toString(36).toUpperCase().padStart(3, '0'); }
+const resp = (q) => (q.unit === 'R$' ? brl(q.ans) : `${fmt(q.ans)}${!q.unit ? '' : q.unit.startsWith('%') ? q.unit : ' ' + q.unit}`);
+
+/* ---------- peças visuais ---------- */
+const ICON = {
+  lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11 V7 a4 4 0 0 1 8 0 V11"/>',
+  check: '<path d="M5 12.5 L10 17.5 L19.5 7"/>',
+  spill: '<path d="M6 4 H14 M8 4 V10 L4 18 a2 2 0 0 0 2 3 H14"/><path d="M15 15 q3 1 3 4 M19 12 q2 0 2 2"/>',
+  map: '<path d="M3 6 L9 4 L15 6 L21 4 V18 L15 20 L9 18 L3 20 Z M9 4 V18 M15 6 V20"/>',
+  file: '<path d="M6 3 H14 L19 8 V21 H6 Z"/><path d="M14 3 V8 H19 M9 13 H16 M9 17 H14"/>',
+  flask: '<path d="M9 3 H15 M10 3 V9 L4.5 19 a1.5 1.5 0 0 0 1.3 2 H18.2 a1.5 1.5 0 0 0 1.3 -2 L14 9 V3"/><path d="M7 15 H17"/>',
+  arrow: '<path d="M5 12 H19 M13 6 L19 12 L13 18"/>',
+  trophy: '<path d="M7 4 H17 V9 a5 5 0 0 1 -10 0 Z"/><path d="M7 6 H4 a3 3 0 0 0 3 5 M17 6 H20 a3 3 0 0 1 -3 5"/><path d="M12 14 V18 M8 21 H16 L15 18 H9 Z"/>',
+};
+const ic = (k) => `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k] || ''}</svg>`;
+const logo = () => (typeof IMG !== 'undefined' && IMG.logo ? `<img class="logo" src="${IMG.logo.uri}" alt="Curso G9">` : '');
+function toast(t) { const el = document.getElementById('toast'); if (!el) return; el.innerHTML = t; el.classList.add('on'); clearTimeout(toast.tm); toast.tm = setTimeout(() => el.classList.remove('on'), 2600); }
+function hud() {
+  return `<header class="hud"><button class="hud-brand" data-act="${S ? (S.finished ? 'final' : 'mapa') : 'cover'}" aria-label="Voltar ao laboratório">${ic('flask')}<span>LABORATÓRIO<small>DOS TRONCOS</small></span></button>
+    ${projection ? '<span class="proj-tag">PROJEÇÃO</span>' : ''}
+    ${S ? `<div class="hud-cells"><div class="hud-cell"><span>Bancada</span><b>${S.finished ? '5/5' : salaAtual() + '/5'}</b></div><div class="hud-cell"><span>Pontos</span><b>${pontos()}</b></div><div class="hud-cell"><span>Análises</span><b>${feitos()}/30</b></div></div>` : ''}
+    <button class="hud-menu" data-act="menu" aria-label="Menu">☰</button></header>`;
+}
+// frascos da bancada: cheio = acerto, derramado = erro duas vezes
+function frascos(n, cor) {
+  return `<div class="frascos">${ks(n).map((k) => { const x = S.e[k]; const c = !done(k) ? 'vazio' : x.ok ? 'cheio' : 'perdido';
+    return `<span class="fr-ic ${c}" style="--lc:${cor}" title="Análise ${k % 6 + 1}"><svg viewBox="0 0 40 52" aria-hidden="true"><defs><clipPath id="cf${k}"><path d="M15 4 V18 L5 44 a3 3 0 0 0 3 4 H32 a3 3 0 0 0 3 -4 L25 18 V4 Z"/></clipPath></defs><rect class="lv" x="0" y="${c === 'cheio' ? 16 : c === 'perdido' ? 40 : 52}" width="40" height="40" clip-path="url(#cf${k})"/><path d="M13 4 H27 M15 4 V18 L5 44 a3 3 0 0 0 3 4 H32 a3 3 0 0 0 3 -4 L25 18 V4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg></span>`; }).join('')}</div>`;
+}
+
+/* ---------- telas ---------- */
+function coverView() {
+  const resume = DB.cur && !DB.cur.finished ? `<div class="resume"><p>Experimento em andamento: <b>${esc(DB.cur.name)}</b> (${esc(DB.cur.turma)}).</p><button class="btn hot" data-act="mapa">Continuar</button></div>` : '';
+  return `<main class="cover"><div class="lab-bg" aria-hidden="true">${cone(5, 3, 7, null, '#38BDF8')}${pir(3, 6, 6, null, '#34D399')}${cone(3, 5, 6, null, '#F472B6')}</div>
+    <div class="cover-in">
+      <div class="cover-brand">${logo()}<span>Prof. Mateus Bibiano · 2º ano · M21 e M22</span></div>
+      <p class="kicker">Geometria espacial · Revisão</p>
+      <h1 class="title">Laboratório <span>dos Troncos</span></h1>
+      <p class="lede">Béqueres, funis, frascos e reservatórios: tudo aqui tem forma de <b>tronco de cone</b> ou <b>tronco de pirâmide</b>. São <b>5 bancadas</b> e <b>30 análises</b> de volume, geratriz, apótema e áreas. Cada análise certa enche um frasco. Você tem 2 tentativas por análise.</p>
+      ${resume}
+      <form class="crew" data-form="start" autocomplete="off">
+        <label class="fld"><span>Nome e sobrenome</span><input name="nome" maxlength="60" required placeholder="Ex.: Ana Souza"></label>
+        <fieldset class="seg"><legend>Turma</legend>${TURMAS.map((t) => `<label><input type="radio" name="turma" value="${t}"><span>${t}</span></label>`).join('')}</fieldset>
+        <p class="err" id="f-err" hidden></p>
+        <button class="btn hot big" type="submit">${ic('flask')} Vestir o jaleco</button>
+      </form>
+      <div class="cover-links"><button class="link" data-act="hall">Cientistas deste aparelho</button><button class="link" data-act="pin">Área do professor</button></div>
+    </div></main>`;
+}
+function mapaView() {
+  const a = salaAtual();
+  const room = (f) => { const n = f.n; const open = salaAberta(n); const now = !open && n === a; const st2 = open ? 'aberta' : now ? 'atual' : 'trancada';
+    return `<button class="room r${n} ${st2}" style="--fc:${f.cor}" data-act="${open || now ? 'sala' : 'locked'}" data-n="${n}"><span class="room-n">Bancada ${n}</span><b>${f.nome}</b><small>${f.tema}</small>
+      ${frascos(n, f.liq)}<span class="room-st">${open ? `${ic('check')} Concluída · ${ptsSala(n)} pts` : now ? `${ic('flask')} ${ks(n).filter(done).length}/6 análises` : `${ic('lock')} Bloqueada`}</span></button>`; };
+  return `<main class="page">${hud()}<div class="wrap">
+    <section class="card"><p class="eyebrow">${ic('map')} Planta do laboratório</p><h2>Escolha a bancada</h2>
+      <div class="planta">${FASES.map(room).join('')}</div>
+      <div class="stats"><div><b>${feitos()}/30</b><span>análises</span></div><div><b>${dePrimeira()}</b><span>de primeira</span></div><div><b>${pontos()}</b><span>pontos</span></div><div><b>${Object.values(S.e).filter((x) => !x.ok && x.tries >= 2).length}</b><span>derramados</span></div></div>
+      <div class="row center"><button class="btn hot big" data-act="sala" data-n="${a}" data-autofocus>${ic('flask')} Ir para a bancada ${a}</button></div>
+    </section></div></main>`;
+}
+function preView() {
+  const f = FASES[salaV - 1];
+  return `<main class="page">${hud()}<div class="wrap"><section class="card pre" style="--fc:${f.cor}">
+    <p class="eyebrow">${ic('file')} Caderno de protocolo · Bancada ${f.n}</p><h2>${f.nome}: ${f.tema}</h2>
+    <p class="intro">${f.intro}</p><div class="quadro">${f.prelecao}</div>
+    <p class="muted">O protocolo fica disponível dentro da bancada, no botão “Protocolo”.</p>
+    <div class="row"><button class="btn hot big" data-act="sala" data-n="${f.n}" data-autofocus>${ic('flask')} Começar as análises</button></div>
+  </section></div></main>`;
+}
+function salaView() {
+  const f = FASES[salaV - 1]; const n = f.n; const open = salaAberta(n);
+  return `<main class="page">${hud()}<div class="wrap"><section class="card sala" style="--fc:${f.cor}">
+    <div class="sala-h"><div><p class="eyebrow">Bancada ${n} · ${f.tema}</p><h2>${f.nome}</h2></div><button class="btn ghost sm" data-act="dossie" data-n="${n}">${ic('file')} Protocolo</button></div>
+    <div class="porta-mini">${frascos(n, f.liq)}<span>${ks(n).filter((k) => S.e[k] && S.e[k].ok).length} de 6 frascos cheios</span></div>
+    <div class="objs">${ks(n).map((k, j) => { const x = st(k); const d = done(k);
+      return `<button class="obj ${d ? (x.ok ? 'ok' : 'fail') : x.tries ? 'meio' : ''}" data-act="enigma" data-k="${k}"><span class="obj-n">${j + 1}</span><b>${ENIGMAS[k].nome}</b>
+        <small>${d ? (x.ok ? `${ic('check')} Concluída · ${ptsOf(k)} pts` : `${ic('spill')} Frasco derramado`) : x.tries ? 'Última tentativa' : 'Não analisada'}</small></button>`; }).join('')}</div>
+    <div class="row">${open ? `<button class="btn hot big" data-act="${n < 5 ? 'sala' : 'final'}" data-n="${n + 1}">${n < 5 ? `Ir para a bancada ${n + 1} ${ic('arrow')}` : `${ic('trophy')} Ver o resultado`}</button>` : ''}<button class="btn ghost" data-act="mapa">${ic('map')} Planta</button></div>
+  </section></div></main>`;
+}
+function enigmaView() {
+  const k = cur; const q = qOf(k); const f = salaOf(k); const x = st(k); const d = done(k);
+  const ask = `<article class="lance" style="--fc:${f.cor}"><p class="eyebrow">Bancada ${f.n} · Análise ${k % 6 + 1} de 6 · ${esc(ENIGMAS[k].nome)}</p><p class="ctx">${q.ctx}</p>${q.viz}<p class="ask">${q.q}</p></article>`;
+  let side;
+  if (!d) {
+    side = `<div class="chute ${shake ? 'shake' : ''}"><div class="tent">Tentativas: ${[0, 1].map((i) => `<i class="${i < x.tries ? 'usada' : ''}"></i>`).join('')}</div>${x.tries ? '<p class="warnbox">Resposta errada. Esta é a <b>última tentativa</b>: confira a conta antes de enviar.</p>' : ''}
+      <div id="kp"></div><p class="hint muted">Use vírgula para decimais. ${q.unit ? `Responda em ${q.unit}.` : ''}</p>
+      <div class="row"><button class="btn hot big wide" data-act="send">${ic('flask')} Registrar resultado</button></div>
+      <div class="row sm"><button class="link" data-act="dossie" data-n="${f.n}">Protocolo da bancada</button><button class="link" data-act="sala" data-n="${f.n}">Voltar à bancada</button>${projection ? '<button class="link" data-act="reveal">Mostrar resposta</button>' : ''}</div>
+      ${projection && reveal ? `<div class="sol"><p><b>Resposta: ${resp(q)}</b></p>${q.sol}</div>` : ''}</div>`;
+  } else {
+    const prox = ks(f.n).find((j) => !done(j));
+    side = `<div class="result ${x.ok ? 'win' : 'lose'}"><div class="big-flask" style="--lc:${f.liq}">${frascoGrande(x.ok)}</div>
+      <h2>${x.ok ? (x.tries === 1 ? 'Frasco cheio!' : 'Cheio na 2ª tentativa') : 'Frasco derramado'}</h2>
+      <p>${x.ok ? `Resultado: <b>${resp(q)}</b> · +${ptsOf(k)} pontos.` : `Seus resultados: <b>${(x.v || []).join(' e ')}</b>. O correto é <b>${resp(q)}</b>.`}</p>
+      <div class="sol"><p class="eyebrow">Resolução</p>${q.sol}</div>
+      <div class="row">${prox != null ? `<button class="btn hot big wide" data-act="enigma" data-k="${prox}" data-autofocus>Próxima análise ${ic('arrow')}</button>` : `<button class="btn hot big wide" data-act="concluir" data-autofocus>${ic('check')} Concluir a bancada</button>`}</div>
+      <div class="row sm"><button class="link" data-act="sala" data-n="${f.n}">Voltar à bancada</button></div></div>`;
+  }
+  return `<main class="page jogo">${hud()}<div class="wrap"><div class="campo">${ask}${side}</div></div></main>`;
+}
+function frascoGrande(ok) {
+  return `<svg viewBox="0 0 120 130" class="${ok ? 'enche' : 'derrama'}" aria-hidden="true"><defs><clipPath id="fg"><path d="M46 10 V44 L16 108 a6 6 0 0 0 6 9 H98 a6 6 0 0 0 6 -9 L74 44 V10 Z"/></clipPath></defs>
+    <rect class="lvg" x="0" y="0" width="120" height="130" clip-path="url(#fg)"/>
+    ${ok ? '<g class="bolhas"><circle cx="52" cy="100" r="3"/><circle cx="66" cy="92" r="2.4"/><circle cx="60" cy="104" r="2"/></g>' : '<path class="poca" d="M84 120 q16 -6 30 0 q-14 6 -30 0z"/>'}
+    <path d="M40 10 H80 M46 10 V44 L16 108 a6 6 0 0 0 6 9 H98 a6 6 0 0 0 6 -9 L74 44 V10" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/></svg>`;
+}
+function abertaView() {
+  const f = FASES[salaV - 1]; const n = f.n;
+  return `<main class="page">${hud()}<div class="wrap"><section class="card center" style="--fc:${f.cor}">
+    <div class="rel-fr">${frascos(n, f.liq)}</div>
+    <p class="eyebrow">${n < 5 ? `Relatório da bancada ${n}` : 'Relatório final do laboratório'}</p>
+    <h2>${f.nome}: ${ptsSala(n)} de 600 pontos</h2>
+    <p class="muted">${ks(n).filter((k) => S.e[k] && S.e[k].ok && S.e[k].tries === 1).length} de primeira · ${ks(n).filter((k) => S.e[k] && S.e[k].ok && S.e[k].tries === 2).length} na 2ª tentativa · ${ks(n).filter((k) => S.e[k] && !S.e[k].ok).length} derramados</p>
+    <h3 class="pod-h">${ic('trophy')} Pódio da bancada ${n} nas turmas</h3><div id="podio"></div>
+    <div class="row center">${n < 5 ? `<button class="btn hot big" data-act="sala" data-n="${n + 1}">Ir para a bancada ${n + 1} ${ic('arrow')}</button>` : `<button class="btn hot big" data-act="final">${ic('trophy')} Ver o resultado final</button>`}<button class="btn ghost" data-act="mapa">${ic('map')} Planta</button></div>
+  </section></div></main>`;
+}
+function finalView() {
+  const p = pontos();
+  return `<main class="page">${hud()}<div class="wrap">
+    <section class="card center final">
+      <div class="taca">${ic('flask')}</div><p class="eyebrow">Experimento concluído</p>
+      <h2>${esc(S.name)}: ${rankLabel()}</h2>
+      <div class="stats big"><div><b>${p}</b><span>pontos de 3000</span></div><div><b>${dePrimeira()}</b><span>de primeira</span></div><div><b>${acertos()}</b><span>frascos cheios</span></div><div><b>${Object.values(S.e).filter((x) => !x.ok).length}</b><span>derramados</span></div></div>
+      <h3>Pontos por bancada</h3><div class="porfase">${FASES.map((f) => `<div style="--fc:${f.cor}"><b>${ptsSala(f.n)}</b><span>${f.tema}</span></div>`).join('')}</div>
+      <p class="muted">Saídas da tela: ${foraTxt()} · Código de verificação: <b>${certCode()}</b></p>
+      <div class="row center"><button class="btn hot" data-act="copy">Copiar resultado</button><button class="btn ghost" data-act="again">Novo experimento</button></div>
+      <textarea id="copy-box" class="copy-box" hidden readonly></textarea>
+    </section>
+    <section class="card"><h2>${ic('trophy')} Ranking geral das turmas</h2><p class="muted">Pontos (100 de primeira, 50 na 2ª tentativa); no empate, quem terminou primeiro.</p><div id="podio"></div></section>
+  </div></main>`;
+}
+function hallList(rows) { return rows.length ? `<ol class="hall">${rows.map((h, i) => `<li><span class="h-n">${i + 1}</span><b>${esc(h.name)}</b><span>${esc(h.turma)} · ${esc(h.rank)}</span><span>${h.min} frascos cheios</span><b class="h-p">${h.pts} pts</b></li>`).join('')}</ol>` : '<p class="muted">Nenhum experimento terminado neste aparelho ainda.</p>'; }
+const sortedHall = () => DB.hall.slice().sort((a, b) => b.pts - a.pts || b.min - a.min || a.t - b.t);
+function hallView() { return `<main class="page">${hud()}<div class="wrap"><section class="card"><h2>Cientistas deste aparelho</h2>${hallList(sortedHall().slice(0, 20))}<div class="row"><button class="btn ghost" data-act="${S ? (S.finished ? 'final' : 'mapa') : 'cover'}">← Voltar</button></div></section></div></main>`; }
+function teacherView() {
+  return `<main class="page">${hud()}<div class="wrap"><section class="card">
+    <h2>Área do professor</h2>
+    <div class="tcards"><div><h3>Modo projeção</h3><p>Mostra o botão “Mostrar resposta” em cada análise e desliga a tela cheia, para resolver com a turma no projetor.</p><button class="btn hot" data-act="proj">${projection ? 'Desligar' : 'Ligar'} projeção</button></div>
+    <div><h3>Como funciona</h3><p>Cada aluno recebe medidas sorteadas. São 2 tentativas por análise: 100 pontos de primeira, 50 na segunda, e frasco derramado (0) se errar as duas, com a resolução logo em seguida. Nada usa semelhança: só as fórmulas do tronco e Pitágoras.</p></div></div>
+    <h3 class="live-h"><span class="dot on"></span> Turma ao vivo</h3>
+    <div id="prof-live"></div>
+    <details class="local"><summary>Experimentos terminados neste aparelho</summary>${TURMAS.map((t) => `<h3>${t}</h3>${hallList(sortedHall().filter((h) => h.turma === t))}`).join('')}</details>
+    <div class="row"><button class="btn ghost" data-act="${S ? (S.finished ? 'final' : 'mapa') : 'cover'}">← Voltar</button><button class="btn ghost danger" data-act="wipe">Apagar experimento atual e histórico deste aparelho</button></div>
+  </section></div></main>`;
+}
+function modalView() {
+  let inner = '';
+  if (modal.type === 'pin') inner = `<h3>Área do professor</h3><form data-form="pin" autocomplete="off"><label class="fld"><span>Senha</span><input name="pin" type="password" required></label>${modal.err ? '<p class="err">Senha incorreta.</p>' : ''}<div class="row"><button class="btn hot" type="submit">Entrar</button><button class="btn ghost" type="button" data-act="close">Cancelar</button></div></form>`;
+  if (modal.type === 'dossie') { const f = FASES[modal.n - 1]; inner = `<h3>Protocolo · ${f.tema}</h3><div class="quadro">${f.prelecao}</div><div class="row"><button class="btn hot" data-act="close">Voltar</button></div>`; }
+  if (modal.type === 'menu') inner = `<h3>Menu</h3><div class="menu">${S ? `<button class="btn ghost" data-act="mapa">Planta do laboratório</button>` : ''}<button class="btn ghost" data-act="cover">Tela inicial</button><button class="btn ghost" data-act="hall">Cientistas deste aparelho</button><button class="btn ghost" data-act="pin">Área do professor</button><button class="btn ghost" data-act="close">Fechar</button></div>`;
+  return `<div class="veil" data-act="close-veil"><div class="modal" role="dialog" aria-modal="true">${inner}</div></div>`;
+}
+
+/* ---------- render ---------- */
+function render() {
+  stopProf(); clearKeyHandlers(); kp = null;
+  if (S && S.finished && ['mapa', 'pre'].includes(screen)) screen = 'final';
+  const V = { cover: coverView, mapa: mapaView, pre: preView, sala: salaView, enigma: enigmaView, aberta: abertaView, final: finalView, hall: hallView, teacher: teacherView }[screen] || coverView;
+  $app.innerHTML = V() + '<div class="toast" id="toast" role="status"></div>' + (modal ? modalView() : '');
+  document.body.dataset.screen = screen; document.body.classList.toggle('proj', projection);
+  mount(); shake = false;
+  syncFull();
+  const prev = onlineWhere;
+  onlineWhere = !S ? '' : screen === 'enigma' ? `Análise ${cur % 6 + 1} · ${ENIGMAS[cur].nome}` : screen === 'sala' ? `Na bancada ${salaV}` : screen === 'pre' ? `Lendo o protocolo ${salaV}` : screen === 'aberta' ? `Concluiu a bancada ${salaV}` : 'Na planta';
+  if (S && !S.finished && onlineWhere !== prev && ['enigma', 'sala', 'pre', 'mapa', 'aberta'].includes(screen)) syncPost([], true);
+  if (!hbTimer) heartbeat();
+  if (screen === 'aberta') fillPodium(document.getElementById('podio'), salaV - 1, 'sol', 10);
+  if (screen === 'final') fillPodium(document.getElementById('podio'), 0, 'final', 50);
+  if (screen === 'teacher') startProf();
+}
+function mount() {
+  if (screen === 'enigma' && S && !done(cur)) {
+    const q = qOf(cur);
+    kp = keypad(document.getElementById('kp'), { unit: q.unit, label: 'Seu resultado' });
+    const kb = (e) => { if (e.key === 'Enter' && !document.querySelector('.veil')) { e.preventDefault(); send(); } };
+    document.addEventListener('keydown', kb); KEYHANDLERS.push(() => document.removeEventListener('keydown', kb));
+  }
+  if (screen === 'enigma' && done(cur)) { const r = document.querySelector('.result'); if (r && innerWidth < 820) setTimeout(() => r.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }), 60); }
+  const f = document.querySelector('[data-autofocus]'); if (f && screen !== 'enigma') f.focus({ preventScroll: true });
+}
+const go = (s) => { screen = s; modal = null; render(); window.scrollTo(0, 0); };
+
+/* ---------- ações ---------- */
+function send() {
+  if (!S || S.finished || done(cur)) return;
+  const v = kp ? kp.get() : NaN; if (Number.isNaN(v)) { toast('Digite um número no teclado.'); return; }
+  const q = qOf(cur); const ok = Math.abs(v - r2(q.ans)) < 0.006;
+  const x = S.e[cur] || { tries: 0, v: [] }; x.tries++; x.v = (x.v || []).concat(kp.raw()); x.ok = ok; x.at = Date.now(); S.e[cur] = x;
+  const f = salaOf(cur); const evs = [];
+  if (ok) evs.push({ ev: 'Acertou', det: `Bancada ${f.n} · ${ENIGMAS[cur].nome}${x.tries === 2 ? ' (2ª tentativa)' : ''}`, pts: ptsOf(cur) });
+  else if (x.tries >= 2) evs.push({ ev: 'Derramou', det: `Bancada ${f.n} · ${ENIGMAS[cur].nome}`, pts: 0 });
+  else evs.push({ ev: 'Errou', det: `Bancada ${f.n} · ${ENIGMAS[cur].nome}`, pts: 0 });
+  save(); syncEv(evs);
+  if (!ok) { shake = true; try { if (navigator.vibrate) navigator.vibrate([20, 40, 20]); } catch (e) { /* */ } }
+  reveal = false; render();
+  if (!ok && x.tries < 2) toast('Resultado errado. Você tem mais uma tentativa.');
+}
+function concluir() {
+  const n = salaOf(cur).n; salaV = n; if (!salaFeita(n)) return;
+  if (!salaAberta(n)) {
+    S.salaAt[n] = Date.now();
+    const evs = [{ ev: 'Concluiu a bancada', det: `Bancada ${n} · ${FASES[n - 1].nome}`, pts: ptsSala(n) }];
+    if (n === 5) {
+      S.finished = true; S.t1 = Date.now();
+      DB.hall.push({ name: S.name, turma: S.turma, pts: pontos(), min: acertos(), rank: rankLabel(), t: Date.now() }); if (DB.hall.length > 200) DB.hall = sortedHall().slice(0, 200);
+      evs.push({ ev: 'Concluiu o laboratório', det: `${rankLabel()} · ${acertos()} frascos cheios`, pts: pontos() });
+    }
+    save(); syncEv(evs);
+  }
+  go('aberta');
+}
+function irSala(n) {
+  if (!S) return; n = Math.max(1, Math.min(5, n));
+  if (n > salaAtual() && !salaAberta(n)) { toast('Essa bancada ainda está bloqueada.'); return; }
+  salaV = n;
+  if (!S.pre[n] && !salaAberta(n)) { S.pre[n] = true; save(); go('pre'); } else go('sala');
+}
+function copyResult() {
+  const txt = `Laboratório dos Troncos (2º ano)\n${S.name} · ${S.turma}\nNível: ${rankLabel()}\nPontos: ${pontos()} de 3000 · De primeira: ${dePrimeira()}/30 · Frascos cheios: ${acertos()}/30\nPor bancada: ${FASES.map((f) => `${f.nome} ${ptsSala(f.n)}`).join(' · ')}\nSaídas da tela: ${foraTxt()}\nCódigo de verificação: ${certCode()}`;
+  const fall = () => { const b = document.getElementById('copy-box'); b.hidden = false; b.value = txt; b.select(); toast('Copie o texto selecionado.'); };
+  try { navigator.clipboard.writeText(txt).then(() => toast('Resultado copiado. Agora é só colar e enviar.'), fall); } catch (e) { fall(); }
+}
+
+$app.addEventListener('click', (e) => {
+  const veil = e.target.closest('[data-act="close-veil"]'); if (veil && e.target === veil) { const keep = kp ? kp.raw() : null; modal = null; render(); if (kp && keep) kp.set(keep); return; }
+  const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
+  const a = b.dataset.act;
+  if (a === 'mapa') { if (S) go(S.finished ? 'final' : 'mapa'); else go('cover'); }
+  else if (a === 'cover') go('cover');
+  else if (a === 'sala') irSala(+b.dataset.n);
+  else if (a === 'locked') toast('Essa bancada ainda está bloqueada. Conclua a anterior primeiro.');
+  else if (a === 'enigma') { cur = +b.dataset.k; reveal = false; go('enigma'); }
+  else if (a === 'send') send();
+  else if (a === 'concluir') concluir();
+  else if (a === 'final') { if (S && S.finished) go('final'); }
+  else if (a === 'dossie') { const keep = kp ? kp.raw() : null; modal = { type: 'dossie', n: +b.dataset.n }; render(); if (kp && keep) kp.set(keep); }
+  else if (a === 'reveal') { reveal = true; const keep = kp ? kp.raw() : null; render(); if (kp && keep) kp.set(keep); }
+  else if (a === 'hall') go('hall');
+  else if (a === 'pin') { modal = { type: 'pin' }; render(); setTimeout(() => { const i = document.querySelector('.modal input'); if (i) i.focus(); }, 30); }
+  else if (a === 'menu') { modal = { type: 'menu' }; render(); }
+  else if (a === 'close') { const keep = kp ? kp.raw() : null; modal = null; render(); if (kp && keep) kp.set(keep); }
+  else if (a === 'proj') { projection = !projection; render(); }
+  else if (a === 'prof-filtro') { prof.filtro = b.dataset.id; renderProf(); }
+  else if (a === 'prof-aba') { prof.aba = b.dataset.id; renderProf(); }
+  else if (a === 'prof-pod') { prof.pod = +b.dataset.i; renderProf(); }
+  else if (a === 'copy') copyResult();
+  else if (a === 'again') { DB.cur = null; S = null; save(); go('cover'); }
+  else if (a === 'wipe') { if (confirm('Apagar o experimento atual e o histórico deste aparelho?')) { DB = { cur: null, hall: [] }; S = null; save(); go('cover'); } }
+});
+$app.addEventListener('submit', (e) => {
+  e.preventDefault(); const f = e.target;
+  if (f.dataset.form === 'start') {
+    const name = f.nome.value.trim().replace(/\s+/g, ' '); const t = f.querySelector('input[name=turma]:checked');
+    const err = document.getElementById('f-err');
+    if (name.split(' ').length < 2) { err.textContent = 'Digite nome e sobrenome.'; err.hidden = false; return; }
+    if (!t) { err.textContent = 'Escolha sua turma.'; err.hidden = false; return; }
+    newGame(name, t.value); irSala(1);
+  }
+  if (f.dataset.form === 'pin') { if (fnv('missao:' + norm(f.pin.value)) === PIN_HASH) { teacherKey = norm(f.pin.value); modal = null; go('teacher'); } else { modal = { type: 'pin', err: true }; render(); } }
+});
+render();
+
+})();
+</script>
+</body>
+</html>
