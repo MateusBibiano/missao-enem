@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Laboratório dos Troncos</title>
-<meta name="description" content="Revisão de tronco de cone e tronco de pirâmide: 5 bancadas e 30 análises de volume, geratriz, apótema e áreas. Turmas M21 e M22 · Prof. Mateus Bibiano.">
+<meta name="description" content="Revisão de volume de tronco de cone e de tronco de pirâmide: 5 bancadas e 30 análises. Turmas M21 e M22 · Prof. Mateus Bibiano.">
 <meta name="theme-color" content="#0A1A1F">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:title" content="Laboratório dos Troncos · 2º ano">
-<meta property="og:description" content="Revisão de tronco de cone e tronco de pirâmide: 5 bancadas e 30 análises de volume, geratriz, apótema e áreas. Turmas M21 e M22 · Prof. Mateus Bibiano.">
+<meta property="og:description" content="Revisão de volume de tronco de cone e de tronco de pirâmide: 5 bancadas e 30 análises. Turmas M21 e M22 · Prof. Mateus Bibiano.">
 <meta property="og:url" content="https://mateusbibiano.github.io/missao-enem/laboratorio/">
 <meta property="og:image" content="https://mateusbibiano.github.io/missao-enem/laboratorio/og.png">
 <meta property="og:image:width" content="1200">
@@ -476,8 +476,8 @@ const passo = (arr) => `<ol class="passos">${arr.map((p) => `<li>${p}</li>`).joi
 
 /* =========================================================
    LABORATÓRIO DOS TRONCOS — bancadas e as 30 análises
-   Tronco de cone e tronco de pirâmide, só com fórmulas diretas
-   e Pitágoras (sem semelhança). Cada aluno recebe números sorteados.
+   Só volumes de tronco de cone e de tronco de pirâmide,
+   com as fórmulas diretas (sem semelhança). Cada aluno recebe números sorteados.
    ========================================================= */
 const TURMAS = ['M21', 'M22'];
 
@@ -489,25 +489,23 @@ const FASES = [
       <p>Quando a questão pedir <b>π = 3</b>, a fórmula fica V = h · (R² + R·r + r²).</p>
       <p>Quando pedir a resposta <b>em função de π</b>, digite só o número que multiplica π.</p>
       <p>1 cm³ = 1 mL &nbsp;·&nbsp; 1 000 cm³ = 1 L.</p>` },
-  { n: 2, id: 'b2', nome: 'Funis e filtros', tema: 'Geratriz e área do tronco de cone', cor: '#A78BFA', liq: '#A78BFA',
-    intro: 'Funis e cúpulas de papel-filtro: aqui o que importa é a superfície do tronco de cone.',
-    prelecao: `<p>A <b>geratriz g</b> é a medida da lateral. Ela forma um triângulo retângulo com a altura <b>h</b> e a diferença dos raios <b>R − r</b>:</p>
-      <div class="formula">g² = h² + (R − r)²</div>
-      <div class="formula">A<sub>lateral</sub> = π · (R + r) · g</div>
-      <p>Área total = área lateral + π·R² + π·r² (as duas bases). Se o recipiente é aberto em cima, some só a base que existe.</p>` },
+  { n: 2, id: 'b2', nome: 'Copos e funis', tema: 'Volume do tronco de cone II', cor: '#A78BFA', liq: '#A78BFA',
+    intro: 'Mais recipientes em tronco de cone, agora com diâmetros, respostas em função de π e comparações com o cilindro.',
+    prelecao: `<p>A fórmula é a mesma da bancada 1:</p>
+      <div class="formula">V = <span class="fr"><i>π · h</i><i>3</i></span> · (R² + R·r + r²)</div>
+      <ul><li>Se a medida dada for o <b>diâmetro</b>, divida por 2 para ter o raio.</li><li>Para achar a <b>altura</b>, isole h: h = 3V ÷ [π · (R² + R·r + r²)].</li><li>Cilindro de raio R e altura h: V = π · R² · h.</li></ul>
+      <p>1 dm³ = 1 L &nbsp;·&nbsp; 1 cm³ = 1 mL.</p>` },
   { n: 3, id: 'b3', nome: 'Frascos quadrados', tema: 'Volume do tronco de pirâmide', cor: '#34D399', liq: '#34D399',
     intro: 'Frascos e reservatórios de base quadrada, com a boca menor que o fundo (ou o contrário): troncos de pirâmide.',
     prelecao: `<p>O <b>tronco de pirâmide</b> tem duas bases paralelas: a maior, de área <b>B</b>, e a menor, de área <b>b</b>.</p>
       <div class="formula">V = <span class="fr"><i>h</i><i>3</i></span> · (B + b + √(B · b))</div>
       <p>Bases quadradas de lados <b>L</b> e <b>ℓ</b>: B = L², b = ℓ² e √(B·b) = L·ℓ.</p>
       <p>Então V = <span class="fr"><i>h</i><i>3</i></span> · (L² + L·ℓ + ℓ²).</p>` },
-  { n: 4, id: 'b4', nome: 'Embalagens', tema: 'Apótema e áreas do tronco de pirâmide', cor: '#FBBF24', liq: '#FBBF24',
-    intro: 'Hora de embalar os reagentes: caixas e capas em forma de tronco de pirâmide de base quadrada.',
-    prelecao: `<p>Cada face lateral do tronco de pirâmide é um <b>trapézio</b>. A altura desse trapézio é o <b>apótema do tronco a</b>.</p>
-      <div class="formula">a² = h² + <span class="fr"><i>(L − ℓ)</i><i>2</i></span>²</div>
-      <p>Área de uma face: <span class="fr"><i>(L + ℓ) · a</i><i>2</i></span>. Com base quadrada são 4 faces:</p>
-      <div class="formula">A<sub>lateral</sub> = 2 · (L + ℓ) · a</div>
-      <p>Área total = área lateral + L² + ℓ².</p>` },
+  { n: 4, id: 'b4', nome: 'Reservatórios', tema: 'Volume do tronco de pirâmide II', cor: '#FBBF24', liq: '#FBBF24',
+    intro: 'Reservatórios com bases retangulares, triangulares e medidas em metros: o volume em litros decide tudo.',
+    prelecao: `<p>Para qualquer tronco de pirâmide (base quadrada, retangular, triangular…), use as <b>áreas</b> das bases:</p>
+      <div class="formula">V = <span class="fr"><i>h</i><i>3</i></span> · (B + b + √(B · b))</div>
+      <ul><li>Retângulo: área = comprimento × largura.</li><li>Se a altura é a incógnita: h = 3V ÷ (B + b + √(B·b)).</li><li>1 m³ = 1 000 L.</li></ul>` },
   { n: 5, id: 'b5', nome: 'Transferências', tema: 'Desafio final', cor: '#F472B6', liq: '#F472B6',
     intro: 'Agora os líquidos mudam de recipiente: vai transbordar? Quanto tempo leva para encher? Quanto sobra?',
     prelecao: `<p>Primeiro calcule o volume de cada recipiente; depois compare ou converta.</p>
@@ -558,7 +556,6 @@ function pir(lt, lb, h, lab, liq) {
 const fig = (svg, legenda) => `<figure class="viz lab-fig">${svg}${legenda ? `<figcaption>${legenda}</figcaption>` : ''}</figure>`;
 
 /* ---------- sorteios auxiliares ---------- */
-const TRIPLES = [[3, 4, 5], [6, 8, 10], [5, 12, 13], [9, 12, 15], [8, 15, 17], [12, 16, 20], [7, 24, 25]];
 const PI3 = '<b>Use π = 3.</b>';
 const PIF = '<b>Responda em função de π</b> (digite só o número que multiplica π).';
 
@@ -602,42 +599,43 @@ const ENIGMAS = [
       sol: passo([`Capacidade: ${h} · (${R * R} + ${R * r} + ${r * r}) = ${V} mL.`, `Cabem ainda: ${V} − ${ocup} = <b>${liv} mL</b>.`]) };
   } },
 
-  /* ===== BANCADA 2 · GERATRIZ E ÁREAS DO TRONCO DE CONE ===== */
-  { s: 2, nome: 'Lateral do funil', gen(t) {
-    const [p, q, g] = t.pick(TRIPLES.slice(0, 5)); const [d, h] = t.ri(0, 1) ? [p, q] : [q, p]; const r = t.ri(1, 4); const R = r + d;
-    return { ctx: 'Um funil de vidro tem a forma de tronco de cone (sem as bases).', viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm`, g: 'g = ?' })),
-      q: 'Qual é a <b>geratriz</b> do funil, em cm?', unit: 'cm', ans: g,
-      sol: passo([`g² = h² + (R − r)² = ${h}² + (${R} − ${r})² = ${h * h} + ${d * d} = ${g * g}.`, `g = √${g * g} = <b>${g} cm</b>.`]) };
+  /* ===== BANCADA 2 · VOLUME DO TRONCO DE CONE II ===== */
+  { s: 2, nome: 'Funil fechado', gen(t) {
+    const r = t.ri(1, 4); const R = r + t.ri(2, 5); const h = 3 * t.ri(1, 5); const S = R * R + R * r + r * r; const c = h / 3 * S;
+    return { ctx: `Um funil com a saída tampada tem a boca larga em cima. ${PIF}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
+      q: 'Qual é o <b>volume</b> do funil, em cm³?', unit: 'π cm³', ans: c,
+      sol: passo([`V = <span class="fr"><i>π · ${h}</i><i>3</i></span> · (${R * R} + ${R * r} + ${r * r}) = ${h / 3}π · ${S}.`, `V = <b>${c}π cm³</b>. Digite ${c}.`]) };
   } },
-  { s: 2, nome: 'Filtro de papel', gen(t) {
-    const g = t.ri(5, 15); const r = t.ri(2, 5); const R = r + t.ri(1, 4); const A = 3 * (R + r) * g;
-    return { ctx: `Um filtro de papel cobre só a lateral de um tronco de cone. ${PI3}`, viz: fig(cone(R, r, Math.max(3, g - 1), { rt: `R = ${R} cm`, rb: `r = ${r} cm`, g: `g = ${g} cm` })),
-      q: 'Quantos cm² de papel tem o filtro?', unit: 'cm²', ans: A,
-      sol: passo([`A<sub>lateral</sub> = π · (R + r) · g = 3 · (${R} + ${r}) · ${g}.`, `= 3 · ${R + r} · ${g} = <b>${A} cm²</b>.`]) };
+  { s: 2, nome: 'Medidas pelo diâmetro', gen(t) {
+    const r = t.ri(2, 5); const R = r + t.ri(1, 4); const h = t.ri(4, 12); const S = R * R + R * r + r * r; const V = h * S;
+    return { ctx: `O catálogo informa os <b>diâmetros</b> de um copo em tronco de cone. ${PI3}`, viz: fig(cone(R, r, h, { rt: `D = ${2 * R} cm`, rb: `d = ${2 * r} cm`, h: `h = ${h} cm` })),
+      q: 'Qual é a <b>capacidade</b> do copo, em mL?', unit: 'mL', ans: V,
+      sol: passo([`Raios: R = ${2 * R} ÷ 2 = ${R} cm e r = ${2 * r} ÷ 2 = ${r} cm.`, `V = ${h} · (${R * R} + ${R * r} + ${r * r}) = ${h} · ${S}.`, `V = <b>${V} mL</b>.`]) };
   } },
-  { s: 2, nome: 'Rótulo do frasco', gen(t) {
-    const [d, h, g] = t.pick(TRIPLES.slice(0, 4)); const r = t.ri(2, 6); const R = r + d; const c = (R + r) * g;
-    return { ctx: `O rótulo cobre toda a lateral de um frasco em tronco de cone. ${PIF}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
-      q: 'Qual é a <b>área do rótulo</b>, em cm²?', unit: 'π cm²', ans: c,
-      sol: passo([`Primeiro a geratriz: g² = ${h}² + (${R} − ${r})² = ${h * h} + ${d * d} = ${g * g} → g = ${g} cm.`, `A<sub>lateral</sub> = π · (${R} + ${r}) · ${g} = ${c}π cm².`, `Digite <b>${c}</b>.`]) };
+  { s: 2, nome: 'Altura em função de π', gen(t) {
+    const r = t.ri(1, 4); const R = r + t.ri(1, 4); const h = 3 * t.ri(1, 5); const S = R * R + R * r + r * r; const V = h * S;
+    return { ctx: `Um tronco de cone tem volume <b>${V / 3}π cm³</b>.`, viz: fig(cone(R, r, Math.max(h, 4), { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: 'h = ?' })),
+      q: 'Qual é a <b>altura</b>, em cm?', unit: 'cm', ans: h,
+      sol: passo([`<span class="fr"><i>π · h</i><i>3</i></span> · (${R * R} + ${R * r} + ${r * r}) = ${fmt(V / 3)}π.`, `<span class="fr"><i>h</i><i>3</i></span> · ${S} = ${fmt(V / 3)} → h · ${S} = ${V}.`, `h = ${V} ÷ ${S} = <b>${h} cm</b>.`]) };
   } },
-  { s: 2, nome: 'Peça fechada', gen(t) {
-    const g = t.ri(4, 12); const r = t.ri(1, 4); const R = r + t.ri(1, 4); const AL = (R + r) * g; const AT = AL + R * R + r * r;
-    return { ctx: `Uma peça maciça em tronco de cone vai ser pintada inteira, incluindo as duas bases. ${PIF}`, viz: fig(cone(R, r, Math.max(3, g - 1), { rt: `R = ${R} cm`, rb: `r = ${r} cm`, g: `g = ${g} cm` })),
-      q: 'Qual é a <b>área total</b> da peça, em cm²?', unit: 'π cm²', ans: AT,
-      sol: passo([`Lateral: π · (${R} + ${r}) · ${g} = ${AL}π.`, `Bases: π · ${R}² + π · ${r}² = ${R * R}π + ${r * r}π.`, `Total: ${AL}π + ${R * R}π + ${r * r}π = <b>${AT}π cm²</b>.`]) };
+  { s: 2, nome: 'Tanque em decímetros', gen(t) {
+    const r = t.ri(1, 3); const R = r + t.ri(1, 3); const h = t.ri(2, 8); const V = h * (R * R + R * r + r * r);
+    return { ctx: `Um tanque de solução em tronco de cone tem as medidas em <b>decímetros</b>. ${PI3}`, viz: fig(cone(R, r, Math.max(h, 3), { rt: `R = ${R} dm`, rb: `r = ${r} dm`, h: `h = ${h} dm` })),
+      q: 'Quantos <b>litros</b> cabem no tanque?', unit: 'L', ans: V,
+      sol: passo([`V = ${h} · (${R * R} + ${R * r} + ${r * r}) = ${V} dm³.`, `1 dm³ = 1 L, então cabem <b>${V} L</b>.`]) };
   } },
-  { s: 2, nome: 'Copo sem tampa', gen(t) {
-    const [d, h, g] = t.pick(TRIPLES.slice(0, 4)); const r = t.ri(2, 5); const R = r + d; const A = 3 * ((R + r) * g + r * r);
-    return { ctx: `Um copo descartável (boca maior, fundo menor) é aberto em cima. ${PI3}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
-      q: 'Quantos cm² de plástico são usados no copo (lateral + fundo)?', unit: 'cm²', ans: A,
-      sol: passo([`Geratriz: g² = ${h * h} + ${d * d} = ${g * g} → g = ${g}.`, `Lateral: 3 · (${R} + ${r}) · ${g} = ${3 * (R + r) * g}.`, `Fundo: 3 · ${r}² = ${3 * r * r}.`, `Total: <b>${A} cm²</b>.`]) };
+  { s: 2, nome: 'Cilindro ou tronco?', gen(t) {
+    const r = t.ri(2, 5); const R = r + t.ri(1, 4); const h = t.ri(4, 10); const Vt = h * (R * R + R * r + r * r); const Vc = 3 * R * R * h; const d = Vc - Vt;
+    return { ctx: `Um béquer cilíndrico tem raio <b>${R} cm</b> e altura <b>${h} cm</b>. Ao lado, um béquer em tronco de cone com a mesma altura, raio maior ${R} cm e raio menor ${r} cm. ${PI3}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` }), 'O béquer em tronco de cone'),
+      q: 'Quantos mL o <b>cilindro</b> comporta a mais que o tronco?', unit: 'mL', ans: d,
+      sol: passo([`Cilindro: 3 · ${R}² · ${h} = ${Vc} mL.`, `Tronco: ${h} · (${R * R} + ${R * r} + ${r * r}) = ${Vt} mL.`, `Diferença: ${Vc} − ${Vt} = <b>${d} mL</b>.`]) };
   } },
-  { s: 2, nome: 'Altura pelo funil', gen(t) {
-    const [p, q, g] = t.pick(TRIPLES.slice(0, 5)); const [d, h] = t.ri(0, 1) ? [p, q] : [q, p]; const r = t.ri(1, 4); const R = r + d;
-    return { ctx: 'A geratriz de um funil em tronco de cone foi medida com uma régua flexível.', viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, g: `g = ${g} cm`, h: 'h = ?' })),
-      q: 'Qual é a <b>altura</b> do funil, em cm?', unit: 'cm', ans: h,
-      sol: passo([`g² = h² + (R − r)² → ${g * g} = h² + ${d * d}.`, `h² = ${g * g} − ${d * d} = ${h * h}.`, `h = <b>${h} cm</b>.`]) };
+  { s: 2, nome: 'Óleo de calibração', gen(t) {
+    const r = t.ri(2, 6); const R = r + t.ri(1, 4); const h = t.ri(5, 15); const V = h * (R * R + R * r + r * r);
+    const p = t.pick([20, 30, 40, 50]); const c = V / 1000 * p;
+    return { ctx: `Um recipiente em tronco de cone será cheio de óleo de calibração, que custa <b>R$ ${p},00 o litro</b>. ${PI3}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
+      q: 'Quanto custa encher o recipiente, em reais?', unit: 'R$', ans: c,
+      sol: passo([`V = ${h} · (${R * R} + ${R * r} + ${r * r}) = ${V} cm³ = ${fmt(V / 1000)} L.`, `Custo: ${fmt(V / 1000)} · ${p} = <b>${brl(c)}</b>.`]) };
   } },
 
   /* ===== BANCADA 3 · VOLUME DO TRONCO DE PIRÂMIDE ===== */
@@ -678,42 +676,43 @@ const ENIGMAS = [
       sol: passo([`V = ${h / 3} · (${L * L} + ${L * l} + ${l * l}) = ${V} cm³.`, `Massa = densidade · volume = ${fmt(dens)} · ${V} = <b>${fmt(m)} g</b>.`]) };
   } },
 
-  /* ===== BANCADA 4 · APÓTEMA E ÁREAS DO TRONCO DE PIRÂMIDE ===== */
-  { s: 4, nome: 'Apótema da caixa', gen(t) {
-    const [p, q, a] = t.pick(TRIPLES.slice(0, 5)); const [d, h] = t.ri(0, 1) ? [p, q] : [q, p]; const l = t.ri(2, 6); const L = l + 2 * d;
-    return { ctx: 'Uma caixa de reagentes tem forma de tronco de pirâmide de bases quadradas.', viz: fig(pir(l, L, h, { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, h: `h = ${h} cm`, a: 'a = ?' })),
-      q: 'Qual é o <b>apótema do tronco</b> (altura de cada face lateral), em cm?', unit: 'cm', ans: a,
-      sol: passo([`(L − ℓ) ÷ 2 = (${L} − ${l}) ÷ 2 = ${d}.`, `a² = h² + ${d}² = ${h * h} + ${d * d} = ${a * a}.`, `a = <b>${a} cm</b>.`]) };
+  /* ===== BANCADA 4 · VOLUME DO TRONCO DE PIRÂMIDE II ===== */
+  { s: 4, nome: 'Base retangular', gen(t) {
+    const [c1, l1] = t.pick([[3, 2], [4, 3], [5, 2], [4, 1], [6, 4]]); const k = t.pick([2, 3]); const Cb = c1 * k; const Lb = l1 * k; const B = Cb * Lb; const b = c1 * l1; const rq = Math.sqrt(B * b); const h = 3 * t.ri(1, 5); const V = h / 3 * (B + b + rq);
+    return { ctx: `Uma caixa de areia do laboratório é um tronco de pirâmide de bases <b>retangulares</b>: a base maior mede ${Cb} dm × ${Lb} dm, a menor mede ${c1} dm × ${l1} dm, e a altura é ${h} dm.`, viz: contrato([['Base maior', `${Cb} dm × ${Lb} dm`], ['Base menor', `${c1} dm × ${l1} dm`], ['Altura', `${h} dm`]]),
+      q: 'Qual é o volume, em <b>litros</b>?', unit: 'L', ans: V,
+      sol: passo([`B = ${Cb} · ${Lb} = ${B} dm² e b = ${c1} · ${l1} = ${b} dm².`, `√(B · b) = √${B * b} = ${rq}.`, `V = <span class="fr"><i>${h}</i><i>3</i></span> · (${B} + ${b} + ${rq}) = ${h / 3} · ${B + b + rq} = <b>${V} dm³ = ${V} L</b>.`]) };
   } },
-  { s: 4, nome: 'Uma face lateral', gen(t) {
-    const a = t.ri(4, 15); const l = t.ri(2, 8); const L = l + 2 * t.ri(1, 4); const A = (L + l) * a / 2;
-    return { ctx: 'Cada face lateral de um tronco de pirâmide quadrada é um trapézio.', viz: fig(pir(l, L, Math.max(3, a - 1), { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, a: `a = ${a} cm` })),
-      q: 'Qual é a área de <b>uma</b> face lateral, em cm²?', unit: 'cm²', ans: A,
-      sol: passo([`Trapézio: <span class="fr"><i>(L + ℓ) · a</i><i>2</i></span> = <span class="fr"><i>(${L} + ${l}) · ${a}</i><i>2</i></span>.`, `= <span class="fr"><i>${(L + l) * a}</i><i>2</i></span> = <b>${fmt(A)} cm²</b>.`]) };
+  { s: 4, nome: 'Base triangular', gen(t) {
+    const [B, b] = t.pick([[27, 3], [12, 3], [50, 8], [18, 2], [45, 5], [32, 2]]); const rq = Math.sqrt(B * b); const h = 3 * t.ri(1, 6); const V = h / 3 * (B + b + rq);
+    return { ctx: `Um suporte maciço tem forma de tronco de pirâmide de bases <b>triangulares</b>, com áreas <b>${B} cm²</b> e <b>${b} cm²</b>, e altura <b>${h} cm</b>.`, viz: contrato([['Área da base maior', `${B} cm²`], ['Área da base menor', `${b} cm²`], ['Altura', `${h} cm`]]),
+      q: 'Qual é o <b>volume</b>, em cm³?', unit: 'cm³', ans: V,
+      sol: passo([`√(${B} · ${b}) = √${B * b} = ${rq}.`, `V = <span class="fr"><i>${h}</i><i>3</i></span> · (${B} + ${b} + ${rq}) = ${h / 3} · ${B + b + rq} = <b>${V} cm³</b>.`]) };
   } },
-  { s: 4, nome: 'Capa lateral', gen(t) {
-    const a = t.ri(4, 15); const l = t.ri(2, 8); const L = l + 2 * t.ri(1, 4); const A = 2 * (L + l) * a;
-    return { ctx: 'Uma capa de acrílico cobre as 4 faces laterais de um tronco de pirâmide quadrada.', viz: fig(pir(l, L, Math.max(3, a - 1), { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, a: `a = ${a} cm` })),
-      q: 'Quantos cm² de acrílico tem a capa?', unit: 'cm²', ans: A,
-      sol: passo([`Uma face: <span class="fr"><i>(${L} + ${l}) · ${a}</i><i>2</i></span> = ${(L + l) * a / 2}.`, `4 faces: 4 · ${(L + l) * a / 2} = 2 · (L + ℓ) · a = <b>${A} cm²</b>.`]) };
+  { s: 4, nome: 'Altura pelas áreas', gen(t) {
+    const [B, b] = t.pick([[16, 4], [36, 16], [25, 9], [64, 16], [100, 25], [49, 9], [81, 16]]); const rq = Math.sqrt(B * b); const h = t.ri(2, 12); const V = h * (B + b + rq) / 3;
+    return { ctx: `Um reservatório em tronco de pirâmide tem bases de áreas <b>${B} m²</b> e <b>${b} m²</b> e volume <b>${fmt(V)} m³</b>.`, viz: contrato([['Base maior', `${B} m²`], ['Base menor', `${b} m²`], ['Volume', `${fmt(V)} m³`]]),
+      q: 'Qual é a <b>altura</b>, em metros?', unit: 'm', ans: h,
+      sol: passo([`√(${B} · ${b}) = ${rq}, então B + b + √(B·b) = ${B + b + rq}.`, `${fmt(V)} = <span class="fr"><i>h</i><i>3</i></span> · ${B + b + rq}.`, `h = 3 · ${fmt(V)} ÷ ${B + b + rq} = <b>${h} m</b>.`]) };
   } },
-  { s: 4, nome: 'Embalagem completa', gen(t) {
-    const [d, h, a] = t.pick(TRIPLES.slice(0, 4)); const l = t.ri(2, 6); const L = l + 2 * d; const AL = 2 * (L + l) * a; const AT = AL + L * L + l * l;
-    return { ctx: 'Uma embalagem fechada (com as duas bases) tem forma de tronco de pirâmide quadrada.', viz: fig(pir(l, L, h, { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, h: `h = ${h} cm` })),
-      q: 'Qual é a <b>área total</b> da embalagem, em cm²?', unit: 'cm²', ans: AT,
-      sol: passo([`Apótema: a² = ${h}² + ((${L} − ${l}) ÷ 2)² = ${h * h} + ${d * d} = ${a * a} → a = ${a}.`, `Lateral: 2 · (${L} + ${l}) · ${a} = ${AL}.`, `Bases: ${L}² + ${l}² = ${L * L + l * l}.`, `Total: <b>${AT} cm²</b>.`]) };
+  { s: 4, nome: 'Caixa-d’água em metros', gen(t) {
+    const l = t.ri(1, 3); const L = l + t.ri(1, 3); const h = 3 * t.ri(1, 2); const V = h / 3 * (L * L + L * l + l * l);
+    return { ctx: 'Uma caixa-d’água em tronco de pirâmide de bases quadradas tem as medidas em <b>metros</b>.', viz: fig(pir(l, L, h, { lb: `L = ${L} m`, lt: `ℓ = ${l} m`, h: `h = ${h} m` })),
+      q: 'Quantos <b>litros</b> cabem na caixa-d’água?', unit: 'L', ans: V * 1000,
+      sol: passo([`V = <span class="fr"><i>${h}</i><i>3</i></span> · (${L * L} + ${L * l} + ${l * l}) = ${V} m³.`, `1 m³ = 1 000 L → <b>${(V * 1000).toLocaleString('pt-BR')} L</b>.`]) };
   } },
-  { s: 4, nome: 'Altura pelo apótema', gen(t) {
-    const [p, q, a] = t.pick(TRIPLES.slice(0, 5)); const [d, h] = t.ri(0, 1) ? [p, q] : [q, p]; const l = t.ri(2, 6); const L = l + 2 * d;
-    return { ctx: 'Em uma caixa em tronco de pirâmide quadrada, o apótema de cada face lateral foi medido.', viz: fig(pir(l, L, h, { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, a: `a = ${a} cm`, h: 'h = ?' })),
-      q: 'Qual é a <b>altura</b> da caixa, em cm?', unit: 'cm', ans: h,
-      sol: passo([`(L − ℓ) ÷ 2 = ${d}.`, `a² = h² + ${d}² → ${a * a} = h² + ${d * d} → h² = ${h * h}.`, `h = <b>${h} cm</b>.`]) };
+  { s: 4, nome: 'Bomba de enchimento', gen(t) {
+    const l = t.ri(1, 3); const L = l + t.ri(1, 3); const h = 3; const V = h / 3 * (L * L + L * l + l * l) * 1000; const Q = t.pick([100, 200, 250, 500]);
+    return { ctx: `Uma bomba despeja <b>${Q} litros por minuto</b> numa cisterna vazia em tronco de pirâmide de bases quadradas (medidas em metros).`, viz: fig(pir(l, L, h, { lb: `L = ${L} m`, lt: `ℓ = ${l} m`, h: `h = ${h} m` })),
+      q: 'Em quantos <b>minutos</b> a cisterna fica cheia?', unit: 'min', ans: r2(V / Q),
+      sol: passo([`V = <span class="fr"><i>3</i><i>3</i></span> · (${L * L} + ${L * l} + ${l * l}) = ${V / 1000} m³ = ${V.toLocaleString('pt-BR')} L.`, `Tempo: ${V.toLocaleString('pt-BR')} ÷ ${Q} = <b>${fmt(V / Q)} min</b>.`]) };
   } },
-  { s: 4, nome: 'Bandeja sem tampa', gen(t) {
-    const [d, h, a] = t.pick(TRIPLES.slice(0, 4)); const l = t.ri(4, 10); const L = l + 2 * d; const A = 2 * (L + l) * a + l * l;
-    return { ctx: 'Uma bandeja aberta em cima tem forma de tronco de pirâmide quadrada invertido: a boca (lado L) é maior que o fundo (lado ℓ).', viz: fig(pir(L, l, h, { lt: `L = ${L} cm`, lb: `ℓ = ${l} cm`, h: `h = ${h} cm` })),
-      q: 'Quantos cm² de chapa formam a bandeja (laterais + fundo)?', unit: 'cm²', ans: A,
-      sol: passo([`a² = ${h * h} + ${d * d} = ${a * a} → a = ${a}.`, `Laterais: 2 · (${L} + ${l}) · ${a} = ${2 * (L + l) * a}.`, `Fundo: ${l}² = ${l * l}. Total: <b>${A} cm²</b>.`]) };
+  { s: 4, nome: 'Duas caixas', gen(t) {
+    let a; let b; do { const l1 = t.ri(2, 5); const L1 = l1 + t.ri(1, 4); const l2 = t.ri(2, 5); const L2 = l2 + t.ri(1, 4); const h = 3 * t.ri(1, 3); a = [L1, l1, h, h / 3 * (L1 * L1 + L1 * l1 + l1 * l1)]; b = [L2, l2, h, h / 3 * (L2 * L2 + L2 * l2 + l2 * l2)]; } while (a[3] === b[3]);
+    const d = Math.abs(a[3] - b[3]);
+    return { ctx: `Duas caixas em tronco de pirâmide de bases quadradas têm a mesma altura, <b>${a[2]} cm</b>.`, viz: `<div class="duo">${fig(pir(a[1], a[0], a[2], { lb: `${a[0]}`, lt: `${a[1]}`, h: `${a[2]}` }), 'Caixa A (cm)')}${fig(pir(b[1], b[0], b[2], { lb: `${b[0]}`, lt: `${b[1]}`, h: `${b[2]}` }), 'Caixa B (cm)')}</div>`,
+      q: 'Quantos cm³ a caixa <b>maior</b> tem a mais que a outra?', unit: 'cm³', ans: d,
+      sol: passo([`A: <span class="fr"><i>${a[2]}</i><i>3</i></span> · (${a[0] ** 2} + ${a[0] * a[1]} + ${a[1] ** 2}) = ${a[3]} cm³.`, `B: <span class="fr"><i>${b[2]}</i><i>3</i></span> · (${b[0] ** 2} + ${b[0] * b[1]} + ${b[1] ** 2}) = ${b[3]} cm³.`, `Diferença: <b>${d} cm³</b>.`]) };
   } },
 
   /* ===== BANCADA 5 · TRANSFERÊNCIAS ===== */
@@ -1057,7 +1056,7 @@ function coverView() {
       <div class="cover-brand">${logo()}<span>Prof. Mateus Bibiano · 2º ano · M21 e M22</span></div>
       <p class="kicker">Geometria espacial · Revisão</p>
       <h1 class="title">Laboratório <span>dos Troncos</span></h1>
-      <p class="lede">Béqueres, funis, frascos e reservatórios: tudo aqui tem forma de <b>tronco de cone</b> ou <b>tronco de pirâmide</b>. São <b>5 bancadas</b> e <b>30 análises</b> de volume, geratriz, apótema e áreas. Cada análise certa enche um frasco. Você tem 2 tentativas por análise.</p>
+      <p class="lede">Béqueres, funis, frascos e reservatórios: tudo aqui tem forma de <b>tronco de cone</b> ou <b>tronco de pirâmide</b>. São <b>5 bancadas</b> e <b>30 análises</b> de <b>volume</b>: capacidades, alturas, litros, comparações e transferências. Cada análise certa enche um frasco. Você tem 2 tentativas por análise.</p>
       ${resume}
       <form class="crew" data-form="start" autocomplete="off">
         <label class="fld"><span>Nome e sobrenome</span><input name="nome" maxlength="60" required placeholder="Ex.: Ana Souza"></label>
@@ -1160,7 +1159,7 @@ function teacherView() {
   return `<main class="page">${hud()}<div class="wrap"><section class="card">
     <h2>Área do professor</h2>
     <div class="tcards"><div><h3>Modo projeção</h3><p>Mostra o botão “Mostrar resposta” em cada análise e desliga a tela cheia, para resolver com a turma no projetor.</p><button class="btn hot" data-act="proj">${projection ? 'Desligar' : 'Ligar'} projeção</button></div>
-    <div><h3>Como funciona</h3><p>Cada aluno recebe medidas sorteadas. São 2 tentativas por análise: 100 pontos de primeira, 50 na segunda, e frasco derramado (0) se errar as duas, com a resolução logo em seguida. Nada usa semelhança: só as fórmulas do tronco e Pitágoras.</p></div></div>
+    <div><h3>Como funciona</h3><p>Cada aluno recebe medidas sorteadas. São 2 tentativas por análise: 100 pontos de primeira, 50 na segunda, e frasco derramado (0) se errar as duas, com a resolução logo em seguida. Só volumes de tronco de cone e de tronco de pirâmide, com as fórmulas diretas (nada de semelhança).</p></div></div>
     <h3 class="live-h"><span class="dot on"></span> Turma ao vivo</h3>
     <div id="prof-live"></div>
     <details class="local"><summary>Experimentos terminados neste aparelho</summary>${TURMAS.map((t) => `<h3>${t}</h3>${hallList(sortedHall().filter((h) => h.turma === t))}`).join('')}</details>
