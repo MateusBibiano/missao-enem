@@ -423,6 +423,18 @@ h2 { text-transform: none; letter-spacing: -.01em; }
 .planta { min-width: 0; }
 .room { min-width: 0; }
 @media (max-width: 640px) { .planta { grid-template-columns: 1fr; } .room, .room.r4, .room.r5 { grid-column: auto; } .room .fr-ic { width: 18px; } }
+/* alternativas */
+.opts { display: grid; gap: 10px; }
+.opt { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; padding: 12px 14px; border-radius: 12px; border: 2px solid var(--line2); background: linear-gradient(180deg, #183641, #132C35); color: var(--ink); transition: border-color .15s, background .15s, transform .1s; }
+.opt:hover:not(:disabled) { border-color: var(--lux); }
+.opt:active:not(:disabled) { transform: translateY(1px); }
+.opt-l { flex: none; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font: 700 16px var(--fm); background: #0B1A1F; border: 1px solid var(--line2); }
+.opt-v { font: 700 19px var(--fm); font-variant-numeric: tabular-nums; }
+.opt.on { border-color: var(--lux); background: rgba(94, 234, 212, .14); box-shadow: 0 0 0 3px rgba(94, 234, 212, .18); }
+.opt.on .opt-l { background: var(--lux); color: #05201C; border-color: var(--lux); }
+.opt.riscada { opacity: .45; cursor: not-allowed; }
+.opt.riscada .opt-v { text-decoration: line-through; text-decoration-color: var(--lose); text-decoration-thickness: 2px; }
+.opt.riscada .opt-l { background: var(--lose); color: #fff; border-color: var(--lose); }
 
 [hidden]{display:none!important}
 </style>
@@ -487,7 +499,7 @@ const FASES = [
     prelecao: `<p>O <b>tronco de cone</b> tem duas bases circulares: a maior, de raio <b>R</b>, e a menor, de raio <b>r</b>. A distância entre elas é a altura <b>h</b>.</p>
       <div class="formula">V = <span class="fr"><i>π · h</i><i>3</i></span> · (R² + R·r + r²)</div>
       <p>Quando a questão pedir <b>π = 3</b>, a fórmula fica V = h · (R² + R·r + r²).</p>
-      <p>Quando pedir a resposta <b>em função de π</b>, digite só o número que multiplica π.</p>
+      <p>Quando pedir a resposta <b>em função de π</b>, deixe o π na resposta: por exemplo, 84π cm³.</p>
       <p>1 cm³ = 1 mL &nbsp;·&nbsp; 1 000 cm³ = 1 L.</p>` },
   { n: 2, id: 'b2', nome: 'Copos e funis', tema: 'Volume do tronco de cone II', cor: '#A78BFA', liq: '#A78BFA',
     intro: 'Mais recipientes em tronco de cone, agora com diâmetros, respostas em função de π e comparações com o cilindro.',
@@ -557,7 +569,7 @@ const fig = (svg, legenda) => `<figure class="viz lab-fig">${svg}${legenda ? `<f
 
 /* ---------- sorteios auxiliares ---------- */
 const PI3 = '<b>Use π = 3.</b>';
-const PIF = '<b>Responda em função de π</b> (digite só o número que multiplica π).';
+const PIF = '<b>Responda em função de π.</b>';
 
 const ENIGMAS = [
   /* ===== BANCADA 1 · VOLUME DO TRONCO DE CONE ===== */
@@ -565,19 +577,19 @@ const ENIGMAS = [
     const r = t.ri(2, 5); const R = r + t.ri(1, 4); const h = t.ri(4, 12); const S = R * R + R * r + r * r; const V = h * S;
     return { ctx: `Um béquer tem a forma de tronco de cone, com a boca maior que o fundo. ${PI3}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
       q: 'Qual é a <b>capacidade</b> do béquer, em mL?', unit: 'mL', ans: V,
-      sol: passo([`V = <span class="fr"><i>πh</i><i>3</i></span> · (R² + R·r + r²). Com π = 3: V = h · (R² + R·r + r²).`, `R² + R·r + r² = ${R * R} + ${R * r} + ${r * r} = ${S}.`, `V = ${h} · ${S} = <b>${V} cm³ = ${V} mL</b>.`]) };
+      erros: [h * (R * R + r * r), 3 * V], sol: passo([`V = <span class="fr"><i>πh</i><i>3</i></span> · (R² + R·r + r²). Com π = 3: V = h · (R² + R·r + r²).`, `R² + R·r + r² = ${R * R} + ${R * r} + ${r * r} = ${S}.`, `V = ${h} · ${S} = <b>${V} cm³ = ${V} mL</b>.`]) };
   } },
   { s: 1, nome: 'Copo graduado', gen(t) {
     const r = t.ri(2, 4); const R = r + t.ri(1, 3); const h = 3 * t.ri(2, 5); const S = R * R + R * r + r * r; const c = h / 3 * S;
     return { ctx: `Um copo graduado tem forma de tronco de cone. ${PIF}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
       q: 'Qual é o <b>volume</b> do copo, em cm³?', unit: 'π cm³', ans: c,
-      sol: passo([`V = <span class="fr"><i>π · ${h}</i><i>3</i></span> · (${R}² + ${R}·${r} + ${r}²) = ${h / 3}π · (${R * R} + ${R * r} + ${r * r}).`, `${h / 3} · ${S} = ${c}.`, `V = <b>${c}π cm³</b>. Digite ${c}.`]) };
+      erros: [h / 3 * (R * R + r * r), 3 * c], sol: passo([`V = <span class="fr"><i>π · ${h}</i><i>3</i></span> · (${R}² + ${R}·${r} + ${r}²) = ${h / 3}π · (${R * R} + ${R * r} + ${r * r}).`, `${h / 3} · ${S} = ${c}.`, `V = <b>${c}π cm³</b>.`]) };
   } },
   { s: 1, nome: 'Balde de gelo', gen(t) {
     let r; let R; let h; let V; do { r = t.ri(4, 8); R = r + t.ri(2, 5); h = t.ri(10, 20); V = h * (R * R + R * r + r * r); } while (V % 10 !== 0);
     return { ctx: `Um balde de gelo é um tronco de cone. ${PI3}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
       q: 'Quantos <b>litros</b> cabem no balde?', unit: 'L', ans: V / 1000,
-      sol: passo([`V = ${h} · (${R * R} + ${R * r} + ${r * r}) = ${h} · ${R * R + R * r + r * r} = ${V} cm³.`, `${V} cm³ ÷ 1000 = <b>${fmt(V / 1000)} L</b>.`]) };
+      erros: [V / 100, h * (R * R + r * r) / 1000], sol: passo([`V = ${h} · (${R * R} + ${R * r} + ${r * r}) = ${h} · ${R * R + R * r + r * r} = ${V} cm³.`, `${V} cm³ ÷ 1000 = <b>${fmt(V / 1000)} L</b>.`]) };
   } },
   { s: 1, nome: 'Altura do recipiente', gen(t) {
     const r = t.ri(2, 5); const R = r + t.ri(1, 4); const h = t.ri(4, 12); const S = R * R + R * r + r * r; const V = h * S;
@@ -596,7 +608,7 @@ const ENIGMAS = [
     const r = t.ri(3, 6); const R = r + t.ri(1, 3); const h = t.ri(6, 12); const V = h * (R * R + R * r + r * r); const ocup = t.ri(2, 4) * 50; const liv = V - ocup;
     return { ctx: `Um frasco em tronco de cone (boca maior) já tem <b>${ocup} mL</b> de solução dentro. ${PI3}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
       q: 'Quantos mL ainda cabem no frasco?', unit: 'mL', ans: liv,
-      sol: passo([`Capacidade: ${h} · (${R * R} + ${R * r} + ${r * r}) = ${V} mL.`, `Cabem ainda: ${V} − ${ocup} = <b>${liv} mL</b>.`]) };
+      erros: [V, liv - ocup], sol: passo([`Capacidade: ${h} · (${R * R} + ${R * r} + ${r * r}) = ${V} mL.`, `Cabem ainda: ${V} − ${ocup} = <b>${liv} mL</b>.`]) };
   } },
 
   /* ===== BANCADA 2 · VOLUME DO TRONCO DE CONE II ===== */
@@ -604,13 +616,13 @@ const ENIGMAS = [
     const r = t.ri(1, 4); const R = r + t.ri(2, 5); const h = 3 * t.ri(1, 5); const S = R * R + R * r + r * r; const c = h / 3 * S;
     return { ctx: `Um funil com a saída tampada tem a boca larga em cima. ${PIF}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` })),
       q: 'Qual é o <b>volume</b> do funil, em cm³?', unit: 'π cm³', ans: c,
-      sol: passo([`V = <span class="fr"><i>π · ${h}</i><i>3</i></span> · (${R * R} + ${R * r} + ${r * r}) = ${h / 3}π · ${S}.`, `V = <b>${c}π cm³</b>. Digite ${c}.`]) };
+      erros: [3 * c, h / 3 * (R * R + r * r)], sol: passo([`V = <span class="fr"><i>π · ${h}</i><i>3</i></span> · (${R * R} + ${R * r} + ${r * r}) = ${h / 3}π · ${S}.`, `V = <b>${c}π cm³</b>.`]) };
   } },
   { s: 2, nome: 'Medidas pelo diâmetro', gen(t) {
     const r = t.ri(2, 5); const R = r + t.ri(1, 4); const h = t.ri(4, 12); const S = R * R + R * r + r * r; const V = h * S;
     return { ctx: `O catálogo informa os <b>diâmetros</b> de um copo em tronco de cone. ${PI3}`, viz: fig(cone(R, r, h, { rt: `D = ${2 * R} cm`, rb: `d = ${2 * r} cm`, h: `h = ${h} cm` })),
       q: 'Qual é a <b>capacidade</b> do copo, em mL?', unit: 'mL', ans: V,
-      sol: passo([`Raios: R = ${2 * R} ÷ 2 = ${R} cm e r = ${2 * r} ÷ 2 = ${r} cm.`, `V = ${h} · (${R * R} + ${R * r} + ${r * r}) = ${h} · ${S}.`, `V = <b>${V} mL</b>.`]) };
+      erros: [4 * V, h * (R * R + r * r)], sol: passo([`Raios: R = ${2 * R} ÷ 2 = ${R} cm e r = ${2 * r} ÷ 2 = ${r} cm.`, `V = ${h} · (${R * R} + ${R * r} + ${r * r}) = ${h} · ${S}.`, `V = <b>${V} mL</b>.`]) };
   } },
   { s: 2, nome: 'Altura em função de π', gen(t) {
     const r = t.ri(1, 4); const R = r + t.ri(1, 4); const h = 3 * t.ri(1, 5); const S = R * R + R * r + r * r; const V = h * S;
@@ -622,13 +634,13 @@ const ENIGMAS = [
     const r = t.ri(1, 3); const R = r + t.ri(1, 3); const h = t.ri(2, 8); const V = h * (R * R + R * r + r * r);
     return { ctx: `Um tanque de solução em tronco de cone tem as medidas em <b>decímetros</b>. ${PI3}`, viz: fig(cone(R, r, Math.max(h, 3), { rt: `R = ${R} dm`, rb: `r = ${r} dm`, h: `h = ${h} dm` })),
       q: 'Quantos <b>litros</b> cabem no tanque?', unit: 'L', ans: V,
-      sol: passo([`V = ${h} · (${R * R} + ${R * r} + ${r * r}) = ${V} dm³.`, `1 dm³ = 1 L, então cabem <b>${V} L</b>.`]) };
+      erros: [V * 1000, h * (R * R + r * r)], sol: passo([`V = ${h} · (${R * R} + ${R * r} + ${r * r}) = ${V} dm³.`, `1 dm³ = 1 L, então cabem <b>${V} L</b>.`]) };
   } },
   { s: 2, nome: 'Cilindro ou tronco?', gen(t) {
     const r = t.ri(2, 5); const R = r + t.ri(1, 4); const h = t.ri(4, 10); const Vt = h * (R * R + R * r + r * r); const Vc = 3 * R * R * h; const d = Vc - Vt;
     return { ctx: `Um béquer cilíndrico tem raio <b>${R} cm</b> e altura <b>${h} cm</b>. Ao lado, um béquer em tronco de cone com a mesma altura, raio maior ${R} cm e raio menor ${r} cm. ${PI3}`, viz: fig(cone(R, r, h, { rt: `R = ${R} cm`, rb: `r = ${r} cm`, h: `h = ${h} cm` }), 'O béquer em tronco de cone'),
       q: 'Quantos mL o <b>cilindro</b> comporta a mais que o tronco?', unit: 'mL', ans: d,
-      sol: passo([`Cilindro: 3 · ${R}² · ${h} = ${Vc} mL.`, `Tronco: ${h} · (${R * R} + ${R * r} + ${r * r}) = ${Vt} mL.`, `Diferença: ${Vc} − ${Vt} = <b>${d} mL</b>.`]) };
+      erros: [Vc, Vt], sol: passo([`Cilindro: 3 · ${R}² · ${h} = ${Vc} mL.`, `Tronco: ${h} · (${R * R} + ${R * r} + ${r * r}) = ${Vt} mL.`, `Diferença: ${Vc} − ${Vt} = <b>${d} mL</b>.`]) };
   } },
   { s: 2, nome: 'Óleo de calibração', gen(t) {
     const r = t.ri(2, 6); const R = r + t.ri(1, 4); const h = t.ri(5, 15); const V = h * (R * R + R * r + r * r);
@@ -643,19 +655,19 @@ const ENIGMAS = [
     const l = t.ri(2, 6); const L = l + t.ri(2, 6); const h = 3 * t.ri(1, 5); const S = L * L + L * l + l * l; const V = h / 3 * S;
     return { ctx: 'Um frasco tem a forma de tronco de pirâmide de bases quadradas.', viz: fig(pir(l, L, h, { lb: `L = ${L} cm`, lt: `ℓ = ${l} cm`, h: `h = ${h} cm` })),
       q: 'Qual é o <b>volume</b> do frasco, em cm³?', unit: 'cm³', ans: V,
-      sol: passo([`V = <span class="fr"><i>h</i><i>3</i></span> · (L² + L·ℓ + ℓ²).`, `L² + L·ℓ + ℓ² = ${L * L} + ${L * l} + ${l * l} = ${S}.`, `V = ${h / 3} · ${S} = <b>${V} cm³</b>.`]) };
+      erros: [h / 3 * (L * L + l * l), h * S], sol: passo([`V = <span class="fr"><i>h</i><i>3</i></span> · (L² + L·ℓ + ℓ²).`, `L² + L·ℓ + ℓ² = ${L * L} + ${L * l} + ${l * l} = ${S}.`, `V = ${h / 3} · ${S} = <b>${V} cm³</b>.`]) };
   } },
   { s: 3, nome: 'Bases dadas pela área', gen(t) {
     const pr = t.pick([[4, 1], [9, 4], [16, 9], [25, 16], [36, 9], [64, 25], [100, 36], [49, 16], [81, 25]]); const [B, b] = pr; const h = 3 * t.ri(1, 6); const rq = Math.sqrt(B * b); const V = h / 3 * (B + b + rq);
     return { ctx: `Um reservatório em tronco de pirâmide tem base maior de área <b>${B} dm²</b>, base menor de área <b>${b} dm²</b> e altura <b>${h} dm</b>.`, viz: contrato([['Base maior (B)', `${B} dm²`], ['Base menor (b)', `${b} dm²`], ['Altura (h)', `${h} dm`]]),
       q: 'Qual é a capacidade do reservatório, em <b>litros</b>? (1 dm³ = 1 L)', unit: 'L', ans: V,
-      sol: passo([`√(B · b) = √(${B} · ${b}) = √${B * b} = ${rq}.`, `V = <span class="fr"><i>${h}</i><i>3</i></span> · (${B} + ${b} + ${rq}) = ${h / 3} · ${B + b + rq} = <b>${V} dm³ = ${V} L</b>.`]) };
+      erros: [h / 3 * (B + b), h * (B + b + rq)], sol: passo([`√(B · b) = √(${B} · ${b}) = √${B * b} = ${rq}.`, `V = <span class="fr"><i>${h}</i><i>3</i></span> · (${B} + ${b} + ${rq}) = ${h / 3} · ${B + b + rq} = <b>${V} dm³ = ${V} L</b>.`]) };
   } },
   { s: 3, nome: 'Pirâmide invertida', gen(t) {
     const l = t.ri(2, 5); const L = l + t.ri(2, 5); const h = 3 * t.ri(2, 5); const S = L * L + L * l + l * l; const V = h / 3 * S;
     return { ctx: 'Um recipiente de base quadrada é mais largo em cima (boca) do que embaixo (fundo).', viz: fig(pir(L, l, h, { lt: `L = ${L} cm`, lb: `ℓ = ${l} cm`, h: `h = ${h} cm` })),
       q: 'Quantos mL cabem no recipiente?', unit: 'mL', ans: V,
-      sol: passo(['A posição não muda a fórmula: B é sempre a base maior.', `V = <span class="fr"><i>${h}</i><i>3</i></span> · (${L * L} + ${L * l} + ${l * l}) = ${h / 3} · ${S} = <b>${V} cm³ = ${V} mL</b>.`]) };
+      erros: [h / 3 * (L * L + l * l), h * S], sol: passo(['A posição não muda a fórmula: B é sempre a base maior.', `V = <span class="fr"><i>${h}</i><i>3</i></span> · (${L * L} + ${L * l} + ${l * l}) = ${h / 3} · ${S} = <b>${V} cm³ = ${V} mL</b>.`]) };
   } },
   { s: 3, nome: 'Altura do reservatório', gen(t) {
     const l = t.ri(2, 6); const L = l + t.ri(2, 6); const h = 3 * t.ri(1, 5); const S = L * L + L * l + l * l; const V = h / 3 * S;
@@ -681,13 +693,13 @@ const ENIGMAS = [
     const [c1, l1] = t.pick([[3, 2], [4, 3], [5, 2], [4, 1], [6, 4]]); const k = t.pick([2, 3]); const Cb = c1 * k; const Lb = l1 * k; const B = Cb * Lb; const b = c1 * l1; const rq = Math.sqrt(B * b); const h = 3 * t.ri(1, 5); const V = h / 3 * (B + b + rq);
     return { ctx: `Uma caixa de areia do laboratório é um tronco de pirâmide de bases <b>retangulares</b>: a base maior mede ${Cb} dm × ${Lb} dm, a menor mede ${c1} dm × ${l1} dm, e a altura é ${h} dm.`, viz: contrato([['Base maior', `${Cb} dm × ${Lb} dm`], ['Base menor', `${c1} dm × ${l1} dm`], ['Altura', `${h} dm`]]),
       q: 'Qual é o volume, em <b>litros</b>?', unit: 'L', ans: V,
-      sol: passo([`B = ${Cb} · ${Lb} = ${B} dm² e b = ${c1} · ${l1} = ${b} dm².`, `√(B · b) = √${B * b} = ${rq}.`, `V = <span class="fr"><i>${h}</i><i>3</i></span> · (${B} + ${b} + ${rq}) = ${h / 3} · ${B + b + rq} = <b>${V} dm³ = ${V} L</b>.`]) };
+      erros: [h / 3 * (B + b), h * (B + b + rq)], sol: passo([`B = ${Cb} · ${Lb} = ${B} dm² e b = ${c1} · ${l1} = ${b} dm².`, `√(B · b) = √${B * b} = ${rq}.`, `V = <span class="fr"><i>${h}</i><i>3</i></span> · (${B} + ${b} + ${rq}) = ${h / 3} · ${B + b + rq} = <b>${V} dm³ = ${V} L</b>.`]) };
   } },
   { s: 4, nome: 'Base triangular', gen(t) {
     const [B, b] = t.pick([[27, 3], [12, 3], [50, 8], [18, 2], [45, 5], [32, 2]]); const rq = Math.sqrt(B * b); const h = 3 * t.ri(1, 6); const V = h / 3 * (B + b + rq);
     return { ctx: `Um suporte maciço tem forma de tronco de pirâmide de bases <b>triangulares</b>, com áreas <b>${B} cm²</b> e <b>${b} cm²</b>, e altura <b>${h} cm</b>.`, viz: contrato([['Área da base maior', `${B} cm²`], ['Área da base menor', `${b} cm²`], ['Altura', `${h} cm`]]),
       q: 'Qual é o <b>volume</b>, em cm³?', unit: 'cm³', ans: V,
-      sol: passo([`√(${B} · ${b}) = √${B * b} = ${rq}.`, `V = <span class="fr"><i>${h}</i><i>3</i></span> · (${B} + ${b} + ${rq}) = ${h / 3} · ${B + b + rq} = <b>${V} cm³</b>.`]) };
+      erros: [h / 3 * (B + b), h * (B + b + rq)], sol: passo([`√(${B} · ${b}) = √${B * b} = ${rq}.`, `V = <span class="fr"><i>${h}</i><i>3</i></span> · (${B} + ${b} + ${rq}) = ${h / 3} · ${B + b + rq} = <b>${V} cm³</b>.`]) };
   } },
   { s: 4, nome: 'Altura pelas áreas', gen(t) {
     const [B, b] = t.pick([[16, 4], [36, 16], [25, 9], [64, 16], [100, 25], [49, 9], [81, 16]]); const rq = Math.sqrt(B * b); const h = t.ri(2, 12); const V = h * (B + b + rq) / 3;
@@ -699,7 +711,7 @@ const ENIGMAS = [
     const l = t.ri(1, 3); const L = l + t.ri(1, 3); const h = 3 * t.ri(1, 2); const V = h / 3 * (L * L + L * l + l * l);
     return { ctx: 'Uma caixa-d’água em tronco de pirâmide de bases quadradas tem as medidas em <b>metros</b>.', viz: fig(pir(l, L, h, { lb: `L = ${L} m`, lt: `ℓ = ${l} m`, h: `h = ${h} m` })),
       q: 'Quantos <b>litros</b> cabem na caixa-d’água?', unit: 'L', ans: V * 1000,
-      sol: passo([`V = <span class="fr"><i>${h}</i><i>3</i></span> · (${L * L} + ${L * l} + ${l * l}) = ${V} m³.`, `1 m³ = 1 000 L → <b>${(V * 1000).toLocaleString('pt-BR')} L</b>.`]) };
+      erros: [V, V * 100], sol: passo([`V = <span class="fr"><i>${h}</i><i>3</i></span> · (${L * L} + ${L * l} + ${l * l}) = ${V} m³.`, `1 m³ = 1 000 L → <b>${(V * 1000).toLocaleString('pt-BR')} L</b>.`]) };
   } },
   { s: 4, nome: 'Bomba de enchimento', gen(t) {
     const l = t.ri(1, 3); const L = l + t.ri(1, 3); const h = 3; const V = h / 3 * (L * L + L * l + l * l) * 1000; const Q = t.pick([100, 200, 250, 500]);
@@ -727,7 +739,7 @@ const ENIGMAS = [
     const x = a[3] - b[3];
     return { ctx: `Um béquer cheio (tronco de cone) será esvaziado num frasco em tronco de pirâmide quadrada, inicialmente vazio. ${PI3}`, viz: `<div class="duo">${fig(cone(a[0], a[1], a[2], { rt: `${a[0]}`, rb: `${a[1]}`, h: `${a[2]}` }), 'Béquer (cm)')}${fig(pir(b[1], b[0], b[2], { lb: `${b[0]}`, lt: `${b[1]}`, h: `${b[2]}` }), 'Frasco (cm)')}</div>`,
       q: 'Quantos mL vão <b>transbordar</b>?', unit: 'mL', ans: x,
-      sol: passo([`Béquer: ${a[2]} · (${a[0] ** 2} + ${a[0] * a[1]} + ${a[1] ** 2}) = ${a[3]} mL.`, `Frasco: <span class="fr"><i>${b[2]}</i><i>3</i></span> · (${b[0] ** 2} + ${b[0] * b[1]} + ${b[1] ** 2}) = ${b[3]} mL.`, `Transborda: ${a[3]} − ${b[3]} = <b>${x} mL</b>.`]) };
+      erros: [a[3] + b[3], b[3]], sol: passo([`Béquer: ${a[2]} · (${a[0] ** 2} + ${a[0] * a[1]} + ${a[1] ** 2}) = ${a[3]} mL.`, `Frasco: <span class="fr"><i>${b[2]}</i><i>3</i></span> · (${b[0] ** 2} + ${b[0] * b[1]} + ${b[1] ** 2}) = ${b[3]} mL.`, `Transborda: ${a[3]} − ${b[3]} = <b>${x} mL</b>.`]) };
   } },
   { s: 5, nome: 'Torneira dosadora', gen(t) {
     const l = t.ri(2, 5); const L = l + t.ri(2, 5); const h = 3 * t.ri(2, 5); const V = h / 3 * (L * L + L * l + l * l); const Q = t.pick([2, 4, 5, 10]);
@@ -992,7 +1004,7 @@ let DB = Object.assign({ cur: null, hall: [] }, store.get());
 const save = () => store.set(DB);
 let S = DB.cur;
 let screen = S ? (S.finished ? 'final' : 'mapa') : 'cover';
-let modal = null; let projection = false; let reveal = false; let kp = null; let cur = 0; let salaV = 1; let shake = false;
+let modal = null; let projection = false; let reveal = false; let kp = null; let pick = null; let cur = 0; let salaV = 1; let shake = false;
 
 /* ---------- estado da missão ---------- */
 function newGame(name, turma) {
@@ -1020,7 +1032,22 @@ const minRest = () => acertos();
 const patente = (p) => (p >= 2700 ? 'Cientista-chefe' : p >= 2200 ? 'Pesquisador' : p >= 1600 ? 'Técnico de laboratório' : p >= 1000 ? 'Estagiário' : 'Calouro');
 const rankLabel = () => patente(pontos());
 function certCode() { const base = `${norm(S.name)}|${S.turma}|${pontos()}|${minRest()}|g9-lab`; return (fnv(base) % 46656).toString(36).toUpperCase().padStart(3, '0') + '-' + (fnv(base + '#') % 46656).toString(36).toUpperCase().padStart(3, '0'); }
-const resp = (q) => (q.unit === 'R$' ? brl(q.ans) : `${fmt(q.ans)}${!q.unit ? '' : q.unit.startsWith('%') ? q.unit : ' ' + q.unit}`);
+const valTxt = (q, v) => (q.unit === 'R$' ? brl(v) : `${fmt(v)}${!q.unit ? '' : q.unit.startsWith('π') || q.unit.startsWith('%') ? q.unit : ' ' + q.unit}`);
+const resp = (q) => valTxt(q, q.ans);
+const LETRAS = ['A', 'B', 'C', 'D', 'E'];
+// 5 alternativas: a certa, erros típicos da questão (q.erros), ×3 / ÷3 e valores próximos
+function opcoesOf(k) {
+  const q = qOf(k); const a = r2(q.ans); const t = rngTools(mulberry((S.seed + k * 7919 + 101) >>> 0));
+  const isInt = Number.isInteger(a); const fix = (v) => (isInt ? Math.round(v) : r2(v));
+  const mag = Math.pow(10, Math.floor(Math.log10(Math.max(a, 1))));
+  let step = Math.max(isInt ? 1 : 0.5, Math.round(a * 0.12 / (mag / 10 || 1)) * (mag / 10 || 1)); if (isInt) step = Math.max(1, Math.round(step));
+  const seen = new Set([a]); const out = [];
+  const tryAdd = (v) => { v = fix(v); if (out.length < 4 && v > 0 && !seen.has(v) && Number.isFinite(v)) { seen.add(v); out.push(v); } };
+  (q.erros || []).slice(0, 2).forEach(tryAdd);
+  t.shuffle([a * 3, a / 3, a + step, a - step, a + 2 * step, a - 2 * step]).forEach(tryAdd);
+  [a + 3 * step, a * 2, a / 2, a + 4 * step, a + 5 * step].forEach(tryAdd);
+  return t.shuffle([a].concat(out));
+}
 
 /* ---------- peças visuais ---------- */
 const ICON = {
@@ -1056,7 +1083,7 @@ function coverView() {
       <div class="cover-brand">${logo()}<span>Prof. Mateus Bibiano · 2º ano · M21 e M22</span></div>
       <p class="kicker">Geometria espacial · Revisão</p>
       <h1 class="title">Laboratório <span>dos Troncos</span></h1>
-      <p class="lede">Béqueres, funis, frascos e reservatórios: tudo aqui tem forma de <b>tronco de cone</b> ou <b>tronco de pirâmide</b>. São <b>5 bancadas</b> e <b>30 análises</b> de <b>volume</b>: capacidades, alturas, litros, comparações e transferências. Cada análise certa enche um frasco. Você tem 2 tentativas por análise.</p>
+      <p class="lede">Béqueres, funis, frascos e reservatórios: tudo aqui tem forma de <b>tronco de cone</b> ou <b>tronco de pirâmide</b>. São <b>5 bancadas</b> e <b>30 análises</b> de <b>volume</b>: capacidades, alturas, litros, comparações e transferências. Cada análise tem 5 alternativas; a certa enche um frasco. Você tem 2 tentativas por análise.</p>
       ${resume}
       <form class="crew" data-form="start" autocomplete="off">
         <label class="fld"><span>Nome e sobrenome</span><input name="nome" maxlength="60" required placeholder="Ex.: Ana Souza"></label>
@@ -1104,16 +1131,18 @@ function enigmaView() {
   const ask = `<article class="lance" style="--fc:${f.cor}"><p class="eyebrow">Bancada ${f.n} · Análise ${k % 6 + 1} de 6 · ${esc(ENIGMAS[k].nome)}</p><p class="ctx">${q.ctx}</p>${q.viz}<p class="ask">${q.q}</p></article>`;
   let side;
   if (!d) {
-    side = `<div class="chute ${shake ? 'shake' : ''}"><div class="tent">Tentativas: ${[0, 1].map((i) => `<i class="${i < x.tries ? 'usada' : ''}"></i>`).join('')}</div>${x.tries ? '<p class="warnbox">Resposta errada. Esta é a <b>última tentativa</b>: confira a conta antes de enviar.</p>' : ''}
-      <div id="kp"></div><p class="hint muted">Use vírgula para decimais. ${q.unit ? `Responda em ${q.unit}.` : ''}</p>
-      <div class="row"><button class="btn hot big wide" data-act="send">${ic('flask')} Registrar resultado</button></div>
+    const ops = opcoesOf(k); const tried = x.bad || [];
+    side = `<div class="chute ${shake ? 'shake' : ''}"><div class="tent">Tentativas: ${[0, 1].map((i) => `<i class="${i < x.tries ? 'usada' : ''}"></i>`).join('')}</div>${x.tries ? '<p class="warnbox">Alternativa errada. Esta é a <b>última tentativa</b>: confira a conta antes de enviar.</p>' : ''}
+      <div class="opts" role="radiogroup" aria-label="Alternativas">${ops.map((v, i) => { const off = tried.includes(r2(v)); return `<button type="button" class="opt ${pick === i ? 'on' : ''} ${off ? 'riscada' : ''}" data-act="pick" data-i="${i}" role="radio" aria-checked="${pick === i}" ${off ? 'disabled' : ''}><span class="opt-l">${LETRAS[i]}</span><span class="opt-v">${valTxt(q, v)}</span></button>`; }).join('')}</div>
+      <p class="hint muted">Escolha uma alternativa e registre. No teclado: letras A a E e Enter.</p>
+      <div class="row"><button class="btn hot big wide" data-act="send" ${pick == null ? 'disabled' : ''}>${ic('flask')} Registrar resultado</button></div>
       <div class="row sm"><button class="link" data-act="dossie" data-n="${f.n}">Protocolo da bancada</button><button class="link" data-act="sala" data-n="${f.n}">Voltar à bancada</button>${projection ? '<button class="link" data-act="reveal">Mostrar resposta</button>' : ''}</div>
-      ${projection && reveal ? `<div class="sol"><p><b>Resposta: ${resp(q)}</b></p>${q.sol}</div>` : ''}</div>`;
+      ${projection && reveal ? `<div class="sol"><p><b>Resposta: ${LETRAS[ops.findIndex((v) => Math.abs(v - r2(q.ans)) < 0.006)]}) ${resp(q)}</b></p>${q.sol}</div>` : ''}</div>`;
   } else {
     const prox = ks(f.n).find((j) => !done(j));
     side = `<div class="result ${x.ok ? 'win' : 'lose'}"><div class="big-flask" style="--lc:${f.liq}">${frascoGrande(x.ok)}</div>
       <h2>${x.ok ? (x.tries === 1 ? 'Frasco cheio!' : 'Cheio na 2ª tentativa') : 'Frasco derramado'}</h2>
-      <p>${x.ok ? `Resultado: <b>${resp(q)}</b> · +${ptsOf(k)} pontos.` : `Seus resultados: <b>${(x.v || []).join(' e ')}</b>. O correto é <b>${resp(q)}</b>.`}</p>
+      <p>${x.ok ? `Alternativa <b>${LETRAS[opcoesOf(k).findIndex((v) => Math.abs(v - r2(q.ans)) < 0.006)]}) ${resp(q)}</b> · +${ptsOf(k)} pontos.` : `Você marcou <b>${(x.v || []).join(' e ')}</b>. A certa é <b>${LETRAS[opcoesOf(k).findIndex((v) => Math.abs(v - r2(q.ans)) < 0.006)]}) ${resp(q)}</b>.`}</p>
       <div class="sol"><p class="eyebrow">Resolução</p>${q.sol}</div>
       <div class="row">${prox != null ? `<button class="btn hot big wide" data-act="enigma" data-k="${prox}" data-autofocus>Próxima análise ${ic('arrow')}</button>` : `<button class="btn hot big wide" data-act="concluir" data-autofocus>${ic('check')} Concluir a bancada</button>`}</div>
       <div class="row sm"><button class="link" data-act="sala" data-n="${f.n}">Voltar à bancada</button></div></div>`;
@@ -1193,9 +1222,12 @@ function render() {
 }
 function mount() {
   if (screen === 'enigma' && S && !done(cur)) {
-    const q = qOf(cur);
-    kp = keypad(document.getElementById('kp'), { unit: q.unit, label: 'Seu resultado' });
-    const kb = (e) => { if (e.key === 'Enter' && !document.querySelector('.veil')) { e.preventDefault(); send(); } };
+    const kb = (e) => {
+      if (document.querySelector('.veil') || e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.key === 'Enter') { e.preventDefault(); send(); return; }
+      const i = LETRAS.indexOf(e.key.toUpperCase()); const n = '12345'.indexOf(e.key); const j = i >= 0 ? i : n;
+      if (j >= 0) { const b = document.querySelector(`.opt[data-i="${j}"]`); if (b && !b.disabled) { e.preventDefault(); pick = j; render(); } }
+    };
     document.addEventListener('keydown', kb); KEYHANDLERS.push(() => document.removeEventListener('keydown', kb));
   }
   if (screen === 'enigma' && done(cur)) { const r = document.querySelector('.result'); if (r && innerWidth < 820) setTimeout(() => r.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }), 60); }
@@ -1206,9 +1238,10 @@ const go = (s) => { screen = s; modal = null; render(); window.scrollTo(0, 0); }
 /* ---------- ações ---------- */
 function send() {
   if (!S || S.finished || done(cur)) return;
-  const v = kp ? kp.get() : NaN; if (Number.isNaN(v)) { toast('Digite um número no teclado.'); return; }
-  const q = qOf(cur); const ok = Math.abs(v - r2(q.ans)) < 0.006;
-  const x = S.e[cur] || { tries: 0, v: [] }; x.tries++; x.v = (x.v || []).concat(kp.raw()); x.ok = ok; x.at = Date.now(); S.e[cur] = x;
+  if (pick == null) { toast('Escolha uma alternativa.'); return; }
+  const q = qOf(cur); const ops = opcoesOf(cur); const v = ops[pick]; const ok = Math.abs(v - r2(q.ans)) < 0.006;
+  const x = S.e[cur] || { tries: 0, v: [] }; x.tries++; x.v = (x.v || []).concat(`${LETRAS[pick]}) ${valTxt(q, v)}`); x.ok = ok; x.at = Date.now();
+  if (!ok) x.bad = (x.bad || []).concat(r2(v)); S.e[cur] = x; pick = null;
   const f = salaOf(cur); const evs = [];
   if (ok) evs.push({ ev: 'Acertou', det: `Bancada ${f.n} · ${ENIGMAS[cur].nome}${x.tries === 2 ? ' (2ª tentativa)' : ''}`, pts: ptsOf(cur) });
   else if (x.tries >= 2) evs.push({ ev: 'Derramou', det: `Bancada ${f.n} · ${ENIGMAS[cur].nome}`, pts: 0 });
@@ -1216,7 +1249,7 @@ function send() {
   save(); syncEv(evs);
   if (!ok) { shake = true; try { if (navigator.vibrate) navigator.vibrate([20, 40, 20]); } catch (e) { /* */ } }
   reveal = false; render();
-  if (!ok && x.tries < 2) toast('Resultado errado. Você tem mais uma tentativa.');
+  if (!ok && x.tries < 2) toast('Alternativa errada. Você tem mais uma tentativa.');
 }
 function concluir() {
   const n = salaOf(cur).n; salaV = n; if (!salaFeita(n)) return;
@@ -1252,8 +1285,9 @@ $app.addEventListener('click', (e) => {
   else if (a === 'cover') go('cover');
   else if (a === 'sala') irSala(+b.dataset.n);
   else if (a === 'locked') toast('Essa bancada ainda está bloqueada. Conclua a anterior primeiro.');
-  else if (a === 'enigma') { cur = +b.dataset.k; reveal = false; go('enigma'); }
+  else if (a === 'enigma') { cur = +b.dataset.k; reveal = false; pick = null; go('enigma'); }
   else if (a === 'send') send();
+  else if (a === 'pick') { pick = +b.dataset.i; render(); }
   else if (a === 'concluir') concluir();
   else if (a === 'final') { if (S && S.finished) go('final'); }
   else if (a === 'dossie') { const keep = kp ? kp.raw() : null; modal = { type: 'dossie', n: +b.dataset.n }; render(); if (kp && keep) kp.set(keep); }
