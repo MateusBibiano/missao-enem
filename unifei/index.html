@@ -1,0 +1,1010 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trilha UNIFEI 2027 · Matemática</title>
+<meta name="description" content="Trilha de Matemática para o Vestibular UNIFEI 2027: 12 conteúdos do programa oficial e 36 questões no formato da prova (5 alternativas, sem calculadora). Prof. Mateus Bibiano · Curso G9.">
+<meta name="theme-color" content="#F4EFE4">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Trilha UNIFEI 2027 · Matemática">
+<meta property="og:description" content="Trilha de Matemática para o Vestibular UNIFEI 2027: 12 conteúdos do programa oficial e 36 questões no formato da prova (5 alternativas, sem calculadora). Prof. Mateus Bibiano · Curso G9.">
+<meta property="og:url" content="https://mateusbibiano.github.io/missao-enem/unifei/">
+<meta property="og:image" content="https://mateusbibiano.github.io/missao-enem/unifei/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232E5E47'/%3E%3Cpath d='M8 50 L26 20 L36 34 L44 24 L58 50 Z' fill='%23F4EFE4'/%3E%3Cpath d='M44 24 V8 H56 L53 12 L56 16 H44' fill='%23C2502F'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;1,9..144,700&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@700;800&display=swap">
+<style>
+/* Trilha UNIFEI 2027 — carta topográfica da Serra da Mantiqueira: papel, curvas de nível, verde-mata e marcos em terracota */
+:root {
+  --paper: #F4EFE4; --paper2: #EAE3D3; --card: #FFFDF8; --ink: #1E2A23; --ink2: #3D4A42; --mute: #6B7468; --line: #D8CFBC; --contour: #CDBF9F;
+  --green: #2E5E47; --green2: #3F7A5D; --green-l: #E1EDE4; --terra: #C2502F; --terra-d: #A43F22; --ochre: #D8A23B; --bad: #B4372A; --bad-l: #F8E3DE; --good-l: #E3F0E6;
+  --fd: "Fraunces", Georgia, serif; --fb: "Atkinson Hyperlegible", system-ui, sans-serif; --fm: "JetBrains Mono", ui-monospace, monospace;
+  --r: 14px; --sh: 0 1px 0 rgba(30, 42, 35, .06), 0 10px 30px -18px rgba(30, 42, 35, .35);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.55 var(--fb); min-height: 100vh; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:disabled { cursor: default; }
+h1, h2, h3 { font-family: var(--fd); font-weight: 700; letter-spacing: -.01em; line-height: 1.15; margin: 0 0 .5em; }
+h2 { font-size: clamp(24px, 3vw, 32px); }
+h3 { font-size: 19px; margin-top: 1.4em; }
+.muted { color: var(--mute); } .small { font-size: 14px; }
+.kick { font: 700 12.5px/1.4 var(--fm); letter-spacing: .08em; text-transform: uppercase; color: var(--terra); margin: 0 0 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+.narrow { max-width: 720px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--sh); padding: clamp(18px, 3vw, 30px); }
+.center { text-align: center; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 18px; }
+.row.center { justify-content: center; }
+.ic { width: 20px; height: 20px; flex: none; }
+.btn { display: inline-flex; align-items: center; gap: 10px; border: 0; border-radius: 999px; padding: 12px 22px; font-weight: 700; background: var(--paper2); color: var(--ink); transition: transform .12s, background .15s, box-shadow .15s; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); }
+.btn.hot { background: var(--terra); color: #fff; box-shadow: 0 6px 16px -8px var(--terra-d); }
+.btn.hot:hover:not(:disabled) { background: var(--terra-d); }
+.btn.ghost { background: transparent; border: 1.5px solid var(--line); }
+.btn.big { padding: 15px 26px; font-size: 18px; }
+.btn:disabled { opacity: .45; }
+.link { background: none; border: 0; padding: 0; color: var(--green); text-decoration: underline; text-underline-offset: 3px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }
+:focus-visible { outline: 3px solid var(--ochre); outline-offset: 2px; }
+.fld { display: grid; gap: 6px; border: 0; padding: 0; margin: 0 0 14px; }
+.fld span, .fld legend { font: 700 12px var(--fm); letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); padding: 0; margin-bottom: 6px; }
+.fld input[type=text], .fld input:not([type]), .fld input[type=password] { font: inherit; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--line); background: #fff; width: 100%; }
+.fld input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px var(--green-l); }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip span { display: inline-block; padding: 9px 18px; border-radius: 999px; border: 1.5px solid var(--line); font: 700 15px var(--fm); background: #fff; cursor: pointer; text-transform: none; letter-spacing: 0; color: var(--ink); margin: 0; }
+.chip input:checked + span { background: var(--green); border-color: var(--green); color: #fff; }
+.chip input:focus-visible + span { outline: 3px solid var(--ochre); }
+.err { color: var(--bad); font-weight: 700; }
+
+/* ---------- curvas de nível ---------- */
+.topo { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.topo path { fill: none; stroke: var(--contour); stroke-width: 1.1; opacity: .5; }
+
+/* ---------- capa ---------- */
+.cover { position: relative; min-height: 100vh; overflow: hidden; display: grid; place-items: center; padding: 40px 20px 220px; }
+.cover-in { position: relative; z-index: 2; max-width: 620px; width: 100%; text-align: center; }
+.cover .kick { justify-content: center; }
+.logo { height: 22px; width: auto; }
+.cover h1 { font-size: clamp(48px, 9vw, 96px); line-height: .95; margin: 6px 0 18px; font-weight: 800; }
+.cover h1 em { font-style: italic; color: var(--green); font-weight: 700; }
+.sub { font-size: 18px; color: var(--ink2); margin: 0 auto 14px; max-width: 560px; }
+.count { display: inline-block; font: 700 14px var(--fm); background: var(--ink); color: var(--paper); padding: 8px 16px; border-radius: 999px; margin: 0 0 22px; }
+.count b { color: var(--ochre); font-size: 17px; }
+.start { text-align: left; max-width: 460px; margin: 0 auto; }
+.start .btn { width: 100%; justify-content: center; margin-top: 4px; }
+.cover-links { display: flex; justify-content: center; gap: 22px; margin-top: 18px; flex-wrap: wrap; }
+.cover-prof { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; opacity: .9; }
+.cover-prof .perfil { display: block; width: 100%; height: 280px; min-width: 0; }
+
+/* ---------- topo das páginas ---------- */
+.hud { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px; padding: 10px 20px; background: rgba(244, 239, 228, .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 10px; background: none; border: 0; padding: 0; text-align: left; color: var(--green); }
+.brand .ic { width: 28px; height: 28px; }
+.brand span { font: 800 17px/1.1 var(--fd); color: var(--ink); display: grid; }
+.brand small { font: 700 11px var(--fm); letter-spacing: .1em; text-transform: uppercase; color: var(--terra); }
+.hud-r { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+.stat { display: grid; text-align: right; }
+.stat small { font: 700 10.5px var(--fm); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.stat b { font: 700 16px var(--fm); }
+.ibtn { width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--card); display: grid; place-items: center; }
+.proj-tag { font: 700 12px var(--fm); background: var(--ochre); color: var(--ink); padding: 4px 10px; border-radius: 999px; text-transform: uppercase; }
+.page { min-height: 100vh; padding-bottom: 60px; }
+
+/* ---------- mapa ---------- */
+.map-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; padding-top: 28px; flex-wrap: wrap; }
+.map-head > div { max-width: 640px; }
+.map-head p.muted { margin: 0; }
+.map-svg { margin: 10px auto 18px; overflow-x: auto; max-width: 1240px; padding: 0 10px; }
+.perfil { display: block; width: 100%; min-width: 680px; height: auto; }
+.perfil .r2 { fill: #DCD3BE; }
+.perfil .r1 { fill: #C9D8C9; }
+.perfil .trail { fill: none; stroke: var(--ink2); stroke-width: 2.5; stroke-dasharray: 3 8; stroke-linecap: round; }
+.perfil .trail.done { stroke: var(--terra); stroke-dasharray: none; stroke-width: 4; }
+.perfil .summit path { fill: none; stroke: var(--terra); stroke-width: 3; stroke-linejoin: round; }
+.perfil .summit text { font: 800 15px var(--fm); fill: var(--ink); }
+.mk circle { fill: var(--card); stroke: var(--ink2); stroke-width: 2.5; }
+.mk text { font: 800 15px var(--fm); fill: var(--ink); }
+.mk .alt { font: 700 11px var(--fm); fill: var(--mute); }
+.mk.ok circle { fill: var(--green); stroke: var(--green); } .mk.ok text:not(.alt) { fill: #fff; }
+.mk.now circle { fill: var(--terra); stroke: var(--terra-d); animation: pulse 1.8s ease-in-out infinite; transform-box: fill-box; transform-origin: center; } .mk.now text:not(.alt) { fill: #fff; }
+.mk.lock circle { fill: var(--paper2); stroke: #A9A897; } .mk.lock text { fill: #8B8D80; }
+.mk[role=button] { cursor: pointer; }
+@keyframes pulse { 50% { transform: scale(1.12); } }
+.marcos { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; }
+.marcos button { width: 100%; display: flex; align-items: center; gap: 12px; text-align: left; padding: 12px 14px; background: var(--card); border: 1.5px solid var(--line); border-radius: 12px; }
+.marcos button:hover:not(:disabled) { border-color: var(--green2); }
+.mn { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font: 800 15px var(--fm); background: var(--paper2); flex: none; }
+.ok .mn { background: var(--green); color: #fff; }
+.now .mn { background: var(--terra); color: #fff; }
+.mt { display: grid; flex: 1; } .mt b { font-weight: 700; } .mt small { color: var(--mute); font-size: 13.5px; line-height: 1.3; }
+.mp { font: 700 16px var(--fm); white-space: nowrap; } .mp small { color: var(--mute); font-size: 12px; }
+.lock button { opacity: .6; }
+
+/* ---------- questão ---------- */
+.qwrap { max-width: 820px; padding-top: 18px; }
+.crumbs { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font: 700 13px var(--fm); color: var(--ink2); margin-bottom: 14px; }
+.crumbs .dots { margin-left: auto; display: flex; gap: 6px; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--line); display: block; }
+.dots i.on { outline: 2px solid var(--terra); outline-offset: 2px; }
+.dots i.g { background: var(--green); } .dots i.b { background: var(--bad); }
+.qn { font: 700 12.5px var(--fm); letter-spacing: .06em; text-transform: uppercase; color: var(--terra); margin: 0 0 12px; }
+.enun { font-size: 19px; line-height: 1.6; }
+.m { white-space: nowrap; font-family: var(--fb); }
+.fr { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; font-size: .85em; margin: 0 2px; line-height: 1.15; }
+.fr i { font-style: normal; padding: 0 3px; }
+.fr i:first-child { border-bottom: 1.5px solid currentColor; }
+.rq { border-top: 1.5px solid currentColor; padding: 0 2px; margin-left: 1px; }
+.mat { display: inline-grid; grid-template-columns: auto auto; gap: 2px 14px; vertical-align: middle; padding: 2px 10px; border-left: 2px solid var(--ink); border-right: 2px solid var(--ink); border-radius: 6px; font-family: var(--fb); margin: 0 4px; }
+.viz { margin: 16px 0 4px; display: flex; justify-content: center; }
+.viz svg { width: 100%; max-width: 380px; height: auto; }
+.viz .fill { fill: var(--green-l); } .viz .stk { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; } .viz .thin { fill: none; stroke: var(--ink2); stroke-width: 1.3; }
+.viz .dash { fill: none; stroke: var(--ink2); stroke-width: 1.4; stroke-dasharray: 5 4; } .viz .dot { fill: var(--terra); }
+.viz .lb { font: 700 13px var(--fb); fill: var(--ink); } .viz .lb.it { font-style: italic; fill: var(--green); }
+.viz .gl { stroke: var(--line); } .viz .ax { font: 12px var(--fm); fill: var(--mute); } .viz .bar { fill: var(--green2); } .viz .bv { font: 700 12px var(--fm); fill: var(--ink); }
+.alts { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 10px; }
+.alt { width: 100%; display: flex; align-items: center; gap: 14px; text-align: left; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; font-size: 17.5px; transition: border-color .12s, background .12s; }
+.alt:hover:not(:disabled) { border-color: var(--ink2); background: var(--paper); }
+.alt .lt { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font: 800 15px var(--fm); border: 1.5px solid var(--ink2); flex: none; }
+.alt .tx { flex: 1; }
+.alt .tag { color: inherit; }
+.alt.sel { border-color: var(--terra); background: #FBEDE7; box-shadow: 0 0 0 3px rgba(194, 80, 47, .15); }
+.alt.sel .lt { background: var(--terra); border-color: var(--terra); color: #fff; }
+.alt.right { border-color: var(--green); background: var(--good-l); }
+.alt.right .lt { background: var(--green); border-color: var(--green); color: #fff; }
+.alt.wrong { border-color: #E5B5AC; background: var(--bad-l); color: #7d2a20; text-decoration: line-through; text-decoration-color: rgba(125, 42, 32, .5); }
+.alt.wrong .lt { border-color: var(--bad); color: var(--bad); }
+.alt:disabled:not(.right):not(.wrong) { opacity: .6; }
+.warn-line { margin: 16px 0 0; padding: 10px 14px; border-radius: 10px; background: #FFF3D6; border: 1px solid #EBCB80; font-weight: 700; }
+.sol { margin-top: 18px; padding: 16px 18px; border-radius: 12px; border-left: 5px solid var(--green); background: var(--good-l); }
+.sol.bad { border-left-color: var(--bad); background: #FBF1EE; }
+.sol p { margin: 0; } .sol-h { font: 800 17px var(--fd); margin-bottom: 6px !important; }
+
+/* ---------- marco concluído e cume ---------- */
+.marco-ok { margin-top: 30px; }
+.badge { width: 70px; height: 70px; margin: 0 auto 12px; border-radius: 50%; background: var(--green); color: #fff; display: grid; place-items: center; }
+.badge .ic { width: 34px; height: 34px; }
+.marco-ok .kick { justify-content: center; }
+.nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 18px 0; }
+.nums div { background: var(--paper); border-radius: 12px; padding: 12px; display: grid; text-align: center; }
+.nums b { font: 800 clamp(22px, 4vw, 30px) var(--fm); color: var(--green); }
+.nums small { color: var(--mute); font-size: 13px; }
+.summit-card { margin-top: 26px; overflow: hidden; padding-top: 0; }
+.sum-top { position: relative; margin: 0 calc(-1 * clamp(18px, 3vw, 30px)) 10px; padding: 34px clamp(18px, 3vw, 30px) 24px; background: var(--green); color: #fff; overflow: hidden; }
+.sum-top .topo path { stroke: rgba(255, 255, 255, .25); opacity: 1; }
+.sum-top > *:not(.topo) { position: relative; }
+.sum-top .kick { color: var(--ochre); }
+.rank { display: inline-block; font: 800 16px var(--fm); background: var(--ochre); color: var(--ink); padding: 6px 14px; border-radius: 999px; margin: 0; }
+.perf { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.perf li { display: grid; grid-template-columns: minmax(150px, 1fr) 1.2fr 40px; align-items: center; gap: 12px; font-size: 15px; }
+.perf .bar { height: 10px; background: var(--paper2); border-radius: 999px; overflow: hidden; }
+.perf .bar i { display: block; height: 100%; background: var(--ochre); border-radius: 999px; }
+.perf li.top .bar i { background: var(--green); } .perf li.low .bar i { background: var(--terra); }
+.perf b { font-family: var(--fm); text-align: right; }
+.tip { margin-top: 16px; padding: 14px 16px; border-radius: 12px; background: #FBEDE7; border: 1px solid #EDC3B5; }
+.tip.good { background: var(--good-l); border-color: #B9D6C1; }
+.cert { font: 700 13px var(--fm); color: var(--mute); margin-top: 16px; }
+
+/* ---------- pódio, recordes, professor ---------- */
+.podium, .hall { list-style: none; padding: 0; margin: 10px 0; display: grid; gap: 6px; text-align: left; }
+.podium li, .hall li { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; background: var(--paper); flex-wrap: wrap; }
+.podium li.me { outline: 2px solid var(--terra); }
+.p-n, .h-n { font: 800 15px var(--fm); width: 30px; }
+.p-t, .p-r { color: var(--mute); font-size: 14px; }
+.p-p { margin-left: auto; font-family: var(--fm); }
+.hall li b:last-child { margin-left: auto; font-family: var(--fm); }
+.p-mine { font-weight: 700; }
+.pulse { animation: blink 1.4s ease-in-out infinite; } @keyframes blink { 50% { opacity: .45; } }
+.tcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.tcards > div { background: var(--paper); border-radius: 12px; padding: 16px; }
+.tcards h3 { margin-top: 0; }
+.local { margin-top: 20px; }
+.prof-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.seg-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0; }
+.seg-tabs button { border: 1.5px solid var(--line); background: #fff; border-radius: 999px; padding: 6px 12px; font: 700 13px var(--fm); }
+.seg-tabs button.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.seg-tabs.big button { font-size: 14px; padding: 8px 14px; }
+.tscroll { overflow-x: auto; }
+.live { width: 100%; border-collapse: collapse; font-size: 14px; }
+.live th, .live td { padding: 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.live td small { display: block; color: var(--mute); }
+.live td.num { text-align: right; font-family: var(--fm); font-weight: 700; }
+.live .warn, .warn { color: var(--bad); }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+.dot.on { background: #2BB673; } .dot.fim { background: var(--green); }
+.feed { list-style: none; padding: 0; font-size: 14px; display: grid; gap: 4px; }
+.ok { color: var(--green); }
+
+/* ---------- modal, toast, guarda ---------- */
+.veil { position: fixed; inset: 0; z-index: 50; background: rgba(30, 42, 35, .45); display: grid; place-items: center; padding: 20px; }
+.modal { width: min(420px, 100%); }
+.menu { display: grid; gap: 8px; } .menu .btn { justify-content: center; }
+#toast { position: fixed; left: 50%; bottom: 22px; transform: translate(-50%, 20px); background: var(--ink); color: var(--paper); padding: 10px 18px; border-radius: 999px; font-weight: 700; opacity: 0; visibility: hidden; transition: .2s; z-index: 60; }
+#toast.on { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+#guard { position: fixed; inset: 0; z-index: 80; background: rgba(30, 42, 35, .82); display: grid; place-items: center; padding: 20px; }
+.guard-box { background: var(--card); border-radius: var(--r); padding: 28px; max-width: 440px; text-align: center; }
+.guard-ic { font-size: 40px; color: var(--terra); } .guard-box small { font: 700 12px var(--fm); letter-spacing: .1em; color: var(--terra); }
+.guard-box dl { display: flex; justify-content: center; gap: 24px; } .guard-box dt { font-size: 13px; color: var(--mute); } .guard-box dd { margin: 0; font: 800 22px var(--fm); }
+.guard-box .btn { justify-content: center; width: 100%; }
+
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .hud { padding: 8px 12px; } .brand span { font-size: 15px; } .stat b { font-size: 14px; } .hud-r { gap: 10px; }
+  .enun { font-size: 17px; } .alt { font-size: 16px; padding: 10px 12px; gap: 10px; } .alt .lt { width: 30px; height: 30px; }
+  .map-head .btn { width: 100%; justify-content: center; }
+  .perf li { grid-template-columns: 1fr 70px 34px; font-size: 14px; }
+  .cover { padding-bottom: 150px; }
+  .wrap { padding: 0 14px; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<noscript><p style="padding:20px">Este jogo precisa de JavaScript.</p></noscript>
+<script>
+(function(){
+const IMG = {"logo": {"uri": "data:image/webp;base64,UklGRt5KAABXRUJQVlA4WAoAAAAQAAAAAwEAuQAAQUxQSMQcAAAB/yckSPD/eGtEpO4TENs2kiRZ5b7f+Sfc1V0zuAQi+j8BmrKv+wFpeMzmuPSk9xP1gF/za+4B1npF+zdQI7fqC/jT8GdSBRMPbI/i5VzYZlQVV1VJSmL2WZokMW1d1bYkULICEui22gWE3d6ASXG0NZ64IYmkRIk+73zQ9ee6UZNSm052F9TnqAsD6MVl/Xfgw7ZtndNo1/P8ZqI4IXjwFnenLrvVLdt136Vd98q6u7X7yXr71V223u1Wv60XaCnQYsUheAKEhCST+b33H5lMJpOZ8G9ETAA9QQOMQPZmCMSJsRlItLcBoweqJLJ0Gwe3HqW9WzjxMSMAlJSMmjpxpI2e1hd3Qio+snZ761srtrTG4HYiY4YEjBs+eVZN5ZgR5HDX1v0vvbyOGLcTFE/EgjEzByw8t19fAAksG4EZcOjFL8xGshMPcwOYu/Cksyc6QAxu5FABN5Z+8dOLEXZCYZEDyXN/OHPJYEDCMHIvJMZ/aOkUZCcO5sCAd/32keOCIDfy0ImpPm9eUicI5kH0m7R0dgoIMidvA67rq04IzGMYs+ArSSBgEfkt+ZRhqIdnbqLk9PMuHQ2xWUT+KzBsPGY9uchg9MJPnFOCZAm67cAI1GMzYPoPPzke0pHRjY2mhp6aReBL/rxPELvRvUV6P9YTM4NFNzVIaTcK4Z6dPTB3OO3WBikdiwL59n5Cz8oIzPzY0t4EdwqlN9+O96TMAqM+/IFexGYUzmBvlJv3mCwKDProh/oT3CikIrWMHpNByeL3jiY2o8DKV/bCekTmcOoX5hHMKLwWPo33hBx6/6oBzCnEQU8kzXo85kQfXSPFRmGWGubiPR2HKdfHCoGCHcKPMOvhULLoIkdGAbMzy0VPNgqMXjqYYBRyo6YK68EI5k5CZhS4EVPouZoYfcYYglHgLS5ZgHoqJsafYRiF31hQKeuh0GfhcGKnKNSAeiImei+poGgO7IX1RGDacIIXjX4jeyImWzgejKLpZfQ8jfLqUoqql/Y4DMZNcFkRMaykxyEmjEcUVy/FehZiYDVYkbEK1JMwlQyvoAgn6UkaA8ajYtTD7DUMvBi19CBE/ypEMQ7NPQgGDKIoC7X2FAxaQUUJlOohyBiSxCjSId0zMNHmFO+4oWcA/ZKoeB2rQ8VPRlkFRvFWOcXfBG0U9YOpngBRhBUx8dIuU9HjON1ZoCwMrBvA+mAU+cDhFOomIeBOZ0Na+SZvW0eRF4wCoxuK4AbEjfXvrK1PmGhLV8+YUlXiCeUbdTuLnXFYiLwPcgN2rFu/a+eOA/VNdNivetzEh1J4UD5B3eFix9E0ea+gBDSvf3Tlpi1p2ptlkoD//v3fj+P5JDbUo+K2vQHlmTCo2/LIk1vqgMgkJDo0MyO8dM+DMcofZ13aKOqNx+hChVzEwTj+xOrH324GMyRyGLvx4vMHUb7I2tZgKmb1dXSl03lZxJ7fnhoB7kYXurF4necN+5dTxOVHt5J7CbbGnYhxVvzjNsAjo4stYkFseYLe3E0oXrRtxpQrOSu+9J2QVTBj+a1/Wosbeem8jvLEXg9O0Tb2x0aO1ULLyuX/eJrQkXDevO6OOiLy1XxNQ6ksH7z5BYp3xP5WlKtStj1xeFwVRmYFZ+X//bMODyFvcNZVez4E3n4NFStn80EzcquI119n8ggCmRVR+/gD9UQS+WyHK/rKug7WNFKszSpWEchtoHVNba/F1XQYRONj99USSeS3UT6Xrgt+5A5cxcr/l1wbTZsZOZXgHUSsvWstHgJ5r901idBlULeGYu1hG5abdJpN25g4DpFRcPBHgzGnWzbuQl1mvFKBFSmeP2QhNyne3Mr4fphlkLP6HHCjmxpdb9yOU5QDO98xchqVpA82lI+vxOiw+bXlREY3NRq6TrZ5A1acoqN7yHFp2yHGjUWivYyNrzTgdFc5DagzCspghhkQoie2G8VYtD4Cyk35cWomE5z2MtatwUX3FeVYZ7JXMPzwo3hRCqyvNZFDC63ViZo+ZJnaugsT3deCVdFJ0fhyY0RIVPbt1atv7wjY9mJxMtu8x4xceulP/vLuXlgmsXuVTHTvZF8su+DXfCcNUNK7esiQkSP6Lup7c5NRhC2qf4ZAbpOfXQpGexlNW7BAN5fIXlZ/7huJGBCZJ1esozjrzVZTjkCBzEZtMxjdvXIwlh2PrfWYbEWx1tEtLnJtbh1QuxdENzfOGt3kWZF+vA0pGwwVJT9+EqLrw/5mjAK4pK/INvYVjyN6gBYnpnvXmTXHBLq/mJioyEbO4w3eI+DYZBddHdIpUQgjzZjV7MqG7bdh9ASPjh0sutqTEV4QElzc0EDWdvsOj3sABtOwzqkTikEqBGbl8144mk3wLbdLFH+32skJ0bWmqBSMQui8r/LIiGzgz+u9BxBoujsWOWxVNoFBCQqkWeO4N8j6g/1lFH+zB3ZHnRP3XVaPOnCGlsoKg/PR3s+mTB24Zi+RUfyNza8gOj/grstSZDmkDwXSvGp5+XNkqZILS+kJOjcfz8WI6o0Npo769qJQRvzinuuPoA6M80YG7wG4/WetBzobakauX04go2nERMwKgzP7/yf93gIdhpoFGD1A4/600Umnz0SeDWQ29Z4KoiCaRU9+ZeieSJnM/Nwo9ATMBta6OiM7h1daImXC5pUGozA6V92TvAGRWSysET1B5ycEOmlh/qh1qxEdLpggozA6s5aPuyTuyMKIiVhPwOOTFnvcCWnMmUfeJNBh22kUSvF263nPbXCR0ag8y3sG4gqMTgbOt382RcoUEv8sLxQWpTaefuwtOhaz+oqeoIUJ06ROBJbUrNhjIqP8yPXBC0TEpjOGPQfKZAyulvUM9E1E9orj847eDFn8HawwJFg+8KyG42TZuw9GTzBqmzhVdDK2N6M79prIqGjnk2YUxIiT9wytk3dgDBqH6BEGvkqc6IT8/O2PGFn+A6MgOtVrR6zZQuggJMci6xF4OGkiRvaBx5M3t7gyhejtlQXCrOKR+suPYGQ0T1YmjB6ilhES2SnE5170IoHMskfxdCEw+I6OLsbIrLS5eRRFkbt7O6lYWej3IdHJkHiIpa0ok6J9t5rRzQ3Mgr4yMPRDZI6jJ84nh4bJQKBiAp8YjWenRPo6XxYFOuDF9YRuZJgpBonLJiGMDmXv3NLcizgEDqfKW9Oh5dDWXYEszYVUHEz9PmeBTthLqQvN6dDCs8HVLQwDBSQ8QZ/J765ETpc2r97V1NSQSjZsWHWwVQIwc7fC51w0MXgn4M98idBBsDeeJJD3Fpm1ScCgin4T5k5L4imQk72yM7I9tvdAS/Ora3enj+yiSH4sgWUXEut2zOqrDlys3ILyy8wjkBgzpXXS/PED6DB2p6sDApk57ePjYctzm85/V3+swDkLTsfphD/NN0iTOTK24eSvRxEZ5580eNYwSjny5qoDR3qdPVDmCfJXksyN9jr8p1IK3ufLA9kr0fJo70WKOjBPbSRvLXKAaPIVf3kpDbz8z/17drQCw3+UoDsKEG16awBe0JzhZ6LO+JstnyZ0YIED6/MH6D/pMze9mtKRzQ88vXlXL4BE395zz0HeHTKnw0t9sIIW8YmRijphuo93kaXYfwDlh2nIvPPmgF68e8WqFtr3Hzlu2tghySYwOpQEWDsDywfMREE3/IEo0BleGTkd6wjSIj8t+Pfmq/buf68qAUhUnzSupv+gBO2D07GTfchkYF0AVticOU2KOsOBPe9TduVJLD/Uf/7arxwCKBtQM2dhWUMz7RXMIjoMhDXHEyLZpwz1row8U/sgMLPcFHjnyxKdDP4S55NOZBMH8rVX0++B4dMmDB/atxUgYJg5WR+94ZGWpKmkulKWLE8M6Ntr2MjWlkljoxIyps3MiotR8Xygs7JNPp3s0wHlS3yMRe+rMjp2Ot+wZjudH9icGjas18QxyTEjqwYnACTMsnEvaM7kBlnndg9M4lkY/SqxvDCp1/tGTSXj8bVrd7VdcEonZGw/RhSyMUAiy6rJJ42omLqkD4ACbplKygqbfT0EOmvsOa0By2rEbPLVWy9aAvtTW+47nGiBsV9Flo2MzQdAdN6QGcKDAAZOHzH7XQMSVUDAMCPhhczp/ZrS1glF4dDZhCibuHw+ypNQkn6pfvWrzf0Byj9zCc0VZBmsbetBRBeazIRJwND+g981tWzGICDEkhUyqBqB0elUsgpZFoTosd+Y8sGo+u5HekUAyTbO/Cap+qFkKWq/j0WxdyR1qmMzAkCi9NQza+aMSUibx+KF7KxhIQf0NrKXp+9q8nzo0COl22Z9aRyhpA9ZijW/AQWyNwOpc4AZEu2HnTvv2fp1YwpZ4FzIQbJvCssKsfoJlB/mFlmakV+aSyBB9vZNykcNKa1ICpzW4w21u0XXWgZB2aVLSyjcxsCFGJ21kBxxiM5vOU6+OEx973mQLqHTa0+hvI+D0V5tGzYcPtR04PndzTnLbBR6Z1FNDpBNOYJ1xtidxrvMIgem3ToWRJIcziWnux7/AdYlYGZWyGCKic47p+cAVOpEXWIYMOD8Rw+L2J1cShiWjSRCsvn7f6K4B59HyIExjBzKrE81uFsuDDMFqJr9vfWS0p4gx0bng++74k6sqLlq5mE5AFkOILDuU0nAzSwbA5OAiilzV9RJcRxE/gY/9LkHjOJuTBmm3Bg5NTNevOPBuhRglkmifWXF1DPOSQABJ7/dMRU5GJYIucl5MGP9thteSzUfo8Oob2nl8PNmJ1IAASfPExVgFHkxHJHfwYz00eZdqzfVNsSVlX1HTp1WGZUDxG7ku1E5gkCRNDPPVUjOx/IMgiI6r4AnyHvREkdGtu5m7oWqC41BM/G8AwHKwgB3umWpBbI2MlpBcub/+r+vHozlApL9KNrGcZG1QdUpV31ldn+wAmR2l3R0Op4LY2iZrEiJeL9nZbBsVV1I71v+HjAVGqNiVYgfr8JyASONou0hRlmV/T0o49GfV7SzdmpnCAwQGKAODKwjMzMwA8wMzMw6MLOIwZsUrsTA2mcnplCkRYjAyNL5vIJqH/73Tump0Zgb7a0dYLQ3jPbWzslo7cwA3OjQnI7NAWxurXQBbkZ7syxMfc9GxYk4kL1TtTKE1Uui0qn/umeImUHljPljIwArKTHoPX1OJY6NWVBNe4PBc2YPpb1D/zkTE1BaApRWJKF0+vwRmYjGL6jmyrT2jSSC8pPnTexNtka/kRRlQ5F36ox66RNE0LsXGAO/++LOvVsfmoclvvjsM+/p+5NXd+z///Esumfj/rXfLjdzpl+3Zueu9df2NjP6f3/51m2PnvOZ55/7CNOfXPmP5AXP7jqw4eeOw7sf2bLvjctvlZ4rM3p/+YVte7Yu/xpmHYhWFSVx5CCddRYflB6YABGYMek5ZXxlENWrpBdfVvunf1IrSakLSbJsuzL+F868F9S+7ph0uX1danusSZLaLsCiP9RLUltzrH8mqLkrVvu272OWCZraipERHwlSp4a8Hdq0dVkSN2P8K9LaH/zueNDXGbM/Tknrt4SQlprW1odY34SPt+n4Y998KI53zmXCcoXwyiMHpHjbKK4NKWnf28fUph/DdyQd+ufytGL93KoeUGh+5o7DQQ0X0YHRr7wIBewITqeNL0kpHb9vJkbp7dIDI+GKlnAjSxoVDn+i74g3FOulRb0+1ar0V5m6SQ1fSDL4ETV/iL8qnfpp/+T5h4L+Qb9nFDf/fVyfLzaG8BPm1sVavSiquiHo4Cx+o7j1m2V8qDHW/+KZoFdJ8THKq8ilWeIXrYqlA1e7XZoKW4bjVGwLN/LJlNIfAW6WNo6CafVKfYS/BT0CST4qXTS+IdYNQOVy6XPM3ifd5jCzVm3f4DaFY4uJ+Li0sW9VbdBtGAPWKTw5kI7dio2c+lawHGBwwYtSSuFi/qaw99uf/9V3rj2i6/lhrNc9supV0u8psQ8HHZs44B3ptc9+61ffeizE7/+cQuNplNrsOsWf45wmtSylxD55THsXDtwUdBeR+zXSmj6fkRpPIWnVa6TnarKz4gL79iKRQ3M3+l9dp5RuGfm04oiMLetKZ8FqjCnN8LqlooWwVfOV5ZYP/p/0QiUJ+7x0UNQE6g5amtmw9dApdQqXW0TVLNhUsQg2pwhERri1TxaiuMrYcQwnlwaYw1mHYj2wZJXY8GCyt7VU7hlYXY12ACMbqdsLJaPgLR8fFP/rZ3+64bo/33zprOelaywyrpFWNDAIdotQOhZ2MaZF+6dawk4ug5f6D4K9fTBmHJG+gHcUB1RMaD4aELk0el04Ek9GfW9XuHnRavH5f7gpJBIsbuBYHWKO2CaoHAC1VEt7x5JMOKWctFv6ESWUPyj9iaHD4S08VFcTdtrEoNqRluS8RtJPlQ2BtkQU6zzS9TOxjoIooqJ+7TFELo3qv7Y8NBqYt076Vcl94q9fjQHM5sKhPahiMmzCNLYONrOpVk3vIaON2SHdn4DPH431eUaOg414GBNIbcFa1foeqHpB7INVizRt/z6dPSCUXGeWxZGW4iFnz9Y0OTZ+IGn5b770y+VS69l8WSF13Q2NC8+65i2GiN2Npn4lsgOYZjbp6HqW/1Nx7WcmTv/Zr6sY8Z84brj+U/+9X+H4ZZREsloCE6TW7exqCFp91ZeeV+Cd4U0vLWLcV++dOgM2TMTJLBoaioaMjduw3E15WJJiSfphwqpXzRR7U9UVz33XR8NeEvHsRqU2IxbDNnH0vc1Sy87d0o9J/kBtsYIUwt6LGZXSsTpCxVw4tIcnN6hVQRJWO5BnUxfGl16Wgrd/h5FlZbJocGxTE65cYfT52V6137jMcCZftxhg/3U+qYbWzYixbdRvgNIhxDsrMC4/IEltWy+B4S9Iavru+Rv1xnBbmOadVuhzEmET0eavHZP02ln/9dWwBT/27UvPoYrGp+/B6NjgeHEQbFlxjC51mPyZ/77m2k+PBcOoOn2RH9+0ejW7vpxWNTH3Xl9SlkTp777NeEMw/Sv/8/vvXzAKYNiy//rxKTD74mnY/z5eNgA4fMXBeBzBSk/5+X8vG0n/V2wQwbZeWTbP618vw8i67kmsCMjCuu2y0CWYkdkBTOStgdHejC50MhuZjaxdyyn8gsNv7COiy6PI3CMno5vACFiUiAywKBG1ixIJzxBF5h45gLt5BFEiAk8konZRIuGARW6RY4mEAVjk5pGRvfFWk6nAyXln3RFidV3xNvbVUtgFqTc2YnRjc8sDM7NuBMfXEApZMLat2oGpGxlFMIoflxUuycPLr8bks7m7ZzIQwMD3LwHDzLqibMKUautG8PJBD4Uqjti4dhuufOq8MfJp7f24mdGVVnL16nX/VYZ1m8D210Vhllw3XdOERD6f8sXPfnFpbwxs4IDDB032A7Xo6RKsevzgnDk166Tb3em+xifOxwtQiKVXPlyOk8/GjKv+8o+/3Dgec0Y9uPZvfTC7uEHh086Ux966tjRH5sw6FOsJIoFZFmb5FGp+TAGOg3ZfWwOu/ApLAaWOQxR9QnqsMuH4WVdeGkXlf5DuLk+YJxIJA6JEwttZZJTa0rTYi8yJLfIMUWTmUd4Ay0YEKzCSpx84HSIjrz2evUBH6qxiMLRxR4h/SpZla0Pz+8ihkfHH0tvDsBBob4CR565xnxUFNeAs/3IlZuS3SZehv/4P5eMpPf0bu4Ie+filw8vf+6kPTCi/4AdH46affPh9vca+72OX9ofE4o9+YFEZTtUHf/Y/n63+vbRVli5dMnnIzy8bgxnM+8LPf/6Nc8DyBFg6DBUOhYhtN98GTt5r8QBturMOksy/WwpBceqymfVKfem8eimoLX2g7w+CDs2GURuk+/sZix9ok3TLQyEshwlXDAPpP+NxLtsjSY1/GIHlianXhwmFIuAcuuWW1bjRDd4H964dRDSBSYMVS9L2Mz51NKydfUVriCXpef5X4ZH+sGS/9Cm46KCklKS0DjH5e5De3iTdVsYlaWn7601qmJE3mM6cEakgKETU3XPfsxjd0OMFw0PbM1YCw3ni+3uk9cuuurD0t+nw78rJP2mRVnznG2eMWRHC78356JFwdBxTNiqu+90lvzoQdCDd79fw5J+OLzscNg2KnlR4aHzVxfddgpE3+LxUIZCcg/ff+yxO6Aam6Aq4wUnCgOT2616VfgBEj0q3wKT9ij8HzNmulvfjXCutGR39VXHqK8DfpFfbriY8eitwn9YPLXs16PtAhJG3zo+G7SJ0MwU3ap+8Dszplha/27X7XnhndEllaJndCls9kR7dC3Zgs8SxzZ5Ij2zg0F6wGthfOXq8ovsPuqcb+rB5zhtB3+g1ceyM/wubxiVfUFvd18aCk7fpwOQVabq35LD7n7cvx5xuqpJPwc7zh2zbIgu9mqqgrhExRRzZRrIG9uyxNBfBPhEmtsE+LmhD9xC11fSBbQtj6eDKrZsPpLV+MJc2KcSrPpokPy0Sdv7n35/w7iSZW8v6J29fixndNUp/oDlwypUVAxphUEntKDiYRoyApr30mQMbDJXVwIESbPhReJlzUO1Bk42pgtSHJB1rampurm++xY0P7ZKk30RmeRAB0y//KAp0X4WEsf/lRx/bj4G6i/uA9yGDRF+Ce2PJBFhb4unyQXCknv7VsD6ZphrCyhKPk705vJ7h2MYB5mEYtBy4MmjT+xYsOe3MU84fTQQzbj+i0HIa3lXmBmd8+2IjdrqpkLm3bXzpQQAPdF/nI0HxvcsTyePnXkyfKDUW9pNQ1SzYBL1bYTtRGBYTr4KSD8I+8whKyo6mORPWHV0mrayg437AhbXSr7AuioAz7/twkhDRPSUc2PbmC28YGIjua1Z9Pjx1L+k2jl5dPqjXriRM33mIgf3gdShtdkYePsbQmOisrfZN4mhPFTtGxwuGvVb+0bY4Olp/8pE4/n4fmDoR73f5o9Oh5LWQ/ireRSTP+meziN3ojhIObYdW/GenABPd2/l23BbdRUnsYZ/3T5Q0uOuUz2x+cEeLWrdCU2Wwr5188Of1lQn/8vmlQKjtxcp5ofL7J/cjpPU60YNqix/8zm+2r6zhCmn7j5fd2axNQ7ts/t+ONynt5L8kc+DY/nV3vrELMFOgezuL9uGbtlobMO4onPzas+8zXzr3nR2Q3Ilt1kn0vWTUC79lATYh9buLp/K68+8RM+k9kwemn8wqOL1WmZcxbaUyNn4Sp2sHHdhx7k9Dmq6VdUYSbgC1T//lfePLATej+xsfe/7Jpz6OgTHt9n+/sIxht+xtaXzju9/81zM398Y561+HWhpXnM05y5uPPfU+PvHigyfjnPty3cFXv9L7S/9+bAbO/Dt2HG/e+/Bn+0H1z16tP779jvdj1jWWvKf+mrcUukIYQpaFyQCaD23bvvaxJIC7UUiN7E+aNWsAHRqJKXNm9sLpP2dmCY4BGL1nTKukQ4NRM+eOA3ComDa7BowuNqo2SFIXxBHpI1V0sumdbfX7al9dlxJgbhRWI2sjSwOMzAZgdGgAZpYBJ6MbmNHe6OoQMedAOuROWOv1d6enDK1KlpWGdEuq9cjextKjb++IyWgUfnO3DJnNzQBzI1szM7I1c6NDcyMfnZ8qzpVkPP+HR2hviSRKx4EODRPiRNGs4kWF3ARnx5/+1mgmQyKjWTshTjCd2YdD6JxCRPNT928jisloGcSJasTV6pwM/vPgNlziBNmSz9BJIb19UQKME2dn8YLYspCcrVcMAjdOpI2zKr0jOfWPjQXnBNu8/CxkgIJz7KHrtuLOCbeHsbPaBYeVt63HnBPz9/aLJfSf/321DQuckDtli0n4y3e8cBwXJ+oK48atWtb/EC5x4m4MHQJunNgbuHFCDlZQOCD0LQAAUI4AnQEqBAG6AD4xFolDIiEhFMuNkCADBKbvx8ewAZkW4MM8sfqH5CezvUv5b9yP65/0f790GlM/2b7Vfg18U/Mf89/Zf3g/vX0M9E/5u/yXuBfw/+Jf2H+gf33/s/2//////6oP1V94H9I9AX8p/qv/b/x37//MV/nf9V7LvQA/qn+M/6/ta/9D2F/2k9gD9jvVd/1X/k/1/7//Qz+yn/v/0P7//QN/LP6//3Pz//830AegB/2fY0/gH74dyB/SPwy/Ub5aeAn0v8R/53/0/Xf8O+W/rX90/Xz+zf9n/X/B7+1+Ynzj9r/xX5k+pf7B/cf7b+1/97/bj5U/3P9p8g/w39k/3vqBfhn8d/sv9x/a//A/t17gP7t39ecf4//hf332C/Vn5f/ef73+3f97/cT2Gf5H+fewP1Y/w35hf4/7Af5L/Ov7x/cP2u/tf/59zn/M/2LyWu9/8z/mPgB/i/81/v39z/xX+8/v3//+0/+O/2H+S/0H/U/xP//98X5H/a/9Z/k/3C/w3///+/6B/xL+Uf3b+yf43/gf3z//f+PyL/q77Dv6X/ed+///ea788iUB49J4HIbBaNyxBn//FxTRndwZcHKQQnbqBgoiIicNcIOxZu3s+GiH8K48B06BEnzy//m+dJiX3x6MyeeWQTthLO3CjVIBvdVd8Y7QxnFhJpHq/PJN+vETp/+ylHKAaH+Yuu/3JLMeGnrV7///jezbc/Fb5rcKIU4ilqlfURQ1B8IsxR42OuDqR40fEIg3jPXMM3vVSdDz3canP/35wrMSlC8K5h+RJNhf/mOoEqpI7Gfo15JS5Wo13Xo2yhZWQrjwHnH+EqaFNX+kY2dl6sFaCIlJ9pOHDvq/vsxx+SEfCSRqKUDCpBixEUDx7S2djyvldex3oh/CWA4q0MSyeGvMlwKgz9CwykSPJFVKs86NJcZ7Q0e5+M2sDXuY2A+KIfwraiYHae0c/9mTyS8w8MCG6MTDQZt73GnIxNkuf468mSNEfDsWSqF3mBYmFMycQBJ4pYLbxgjhDmR5agJe8Q/eCKhq2fvAUPMKIko2LnMJ4JknE73GGUQrXog4IWL7UklxBpoLFF6CxDFeIF/Ty1rwgHHv7V4j3L1LPU/0CidN722TFCELJUGx/TUCUbyIb1fV/G8wndxvmu4PgpOQPaZ64AjgTDJ15xaYL9Z8Mj8gcYeiflHdpEXGHgIf89xNVjUAIu12b2zmxANmrX8ocBAAEO+uB7XboFfj40gWN3iiN2Vgv/cRSzTNV1+KYPeiQWqBDv2B9ulIneccmbjTOX9v//5YbSfixYYBNDC1is2nT40FMldXPoeFm8AHjRCPs1yDm1wCSWbG94tryWAaJ2g8Oy+9s4BWTDavEmXaFLv9nigRd9EYKkE/QTSf8IB0iQCai0XW6Dkm/1908AAjV4Xt5X2vNYMs2YyHza6l/gPf0MxjVqxU8beucTe8K0QyEeu0RX7Gfh/HJRIkqBj3r31KTOdbV145f/W0zBUO+ZmSh+6CEAxzj+iLAAD+9pGhyF0bvdK/iGpvBsi99F3fSHLnybsTdOuIArBTtxdK1Nr2uCP2zyTBOrfxgk9ic7kqy895K/Ci498re6NxJCkbDuYJSmrEJlnkvnxfiuO/8f5hj1380voYZFc4E3vbq5e7jj9X1vS14t+JbJJjj5UB+vQyQdVbY2EXJ72V8YxNyNLOJJZpaJWcYcY/TG+S5qgm9fMTDG5NoWSAbrjaBFqahl1fhEebop82cAnpFe4mqE8ocQRO2SktEtpIhpU/2RZQZoygUrKIadiaS6OaE82YoY7UubDjZcpUR0nYyvQI5uLWUDrTZBcInqCvBE20kd3OJGcSEophTlJVbVIXAHVHm6XTQk+jyIuJl+O0mGc8JRaSUF2p8Xn3b9/r4RJdEugAJGMGrnAVbTNHx9gs310OaQIds3QhSIg2ABEo7dkUjQPWzQnv/ehiE8UkPf4XUBex28+dmAqJlt8K5kyn+ErqZUTBwjbdHfrYGJBgvBPJ9FbykaWAfYQn/LQvxLs17ZJncJThif43WP+XOigUAuFWgzH7j5SlUACLebpdJ7N7D5K5WQyqLLTn0dMKHh7DjfNmcuZQSHd/M41zlHdKuZ+0UtEBDFHy8/kUtx/5Gj/jovh61qgCr8cdAPQQJbHbiCxm+tRNQctV4kTcBKMvDZsw+rEt2y8fSnZMLOkXboqhK5edXhBwGNeIS7LqiweOPx/6peT6dEMN76osJ22P8Tec7yw5DyTwg2MSVnv8iDKRSA/6RsckpocVwhoNEj/El5Ydf4N1z1JH0VfnrVGvFRIm+oIBjKQtruTnFH6JO+5K7n0zyPamJoLEd3YrqXZ4AFxmTJc6y9iECMQj6TGzalyRf7Nz9pESaU7qivCl2TFCY+Q3+Zj1QzV+J14xYBwMkV9EwS1MuoxpmwoPKlEKA3sJv0XchDAjGj/GZGusm3BQWQGWWEt2R9tnFpaHokevGdMw58dx25he6pDDS95SGmwZP3vex9U0fMgDo++xSuE84n0lJFs0NVqXumOxms1OBlCH/Oiwvl6P8E6UBK5GPNcYB8IFB5alYwslbs5h+jeTE13rZS+wvkeGVWf8+1lVpQW5Gb7ypkbafHZ9gk7raBk54rvYbzTmWk7OlQzHLiRbw3Novv7FJEyxMbe8EzMWkPIRQFaTWM8UYYDFsySJ4QOnqyeNnOUPVzaHEwv73ORvQLE7cyI5EHA+OpqP+4r5+yPXMgEb/3OtRXycOpnKz/9WfuWF6Oqa9jyr4dUjImktCx9IZyGDgp2YGt5cbsGuu+I8Bq5KxrXpVYUQ5T9rfM0soSsYOj0aVNYHnl2Ntdzhj+cGpQtm8mqDby8KHp5DxGEQTAOb5/1MVP4lLVjuVvpcpM00ZA5UgGhZOgpRGM2ZpnWloKDJT07IUG4hMmVuRStgZU11g49IACmfIC+9lX6ueG+ulshmrLkTL46Zfk4lQiobBjiUgjeHdrGec/Kf7uJNqtjHN0EPR9ApZqjxvSZGhw+ow/vbBIajpyOuqOydAgMEJ6flHaGM88eWaxd6XQMJnjDFKiP3sG5pMnECWG/ZDXcEyQSsiK3Y4dihDLvli0wa//tRWrJsFXKw/C//fFIOJJLzD6AJAIrrTnox2USbMOGdTlgcOs4BEkQlHQsQ8n+CYi5uYO8v20qqH/tLTWhIC6X6VFrjK9B57VPnZUhoOf/7yJd9fYMcSEIE1pgIMbkZoPPdAI+nFEg8Rd1Ie1TuQgdr2CUW+UOADYdRumzrNsTenQjoBfqkJYs9wjLuLnvuI+/jPCp9cDbJXMiD908oA6JV8XbmFCCB1gGhEwUtQJ52LLWQRfk9t0sTmEp2pIIZuWVJJMrD+gA0PCIpdm5vRB5Xz37/8T/yUwx9NGS8E6FhS0oe07PZTppSw/ax7S9OvwNlBM3DetDufZARcjFMOY0yCQF6cmNaYvPW9qskfb6Vof1vEiC2+Fih1PrWTk98v5PeQdLQOiR37fhLBya5UQsaBcbdN5pjFRL3ZZ8YLpg/LP2i6+BfiryCKeDqMDc9DjDR5uOqgXJKgnzEwEsBuuw68Xw4s82JweA5xxi/U/Mr0lFhZPzlGnuqtyIEM0y+mjgcmrE8Cb2UkhJQqMNEc0gHWLJbsUs+hecMm18V5PaqKunpQ+2QHE1FvlLVdMZyA4OJkjx0K0vjSx2gyh5mn76/AhOHXpD2Apai6lfQVFAhECA0k+OyZaCMTq+mjJgPZuvOchU28Ieayx8X1LfLxsmvxPz4Xb7GHmYHyGs04QX8/JsjtRmOKq7Gx7yBkgCHQ8MVfVGlxn85PnkNp91eZ4URTSxFkwTfzONsmM+BpxhNpBMKyfBVLHWwnREpUSTDdbWemFuHFBw35ghtw7jVQnqIRugrT9jCxNQmGkWt/zAWB9tnW9xDqUqW3cwlLS1/P9PK95aQoHjEBXFgciidJ5//Z2zV2dgrm7TlAhoRpfG+ZieKSxP1F03Hd5eVCtyxdI26MpoiqDOdxyvvOM7o29UfCJNaNrl0VPhOY3GJXQUW3CzUOfyVxLcwdbOE9xgWj4XMwTlnzTEsa5S5J1B5qcza2sN8dwMgo8zFeQyeBgOEl4Ew2yns05z3uL61sU5vncFEEnT7ATyu3dM9HSj0zLXeqkYKoqdaIhrXxlCfoeW8UooOrxF+Azq7a7p2D1ZxLXhYrPCdnGxI+EAvEeJy1Np95X/l4hHznVXugbuV2j0ggjsWNjJW4mTcdg/hHjKbSH8dl5q2zs8LLcRzn6MXiLgr2wqPZjjqk29rg5s3EQp9cVukW5TpLFAapm+1fsWUZVHJEgCctlYkg1jqR0YFwYrfsfLaRgsO4Q5Bt59difIQTGaTVvyyUD7ukeBbAOAAf5vgQ14c5qEsfGr2/jEU3mXjC9OExMviopMQPL8yZILrsD6k+z/4aQ/SB26lxH30hgkf5yCdM94XMODKA5N4axFNKdehY+gA1LVOTFXwBfAOtIoiyGF69MrKWD4wxKuRJTDo8gguHgYE+HHcBAS2n/Pp6i+Xkfvkpe9rG34VGys/BdfTxG6u0CmRrTjPsXsIiMb3/ClT6W72Cq8w8s0Kk26ZjHKsEFpDSlLRR+IG1TqEDd31nbZfh1yDQWE0zdhgnbSTAHxVAXWwZjVKS0xBErr9C3ziDFJ2Ny03w33FlvYe5FI3OtrUD4d4gpUKgFpICr2zF4TjiVBUun9mZwNhF/0/oJleUGlvp2uDvsiajNud8bfRUXdLQ5eOzFn6D5YCNZSg09EvHg8NYKLd+cRc3/f5Jb78GedJvjMWQlFg5t8UzRHE66Nhr0pkmQIw9OcG5XSUWvwRvmD6bUvwCmd7w3YfdTI8r5pODn0q0lIhRBvxzku8vRrznzW+Owv+xKeHCHhLk12A9PwedzYVhYmHUEiYN6bZxOsr6/tbjucUYyjhbg/7y8IiL6vKUyinDBqV7hQWdJB18J076A/F0lvo6+mvbhl/2U6mNCQYK1iz39k1ktwpZGOWRJOWHi8mscCjeIUcGbYGFpVMm2iRSF4ugdtYCeVfdCIA4YsAYEYAlZUNXc+kIvdRqoyOq+79OBU7a54ERumr2UwLmmGc47L+A+qdiXcd++x+g/xllqfuRmEHK1Bd/01QTko6d0qmRBrIKcvURE6cVRfqjx5t6efqKX/DKbd15mgU/IpNiPjTPhkD8B7hKN2HuASed4wzYY+W/fv2Teu38Sddpfibe6vQmOzRgr8s54IwC8aJuQWWWbSTQmOMGiZLXpY3L5+lKR4wVB3VAn/LHUaVKaar18JkAMyPDx97giGBtYv045a3xdJcYS/BLm9fL3vPeIeh1y3K0Nbcb1429Di5EeNChgHqiEfw1NMUvWhO1rVdT4f+5ktPBqvhAMxAB43+DvxnA4w/Nicvbv+tSs9cRKfmVP0Wi3UXLr9PZaF9Uvd+9mV4LkVFudzdvr3KrtADL7yDcRkl2DX/jXZbb8kiPbXIdCkv18yAmRV/UGJ8SSdkBPJwH3WkJ4oVpXUrBGUrUUvnHD3xBzhyfpPo3iaH3JjdT5PDLlFSFN3JLTo3qFBRfxwrELMQQZZk1S7/cT8oDuyl1M7wDZge1sbf572cKl05mfHNDwVtlzTYEpfleR/EiFCGlY0xdfnzO1sczKHY8j8bvnG2pcb35ZenJ49jRfL5nBsAZaD10eIrsWPG5DZXXTz9U+CnQfAC2t2D9TVNgUNhfVjWJsJCdIg0aodk1NpIcwEoCJaSBIr2t1rXpuT8XQU3w+mECJY+N3rSYWESx9SXvu3PsAOaFsUoUpBmUSX6lBV0z6zN/GKERKTibr10ehnbJVg3gXAwiJWQndRIr7SHlY0AiZPpLBMLZkPzf84xbrg3NdQoUYHlPcp8IGp0SwteJ25HovjTBbu4kdD9rDp4BXPOvndhNKaNUxcI/WjYcQXOUwS3IAWiLgto8gepgTHGIna9fKu5I2seuKPXQSoLNdWx5bqu1JX6HPKpnKdWWedhik1bvfD7cI9AMSU/mLEYbT8Kzlys9SAMWwkHttm2ABFigALv430eWk/D1OXeib8xYfy2hWRyNnkmx23yP3I8B//F+mt3M5i7Qgif9GgewnuVm+cRSLt/E6nSu1QEO4kpTaEeYuWsJemsNOBi1wWVXYfufU7chs/uzFBp06EN7zaLh1T/hKQ67dmOTp4NzqGfpNNql/ikljPXdXe6WTrJzLJmumXgyGn9wZtjb4l7bBnBMyoRKve9/oL0MtHAdNiOX6SeyNwRrcAvnytSJ04CCDGv+gPgQ0OJA1NrccOoL/li6xx69FhhkNB1uaIkptjvgwzSfOIsByemcz6TSv106a6gh+4f1MG0QCJ4hGPY32CpFTytmxcWI6n/UJ7OvlSiTZkEPfXYYbBJJhS13w52OetLEyrUVLNgsHDD8yLajNQFxD22kyS4rg0OaYcQ+T9v8omKQFR4mzuBhgY5VSIPHiPM8yFChTmZFF9zY9Tzxp8UNFUc2rlTXSx44CgopssmzisKuyo8DnprmcDax6ZYoOPacwxgojfx2uOioxKWRlYaWqepzdElLpBBpqISTspkNO+IWunnGruUgHiao68vEJam/fS2Jy5n9VVzoSytZzElKJ/7XzDdEyY0ngFdtsLNUq7l9SIvjcElKfkp8w7UnOtxmEV1f+7xkEcbsiCraE86UoM2r/2cazuT3kDMKOj2Wrgwb+7UNjp/xToqhK5S4A6aYHTNb+dkiytcm+nzBzfViXY+tIcB9wix6mDUOPcE0gGUCkj8hNYOaIbwAZc6yQV+KztM0PvMOjyXfj/ywCAOpOyME9OH/PlSB4wtpVAyin843auCgWsM+ACEFJGV6cSFvdk8EyFX61ZftQOQSLrBrofv+9McsiYAkKi3tuMg+19US21XASfqzcJYQJN+vhpvojhJJoe9l4eYGmfeWPrkfl+4UEFItcrTIr62tTl+PJu8Fjqyy3ojS9midARlpfT71xbHG59Zck+NgHFS628M1bMLXrm+DeH1jNEBjKDeAyHZ4ufeF/oXVWiaKVRi9wnkt9zDwRJwsq+dxphgC4veurlI2cyhnE/QRUwZQ9kFLlNydCeGanGVd+fkjtYWySj7k0ab1y6RQxDzSJOuRTeIC21fYaeN8fhLggjyEQyGdWw5vXvDVKktCj9EV1H24b/IlUVlBUnOo/k0SRGYYjnB9QJy2AoOww9CVTF5Li46LDHSS76s2u46MTm0elBvh3MPkGQdPKRFKy/dxg4Zof0RescLTHG19KX1nrH1yPBqoQ2Bn6QwSrk1p7pCDJOmS47DgrflArV2rLo/gE7P6OW/efWJHIPSLsd5S6MiOWYqzcNR0G3TxC1ioo5yi7CgMLJ4dMnJ8SjfEXhMaqsxcRiGbUXyAm4M/1TbAM77s2mhFytjz915e4NKYWbd8LMKbSPrwTZyR8mXMgP/m4Y1nv+9G5Q9Qlkm4OQazHlv5If7KeqDhLHq7lLxX5dAjuQur8Jw7AI3iI7PRWwhbbQdNdSjavp/iPpLTUs5u7Y+0ekKzNhw3bNj+b2fa6UZ64zQr0lpPfEfStfUb9dsktdVCAmzeNEP/zmA3Z5zGBu1XtZ5oLK1IBJYL9TxfpTkU4LECBcPDXc+z7ygY/ktbSEOND3Nlc7AUa/zGTNzGcKJhqYBqph/0fPVoSL27AjquiWcA24rOnpc04LYna1zrLF/EH5b34ScViWXv7r7RDzUZ6xRD9MUguklDzcgf4/Rl+m8rpyFB2s9SZC4StP5FI9UwfQEdWatoVwezINIXKiW3NheqQrTIHl8+mRJ+nR3/xrhHAT0eu86v6DRcNjb+tAQ1ZWibJEzXVeaVjp3xJwNyjKPT16xfTlqsayGjPfggCJ6JzvbD3wgbhUIj1TrcvQ7aS1PUJ+6fJ7N+h/MkizumZw4810KiD+A76gD8NVr4mTxLpzkEmLkCq/TFeYQtE0Hmy8ZLg8yHioKpwimDgswtshc4buL9NwoF3NLcqT1LeyKXIhdAZlYQzNs/hCR/RldEJ+yqfFEeBaTQLiBM+COR0/QWBSjuz6eYvRIfOkC7CgZkYwEH+Ey/O47uJU50ch5YBQgvALh7GmZpiFaLDkAuaLOsl0tiPnlMuJtRHT6tMenpXXwwLoyH7IdTjAHkeL9DqPW5Ua7oD8TI7fzUbSQEJ9wrZFBPJu1NFy2cFk+VPSpW5/wqtFaGxYU22QRiCBObEhabhnOb3qbuOLALUfse6EA+XlUq57817ni0ayGowfxHhgwbCAVF6XywZs0Yvwq+xmfBVvS6BnNbMlgBfImh8WgZDlI0yO0Sx2MFw0eDU1ki5q4bkyL659OLJu4XztbOHZoYgOIPZJB+Ame3HSkVfJYkkQnlfuhdPuo+bmpIid2Y4rOI5kejOgPzgEIueE1FikqlsB1sTKjL2in/WY+eoNdo8Xp3f2XCUK3DMb8ifIV9UNkOBq9VvnHN1JzLF/R2TlICV+foD40VoYyI0XN7vHPCUpRWf51FvujXExoi6GrkDg1uNHjBkp/vQ/dYTSEf2GNO987XBcHTvvLHvnWSW2BLF0wu4zfPxpZN+ImWe5fSrnPcMBIiRLXHmJQ6qpSNUWcZ1kiLRNnKIEz9iNNzlxrZxzuYSe4XW/p++mHrxgXjLJmrP6UyPc3ISahYovdieacnhS7uSdVJQo+W9GCaJFDOpkwqISHVJJbDWcgRqhBAYuuqIMQb6ZEGoZVKrWZbz1HnTO7IFtoNaML2BCWTAIloINv2BKuRDZPmqP058mo///r7rER/NYNrj9Px7V4gow0evLkG8k5yMohvA+z2IGmpQf65k6OvH710OHYFKFzkxnBZjkCvByCjMDgyCQ1pgqBYryGXsqy+7PVmUmj78ID2IpFu8sVYdAhkkda5w5sCv2RhzEB1mMDxGb5ErChr0BlDEWM3AroEVzu5u7bN6TmmuDJWlTvyyYhX/V6rT6cKlT4RMM6H9m0i6hQuKcFBDtL6TMBrItvQ10ZCshiX90JCo12+1/FlYrt0icfRh48FYW15P6o038LaJdjIXkc1eq9g2fOO5NxWdDAF6OGUUodSzTU3h0kNFlBAjfr7Zadj7HgdHIwo0GYLnzocCq+NyxOJnn+yTY+a5kjF8uO2zTRZmKOXX9Msz/+fBCcLOw1aHpNGGe8dlUqu4F5HOp1/CaAZDARXelcsI8nxaATDH4MHK/U2E16BHHdaFzbfHVk1NjULiWUGAXwcbFEt5FTzmZLg9b8Vxx0RE2nc7bssPh2LqFfft0INHtzu35GU7Nt/DTQKuw+pLmDV8cdkl9NRKxtFoZZJsbinZMrvavxQazAq5DXiQWyAiJOj7Q+ROgX6wxBnOLCJBetVgEkP6UUsM5Qv1jo9kx1dUxbe+R1BnK0D0zqV9X1n9lULPSysHpFdnQuGKO2Mc6air+s7lTdF5IXOwufRu1H3d2LmaqHpCbMM5pcrH84T+nxDggPoF/JpFy8UmWLMMuXL178UhasXkRXMDcvs2HAsK1WBEX1ofrxnLIgT4oHQiwZ7gcEspS4bgJf5l8guLdLb0wX3+STwBymMe+AX1BRKalSWuvDAK2YhJ5+n3EVtxqIX//Q/+igwdQSAWDEFUL1j/KaFVL7Ul165jtd750UwASsaLcK8diCLgDhQge0IuBjLG8zgkBPBpc5FDwfN7AnhOWSJVCK7dtlyritxQ8HVyXjf0L4u/Tr2nSECXDT2QQ1aef2+Ihz/DgdL8e6FXbfb7mMtm+dbInonDjfu5/ZtSC6Dwo5K9422xancCgcjjURgnhNGKL2yYiheFiD3n/wfGKj0aErYlrwwM+Evf4LFBE0mXMmHGGDpXJsD3nLyfH88g2o2n7DqYAmfdo0Rm9uJpxLLdTAhE+Kzigiy4TTGFAxs/1nytbssmVbgkexa+aqJalyMkcwsiveKrumsJBwFwolSz749RAOtB4QQI7aERnEKYdgvcre2NFgJjpFiu9kYRKSsB7z9QjDIlRfpZ7ayuYDvTwdLpNJJwbNykYrnvG3l9D/VN78wJ8gNjgK8djkuD/kudNwDkefQdNwHXdK7E1/LtVukxpZefWuqmKSoPFrZegYB2AZT234vV2jQ0of11drvWMcC959vS+aq4RhTf+HkeemWO0zcIGBRmotvBlKi4OqsMeahnSyU73HAfNwV8AA2DOoPZI9UdxrqNIeEIMyLEQDwlz0vzirWjAblRiIuY5X3aipeb5De59SgOGTv53QINLVWN7eN6Fy4u3FI56O3YMxifvihTxpD/SfD85PnbnuXiB/lPhmDQOb57lu5w0YPM3WN/iUUWyXmVUBmtDl72KyytZ8MxekL9aW/72mrzmhC6tZ07hiX6A0dszINDSs5IfN2Iq0KOXim9MFuNDKV8yGaA15BZiS//VY676UdJ64DiazXDxg4OKw3N/MLO41o3RfOCg1NONX/F8+H3mssUM6tzSRWsh6g6WoucqYx4AFcLQGKHpjAXpw59GyGP0ZTVVIOlwCAjHK3skLllkCur1hzC91DXpbAmWPLPS4EgELSRA1f3c4t5McswF09nn4+F0xNTKuBFQljQdyoLyB+vzUvPt+zbIN0eC78CyO34kbuRbStv19+dDRPdCJjcKWb/ZDe/DuM/Po4V3wt+mGBU2f39A+XI9v7tihOX9vdgW70ZRzPO13ecYMso/XmHbgXWwF0vddd7xeGgg1vOd+I38RawCZ79t+ZG59Ffs/iv61kR0WFdCqnG7YitHuqe0hw5pjWYYNmL9Zk5ZiYlKtvLw/mzSy6po7pLClslT6Eshvo6DXSsmz35MKsTA3HqBdWb66jNSA4BeOI4hv1WIxCNHA0/A9IMNysI9LuUtMt3ZGU8g+t4E2WOnHsB1tabaRVLBZSH9/QQ6QyczxRtEaQQqzW+9aAHlpQczrXBNlSFf2yeNdcvrro7Yqs5FDaZX7MMQeZu5D3wGVVPK04SU3LKt6ZxqOkYb2Jm1EsDtxYSnEk6RA6K/a5TfP8wNOl8zph/dIaZKWoRaxITGmAoBH7v74f63s2JlOoa7OlvSdtW7Vvn1UBk7l/NrEyve5jeX0knfQUCr/5kNHjq/BqZJZaNXxF4bSeul2qkC9GrCDgNxpgCK376HbL+kDmEtfNHo5LBxAyGWzWiVGnAi+dn83+KPITYomea84mkGX5P4KiijjofhiIF4y3JRWsjcBpBgQ0gYqd/xwjr2K5c6daNLrTaiesr3Zba/UoHu61uMGCe+VwWTijxmgvAa5SaDlNQzt/pHudBb/vCKFQEuRgaKLDpIp0slGz9F61UkVzEGDXomaH5EW/qXQQWL9gFIlUwBfNASfZQUuerrtV0E62EVNNKWqAv7ABv5HTe/UIka3DdmmrJfbojuneFWJC/rlNcF7UGLVnfhnpbwQyAytBZEaQFOS/FKH1t7OfSMklLLblZ+i9A7tIoT+9jqR74fgoMLsYQzKv1wYFk2lxcvLkEcI/CI5GSSx/i6gQ1+m6+nOXRbNgrSd5Ez5YbopqugZJT9Tnn2HnIcNMzomrTJn77/av6YgrRErGkouWQnAd8yDmXbDvNWXJfo7MmJqLrZI6pVLntcjdbvSUiwEf3oUBqOTHMmFrtZPh+FaX1mjNBfVwouFWup1DcMGhTHIphZhxORkMuyooXU3yHt/oZT7Mbj6RFJdaotTEcB14TluuG3rU9OMZgHEQI+mWXtNFXcswZgFABv6V9QCT9u3tSxLvG14LG9zQzl1kLUaJXZNxr2IPqEJxBkJ7qjgtW3jozR95Ws9oqk7mORau9mT8l4xAvgjm8arqYU7+PY8hqaadoPjezvm6cozRUcuS09vGYuk1tePAnZUCYD9ANKwLAFXMrfQRpVGPdGF0+NUjP9dq9TwN0hTvm9t7K60JE7tlONp2MoVnPFbHCdsp8rPUB02c6r6yHCFVAn+7GwtQ39gpbwrAcivMrP/94uE4leECSisdGBGlkrXYMmyuG7r+hjm2co027xkmXQ4J7MwURuebli0eNOAABnLhl7X6xka0iGi689z9m7uyIXJ/PT7hkNYnjM5KpogDfeeG0cyx53dSkJCvshv2yWtcb1pOx4kv+C+b0pG8aAbtbXYc9PZrDalWQQDr9ERf8wTtclR6gpEscu1gppj/nb+H1G27xnidkRbwHlYApx7O+/yYGL1jrhC1A5DnSayD1Ul1RrYFSpGsYcic6SgNOpF9hk8zeR5Fh139l0bJgZ2bULwdcHAmLDToYWrw+sqfRYDUB33Kq7VuM4meGl1A5D4KJapfQuV0xaw+psgIrwiVHc0P9lO5JmHVc1dVKX/9S5/t20onUAJs6JZgOdMbgOw0jS+2rTC+DHL9keoI0IbRmN2MICW7GJHxda2r1qfxRquBOGSnCtUgL3HtfrIGA6VICQCCUoEpsLIM1iENRG4/ITZ4aZIedHfMQSBTIVTsmrr9RSoTiG506sm+rMld7MXGd1G/uTINvYq+nMCGGHbU4K7uYpc1trW5U/GHf6RrvvVrss6Q2QPydsfyPQAAQXUa0QvrfaB1lRBccSE8dKQZzGc69tRPnIInAwxmAeH0fW8XpXIeFQ2mBTAN9BNKMMlOMYUHsVVlzPM/FSI/3Cw5qi73VMEAUxPmufS4Lzf0+9eXql6+2GAs9i/dqf/iTGjnluWTTlf7DNt5HMSigEXW75bTVUbB8FY5VAAjAp+113iAr8T8P9eee305qvkk/uLuExwNZPQzALh7/lnXu2u+2gMEuL3un1WSD272cE/maagwxVHw8SoFWGaBaW6HU2vjfcjpOFVE0cswXzJWN9ZTJyaY25b9MG4bE/OjMbr4/fb5ITjkIA/29qgYt+jEOUfXdCJCQuWVLV1pHVCUT4ASbamXoPCM8uNXMH2EeFzKN/lKQnN/xn2Ac1OnS1ADme6xOFWyde631jDObyvSm+fndWSSdDtLfmoP+XmR5DO5mgNuCX8UYwrw0FV6uiyj89SMfKLGfYbKGioVZFTXhkSGF3TRao5QFb3XMNecrYF9V0oS1MRELjmuqQSGrJJ4i1Zeqs4QDnBtkHmbA9j51Fb9Yzo21ID2Ix+VmBoFJA/kTu8FRlR5NhrBjNqisQy56tATTNKGd/JJd5Hx723SUqkyY4nMtAyvjaV7nPeXryZUrMkwWIXnx+NFZMzCodbCdejHfxLH0VYTUGuuWcYND5EDrt4br8d8lucv1PSCcAnt8N7NsumKBYeLJQUt1r3cxNr40SzVl0figHQmIrQ3LVDK/K+x83e/KFxeDoJnr8XGLux877aMsqi63/j+IL4qYdQjsZ3ulZZMH3ScBcxKq2wb5oLYfTPYAgCNcRBLCo2lmkdlMLc8qURu92SxZYCMcOm4biqeoqaR7nfqNm/N1Gy3Ol+RdSncL/AcL9hZqBmFuNcR7Ms/dX3uC7GtiBHj4iu6SVK/bmRtLweVeoC/X3VG5BXwNNjfN55Pwg8yRj7TWYjcubAa1aDWeiBPlL7syInPHiodCtuOd2DpJhg4NF/IJte/WAkxnhIG0CKUIVNzp6/01a+rXNVfhirqw1zia0Zf9Nh2qnuZMh75l9zZkjiwn6JLahWbZwdqRAi1FKIiMqEXAgN8g3C3C039rt1yrX2cGjckn8BTnOnSlZlU8xkjEEDpjWYQN0jaDxtUtlyBeBdfaypCPgjgbL6d8uEk8mg9T3XWUajFPdZ+zCY0RAFoSUmGD7vuSGnP7YzXJtNv+zRXUeepCEaOOOcUHk2v+BKv2NzmTd/I1dgL6YC+6VLjq+XLRrh0vaepvavxkVw9dLV0jLfWfynElJfhtmngP5RC71rMqid6EYJMMrTDdIDI9SCbWhRf1CBdrjB8agMwYu8K6Ju0i5+DWutROeqizWIMX9uidJs3ELq4CoL+by2F43NdtOOtOlqkb7uTXKDPLYgV1Ki2oUUTFmHdzoPUygkYtc+CZeaPgn6Elij41D8ywdy6loYF5uFvwVIVr0QrPg+0z0LtjuMmYHTD0dtk3kr3qvRi44cVS2iBrDBfyvFFEKVTCbv29l37Yv62N2H+UraR4L1vCt6vFhGbOuSXrAnqydkFZONbOtHZrsnpt03kGr3Ur+faJSVNdnS36buV7g+r5UuBYfR+u8SZmKpMVYryhXtsLyUYtuyybqOn15aEkMmfR8BTtGVmPu++6kQdWbQ/67W0yOywaWeE/vJbpb5VUla1EJcE7vdUE15xrTW0ZKNjP8Lu1fLCzJporCXskHFLC7E7Re7o9vfuKXIxDphRWcxJpEoaZ2Hg5vQkSkjO595i7AGf+v1Tex+Ui0nD4DZW1rE25z/M8sCjm52fOtVjSJwP94zEwEbHdS/be2fqJW1qtgJ+lvooDJzaX6Poz1GWsGjCfnwg+jUN8JXhj0OezcuvYL2yXQGXP/xywY4AbWvEeecz08H6om8g+PPc7Dhydg30JEeaWwi1zdggT3eWdzRidwt5FIwBBk8k/Rk7RwKomoE8NhiqKrOIs+kS+YHlE1fFSmWyklOb3VQm51igaq3jL6iQxy1eN83166icgsmA4iOhwh3ZR8R6H84JFnFRnudTwRrBLO17csTq7jaPudELkAI2Nt9JjJCEHxwcT+QZJQDHDwbmxbOJQ1Ohlqo78Z3sVr7Vp080pR9bQceCQbWMn8JwoAWbcCCOGOOiS4OM/gLrUe7sJNWTEIGnwF9Qfy6jWXWT4s0yApGHT0FWVOL7U93KCW1/2TgJ2GTXDhU3HJM7kseUckrezsNYMvSK26bF15f4VapEHBPYP3ZkKj0tGjvS/IVsqTR+v0Yl9aApbjtKGDK8Na12FS7+/2W/a/Ad88Ouq3sNTSVa8xYudVj0URRYENgfRkqLV89XlUcQECiMhnQT5QhC+A4D2Mw6/c/XsV58uuI8wIH0ftZIAbLMD7Vhbzmo5pasQfh3ptnDDWmh7V7hXEtmaixfM+YfLQZE2a1o/J9R//A9sgOs+qkF4Op/Xw6Jl49wuvcGxy7MqBtOdaubxa8Ml85sVoZlKH1E3OyJdQOoDIRDqz4e9WDcZkDiLucdcd0XpHTET62A3S/eYr72iZXzHdlLmP2pGCjgired1wJiPZyM2zF7S0wivRTVjwEFqQ+U8F2lo8aNxnPvBGtzegTNGPGSjJ3XNYKicZRFRbkEGvIYrfcAq/3hfCA3YmGvlaIuuepqM13Zn/6yb6ozsgT/LScQXk9fBLvWspImgNwcs0KxLukFgsCCULcLz4ilJiB4nNC2iAkC42FUJZg7XTbZKkhk5sKYkA/RTjB2NAruLFQRSBmyUc/WhLZIkUauPvwt+5aFBHfz817fXdBekJjxWN9V6Lq+IKIGp0jAm4SfZXBkfn59pY/dypkXhYTYd186mJakDwk5AVsBFquA77vCHiWtaB+L6peq7tZVu7IGshl+6Sl4im1cjss52EzSvk8HL8AbJeYF8llP/6LtE+etQdi/v4Hh5SysC4r7lynVAaO2NK0Z4FHbWrywryqM6ObtcagLc6PabpruNkVkWA2rDKYCxnD8VagQxI2Vo6LYpZ+F2kJ5jqJWyJKZ0o58LC0hZFwFOzKCavo6g7Ga+ymzUKPDFwnu9bsjkb36QF/s4LZjNn6DcG1kqwknC8195M++7Y7kWyYb1z3P064igISqnNkAEpqpCHeVv1qeiB5yYuAAAAAAAAAAA=="}};
+/* =========================================================
+   TRILHA UNIFEI 2027 · MATEMÁTICA — banco de questões
+   12 marcos = 12 itens do conteúdo programático do Vestibular UNIFEI 2027.
+   Formato da prova: múltipla escolha, 5 alternativas, sem calculadora.
+   Em cada questão, a[0] é a alternativa correta (a ordem é embaralhada por aluno).
+   ========================================================= */
+const fr = (a, b) => `<span class="fr"><i>${a}</i><i>${b}</i></span>`;
+const rq = (x) => `√<span class="rq">${x}</span>`;
+const M = (s) => `<span class="m">${s}</span>`;
+
+/* ---------- figuras ---------- */
+const svgFig = (w, h, body, label) => `<figure class="viz"><svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${label}">${body}</svg></figure>`;
+const FIG = {
+  rampa: () => svgFig(320, 150, `<path d="M30 120 H270 V40 Z" class="fill"/><path d="M30 120 H270 V40 Z" class="stk"/><path d="M262 120 V112 H270" class="thin"/>
+    <path d="M70 120 A40 40 0 0 0 67 107" class="thin"/><text x="78" y="114" class="lb">30°</text><text x="278" y="85" class="lb">1,5 m</text><text x="128" y="70" class="lb it">rampa</text>`, 'Rampa com inclinação de 30 graus vencendo 1,5 metro de altura'),
+  sombra: () => svgFig(340, 170, `<path d="M20 140 H320" class="thin"/><path d="M70 140 V30" class="stk"/><circle cx="70" cy="30" r="5" class="dot"/><path d="M70 30 L250 140" class="dash"/>
+    <path d="M215 140 V112" class="stk"/><circle cx="215" cy="106" r="5" class="dot"/><path d="M215 112 L250 140" class="dash"/>
+    <path d="M70 152 H250" class="thin"/><text x="160" y="166" class="lb" text-anchor="middle">6 m (sombra do poste)</text>
+    <path d="M215 132 H250" class="thin"/><text x="262" y="126" class="lb">1,2 m</text><text x="190" y="124" class="lb" text-anchor="end">1,8 m</text><text x="56" y="90" class="lb" text-anchor="end">h</text>`, 'Poste e pessoa com suas sombras alinhadas'),
+  cone: () => svgFig(260, 200, `<ellipse cx="130" cy="160" rx="80" ry="20" class="fill"/><path d="M50 160 L130 25 L210 160" class="stk"/><ellipse cx="130" cy="160" rx="80" ry="20" class="stk"/>
+    <path d="M130 25 V160 H210" class="dash"/><text x="178" y="152" class="lb">6 cm</text><text x="178" y="86" class="lb">10 cm</text><text x="136" y="100" class="lb">h</text>`, 'Cone de raio 6 centímetros e geratriz 10 centímetros'),
+  cubo: () => svgFig(240, 210, `<path d="M40 70 H160 V190 H40 Z M40 70 L90 30 H210 L160 70 M210 30 V150 L160 190" class="stk"/><path d="M40 190 L90 150 H210 M90 150 V30" class="dash"/>
+    <circle cx="117" cy="113" r="58" class="fill"/><circle cx="117" cy="113" r="58" class="stk"/><text x="100" y="206" class="lb">6 cm</text>`, 'Esfera inscrita em um cubo de aresta 6 centímetros'),
+  vendas: () => {
+    const v = [40, 55, 50, 70, 65, 80]; const ms = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun'];
+    const W = 340; const H = 200; const L = 40; const B = 30; const T = 12; const top = 100; const y = (x) => H - B - (x / top) * (H - B - T); const bw = (W - L - 10) / 6;
+    let g = ''; for (let k = 0; k <= top; k += 20) g += `<line x1="${L}" x2="${W - 10}" y1="${y(k)}" y2="${y(k)}" class="gl"/><text x="${L - 6}" y="${y(k) + 4}" class="ax" text-anchor="end">${k}</text>`;
+    v.forEach((x, i) => { const X = L + i * bw + bw * 0.2; g += `<rect x="${X}" y="${y(x)}" width="${bw * 0.6}" height="${H - B - y(x)}" class="bar"/><text x="${X + bw * 0.3}" y="${y(x) - 5}" class="bv" text-anchor="middle">${x}</text><text x="${X + bw * 0.3}" y="${H - B + 16}" class="ax" text-anchor="middle">${ms[i]}</text>`; });
+    return svgFig(W, H, g, 'Gráfico de barras: bicicletas vendidas de janeiro a junho');
+  },
+};
+
+const MARCOS = [
+  { n: 1, nome: 'Conjuntos numéricos', sub: 'divisibilidade, progressões, juros e porcentagem', alt: 860 },
+  { n: 2, nome: 'Polinômios', sub: 'valor numérico, identidade e divisão', alt: 960 },
+  { n: 3, nome: 'Equações algébricas', sub: 'raízes, Girard e raízes complexas', alt: 1080 },
+  { n: 4, nome: 'Análise combinatória', sub: 'contagem, permutações e combinações', alt: 1190 },
+  { n: 5, nome: 'Probabilidade', sub: 'eventos, sem reposição e condicional', alt: 1300 },
+  { n: 6, nome: 'Matrizes e sistemas', sub: 'determinantes e sistemas lineares', alt: 1420 },
+  { n: 7, nome: 'Geometria analítica', sub: 'retas, distâncias e circunferência', alt: 1530 },
+  { n: 8, nome: 'Funções', sub: 'quadrática, exponencial e logarítmica', alt: 1650 },
+  { n: 9, nome: 'Trigonometria', sub: 'triângulos e funções periódicas', alt: 1760 },
+  { n: 10, nome: 'Geometria plana', sub: 'semelhança e áreas', alt: 1880 },
+  { n: 11, nome: 'Geometria espacial', sub: 'cilindro, cone e esfera', alt: 2000 },
+  { n: 12, nome: 'Tratamento da informação', sub: 'gráficos e medidas estatísticas', alt: 2110 },
+];
+
+const QUESTOES = [
+  /* ---------- 1 · Conjuntos numéricos ---------- */
+  { m: 1, nome: 'Ônibus do terminal',
+    t: 'Em um terminal de Itajubá, três linhas de ônibus partem juntas às 6h. A linha A sai a cada 12 minutos, a linha B a cada 18 minutos e a linha C a cada 30 minutos. As três linhas voltarão a partir juntas, pela primeira vez depois das 6h, às',
+    a: ['9h.', '8h.', '9h30.', '10h.', '12h.'],
+    r: `É o menor tempo múltiplo de 12, 18 e 30 ao mesmo tempo: ${M('mmc(12, 18, 30)')}. Como ${M('12 = 2²·3')}, ${M('18 = 2·3²')} e ${M('30 = 2·3·5')}, temos ${M('mmc = 2²·3²·5 = 180')} minutos, ou seja, 3 horas. Partida conjunta às <b>9h</b>.` },
+  { m: 1, nome: 'Progressão aritmética',
+    t: `Em uma progressão aritmética, o terceiro termo é 11 e o oitavo termo é 26. A soma dos 10 primeiros termos dessa progressão é`,
+    a: ['185.', '175.', '190.', '370.', '160.'],
+    r: `De ${M('a₈ = a₃ + 5r')}: ${M('26 = 11 + 5r')}, logo ${M('r = 3')}. Então ${M('a₁ = 11 − 2·3 = 5')} e ${M('a₁₀ = 5 + 9·3 = 32')}. A soma é ${M(`S₁₀ = ${fr('(5 + 32)·10', '2')} = 185`)}.` },
+  { m: 1, nome: 'Juros compostos',
+    t: 'Um capital de R$ 2.000,00 foi aplicado a juros compostos de 10% ao mês, durante 3 meses, sem retiradas. O valor dos juros obtidos ao final desse período é',
+    a: ['R$ 662,00.', 'R$ 600,00.', 'R$ 2.662,00.', 'R$ 630,00.', 'R$ 720,00.'],
+    r: `O montante é ${M('M = 2000·(1,1)³ = 2000·1,331 = 2662')} reais. Os juros são ${M('J = 2662 − 2000 = 662')} reais. (R$ 600,00 seria o resultado com juros <i>simples</i>.)` },
+
+  /* ---------- 2 · Polinômios ---------- */
+  { m: 2, nome: 'Três valores conhecidos',
+    t: `Seja ${M('P(x) = ax² + bx + c')} um polinômio tal que ${M('P(0) = 3')}, ${M('P(1) = 4')} e ${M('P(−1) = 6')}. O valor de ${M('P(2)')} é`,
+    a: ['9.', '7.', '11.', '13.', '5.'],
+    r: `${M('P(0) = c = 3')}. Depois, ${M('a + b + 3 = 4')} e ${M('a − b + 3 = 6')}, ou seja, ${M('a + b = 1')} e ${M('a − b = 3')}. Somando: ${M('a = 2')} e ${M('b = −1')}. Logo ${M('P(2) = 2·4 − 2 + 3 = 9')}.` },
+  { m: 2, nome: 'Teorema do resto',
+    t: `O resto da divisão do polinômio ${M('P(x) = x³ − 2x² + kx + 4')} por ${M('x − 2')} é igual a 10. O valor de ${M('k')} é`,
+    a: ['3.', '1.', '2.', '5.', '7.'],
+    r: `Pelo teorema do resto, o resto da divisão por ${M('x − 2')} é ${M('P(2)')}: ${M('8 − 8 + 2k + 4 = 10')}, então ${M('2k = 6')} e ${M('k = 3')}.` },
+  { m: 2, nome: 'Briot-Ruffini',
+    t: `Na divisão de ${M('P(x) = 2x³ − 3x² + x + 5')} por ${M('x − 1')}, o quociente ${M('Q(x)')} e o resto ${M('R')} são, respectivamente,`,
+    a: [`${M('2x² − x')} e 5.`, `${M('2x² − 5x + 6')} e −1.`, `${M('2x² − x')} e 0.`, `${M('2x² + x + 2')} e 7.`, `${M('2x² − x + 1')} e 6.`],
+    r: `Briot-Ruffini com a raiz 1: coeficientes ${M('2, −3, 1, 5')}. Baixa o 2; ${M('2·1 − 3 = −1')}; ${M('−1·1 + 1 = 0')}; ${M('0·1 + 5 = 5')}. Logo ${M('Q(x) = 2x² − x')} e ${M('R = 5')}. (A alternativa com resto −1 é a divisão por ${M('x + 1')}.)` },
+
+  /* ---------- 3 · Equações algébricas ---------- */
+  { m: 3, nome: 'Relações de Girard',
+    t: `Sejam ${M('r₁, r₂')} e ${M('r₃')} as raízes da equação ${M('x³ − 6x² + 11x − 6 = 0')}. O valor de ${M(`${fr(1, 'r₁')} + ${fr(1, 'r₂')} + ${fr(1, 'r₃')}`)} é`,
+    a: [fr(11, 6) + '.', fr(6, 11) + '.', '1.', '2.', '−' + fr(11, 6) + '.'],
+    r: `${M(`${fr(1, 'r₁')} + ${fr(1, 'r₂')} + ${fr(1, 'r₃')} = ${fr('r₁r₂ + r₁r₃ + r₂r₃', 'r₁r₂r₃')}`)}. Por Girard, ${M('r₁r₂ + r₁r₃ + r₂r₃ = 11')} e ${M('r₁r₂r₃ = 6')}. Resultado: ${M(fr(11, 6))}. (De fato, as raízes são 1, 2 e 3.)` },
+  { m: 3, nome: 'Uma raiz conhecida',
+    t: `Sabe-se que 2 é raiz da equação ${M('x³ − 7x + 6 = 0')}. O produto das outras duas raízes é`,
+    a: ['−3.', '3.', '−2.', '6.', '−6.'],
+    r: `Dividindo por ${M('x − 2')} (Briot-Ruffini com 1, 0, −7, 6): quociente ${M('x² + 2x − 3')}, resto 0. As outras raízes vêm de ${M('x² + 2x − 3 = 0')}: são 1 e −3, com produto ${M('−3')}. (Ou: produto das três raízes é −6, então ${M('−6 ÷ 2 = −3')}.)` },
+  { m: 3, nome: 'Raiz complexa',
+    t: `O número complexo ${M('1 + i')} é raiz da equação ${M('x³ − 4x² + 6x − 4 = 0')}, de coeficientes reais. A raiz real dessa equação é`,
+    a: ['2.', '1.', '−2.', '4.', '−1.'],
+    r: `Coeficientes reais: o conjugado ${M('1 − i')} também é raiz. Soma das raízes (Girard): ${M('(1 + i) + (1 − i) + r = 4')}, então ${M('r = 2')}. Conferindo: ${M('8 − 16 + 12 − 4 = 0')}.` },
+
+  /* ---------- 4 · Análise combinatória ---------- */
+  { m: 4, nome: 'Anagramas',
+    t: 'O número de anagramas da palavra <b>UNIFEI</b> é',
+    a: ['360.', '720.', '120.', '180.', '240.'],
+    r: `São 6 letras com o I repetido duas vezes: permutação com repetição ${M(`P₆² = ${fr('6!', '2!')} = ${fr(720, 2)} = 360`)}.` },
+  { m: 4, nome: 'Comissão com pelo menos uma',
+    t: 'Um grupo de estudo tem 6 rapazes e 4 moças. O número de comissões de 3 pessoas que podem ser formadas com <b>pelo menos uma moça</b> é',
+    a: ['100.', '120.', '60.', '80.', '96.'],
+    r: `Total de comissões menos as que só têm rapazes: ${M('C₁₀,₃ − C₆,₃ = 120 − 20 = 100')}.` },
+  { m: 4, nome: 'Números pares',
+    t: 'Com os algarismos 1, 2, 3, 4 e 5, quantos números <b>pares</b> de 4 algarismos distintos podem ser formados?',
+    a: ['48.', '60.', '120.', '24.', '72.'],
+    r: `O último algarismo deve ser 2 ou 4 (2 escolhas). Os outros três lugares usam 3 dos 4 algarismos restantes, em ordem: ${M('4·3·2 = 24')}. Total ${M('2·24 = 48')}.` },
+
+  /* ---------- 5 · Probabilidade ---------- */
+  { m: 5, nome: 'Soma prima',
+    t: 'Dois dados comuns, não viciados, são lançados. A probabilidade de a soma dos resultados ser um número primo é',
+    a: [fr(5, 12) + '.', fr(1, 2) + '.', fr(7, 18) + '.', fr(1, 3) + '.', fr(4, 9) + '.'],
+    r: `Somas primas possíveis: 2, 3, 5, 7 e 11, com 1, 2, 4, 6 e 2 casos (total 15) entre 36. ${M(`P = ${fr(15, 36)} = ${fr(5, 12)}`)}.` },
+  { m: 5, nome: 'Duas bolas sem reposição',
+    t: 'Uma urna tem 4 bolas brancas e 6 pretas. Retiram-se duas bolas, uma após a outra, sem reposição. A probabilidade de as duas bolas terem cores diferentes é',
+    a: [fr(8, 15) + '.', fr(12, 25) + '.', fr(4, 15) + '.', fr(2, 5) + '.', fr(7, 15) + '.'],
+    r: `Branca e depois preta, ou preta e depois branca: ${M(`${fr(4, 10)}·${fr(6, 9)} + ${fr(6, 10)}·${fr(4, 9)} = ${fr(48, 90)} = ${fr(8, 15)}`)}. (${fr(12, 25)} seria com reposição.)` },
+  { m: 5, nome: 'Probabilidade condicional',
+    t: 'Em uma turma de 40 alunos, 25 gostam de Matemática, 18 gostam de Física e 8 gostam das duas disciplinas. Sorteia-se um aluno e verifica-se que ele gosta de Física. A probabilidade de que ele também goste de Matemática é',
+    a: [fr(4, 9) + '.', fr(1, 5) + '.', fr(8, 25) + '.', fr(1, 3) + '.', fr(2, 5) + '.'],
+    r: `O espaço amostral passa a ser os 18 que gostam de Física; desses, 8 gostam de Matemática. ${M(`P = ${fr(8, 18)} = ${fr(4, 9)}`)}.` },
+
+  /* ---------- 6 · Matrizes, determinantes e sistemas ---------- */
+  { m: 6, nome: 'Determinante do dobro',
+    t: `Seja ${M('A')} a matriz <span class="mat"><span>2</span><span>1</span><span>3</span><span>k</span></span>. Se o determinante da matriz ${M('2A')} é igual a 20, então ${M('k')} vale`,
+    a: ['4.', fr(13, 2) + '.', '2.', '3.', '5.'],
+    r: `Para matriz de ordem 2, ${M('det(2A) = 2²·det A')}. Então ${M('4·det A = 20')} e ${M('det A = 5')}. Como ${M('det A = 2k − 3')}, temos ${M('2k − 3 = 5')} e ${M('k = 4')}. (${fr(13, 2)} sai de quem usa ${M('det(2A) = 2·det A')}.)` },
+  { m: 6, nome: 'Na cantina',
+    t: 'Na cantina da escola, 2 salgados e 1 suco custam R$ 13,00, enquanto 1 salgado e 2 sucos custam R$ 11,00. Quanto custam 1 salgado e 1 suco juntos?',
+    a: ['R$ 8,00.', 'R$ 7,00.', 'R$ 9,00.', 'R$ 8,50.', 'R$ 12,00.'],
+    r: `Somando as duas equações: ${M('3s + 3j = 24')}, logo ${M('s + j = 8')}. (O salgado custa R$ 5,00 e o suco, R$ 3,00.)` },
+  { m: 6, nome: 'Sistema impossível',
+    t: `O sistema linear ${M('x + y = 3')} e ${M('2x + ky = 5')}, nas incógnitas ${M('x')} e ${M('y')}, é impossível para`,
+    a: [`${M('k = 2')}.`, `${M('k = −2')}.`, `${M('k = 0')}.`, `${M('k = 1')}.`, `${M('k = ' + fr(5, 3))}.`],
+    r: `O sistema não é determinado quando ${M('det = 1·k − 1·2 = 0')}, isto é, ${M('k = 2')}. Nesse caso, a 2ª equação vira ${M('2x + 2y = 5')}, ou ${M('x + y = 2,5')}, que contradiz ${M('x + y = 3')}: sistema impossível.` },
+
+  /* ---------- 7 · Geometria analítica ---------- */
+  { m: 7, nome: 'Circunferência pelo diâmetro',
+    t: `Os pontos ${M('A(1, 2)')} e ${M('B(7, 10)')} são extremidades de um diâmetro de uma circunferência. A equação dessa circunferência é`,
+    a: [M('(x − 4)² + (y − 6)² = 25') + '.', M('(x − 4)² + (y − 6)² = 100') + '.', M('(x − 4)² + (y − 6)² = 10') + '.', M('(x + 4)² + (y + 6)² = 25') + '.', M('(x − 3)² + (y − 4)² = 25') + '.'],
+    r: `Centro = ponto médio de AB: ${M('(4, 6)')}. Diâmetro ${M(`AB = ${rq('6² + 8²')} = 10`)}, então raio 5 e ${M('r² = 25')}.` },
+  { m: 7, nome: 'Reta perpendicular',
+    t: `A reta que passa pelo ponto ${M('P(2, 1)')} e é perpendicular à reta ${M('2x − y + 3 = 0')} tem equação`,
+    a: [M('x + 2y − 4 = 0') + '.', M('2x − y − 3 = 0') + '.', M('x − 2y = 0') + '.', M('2x + y − 5 = 0') + '.', M('x + 2y − 5 = 0') + '.'],
+    r: `A reta dada tem coeficiente angular 2; a perpendicular tem ${M(`m = −${fr(1, 2)}`)}. Por P: ${M(`y − 1 = −${fr(1, 2)}(x − 2)`)}, que dá ${M('x + 2y − 4 = 0')}.` },
+  { m: 7, nome: 'Distância de ponto a reta',
+    t: `A distância do ponto ${M('P(3, 4)')} à reta ${M('3x + 4y − 5 = 0')} é`,
+    a: ['4.', '5.', '20.', '3.', '2.'],
+    r: `${M(`d = ${fr('|3·3 + 4·4 − 5|', rq('3² + 4²'))} = ${fr(20, 5)} = 4`)}.` },
+
+  /* ---------- 8 · Funções ---------- */
+  { m: 8, nome: 'Altura máxima',
+    t: `Uma bola é lançada verticalmente e sua altura, em metros, é dada por ${M('h(t) = −5t² + 20t')}, com ${M('t')} em segundos. A altura máxima atingida pela bola é`,
+    a: ['20 m.', '40 m.', '15 m.', '25 m.', '10 m.'],
+    r: `O máximo ocorre no vértice: ${M(`t = −${fr('b', '2a')} = −${fr(20, '−10')} = 2`)} s. Então ${M('h(2) = −20 + 40 = 20')} m.` },
+  { m: 8, nome: 'Bactérias',
+    t: 'Uma cultura começa com 500 bactérias, e a população dobra a cada 3 horas. Após 15 horas, o número de bactérias será',
+    a: ['16.000.', '8.000.', '32.000.', '2.500.', '7.500.'],
+    r: `Em 15 horas há ${M('15 ÷ 3 = 5')} duplicações: ${M('N = 500·2⁵ = 500·32 = 16 000')}.` },
+  { m: 8, nome: 'Equação exponencial',
+    t: `Considere ${M('log 2 = 0,30')} e ${M('log 3 = 0,48')}. O valor de ${M('x')} que satisfaz ${M('2ˣ = 12')} é`,
+    a: ['3,6.', '3,4.', '4,0.', '1,08.', '6,0.'],
+    r: `${M('x = ' + fr('log 12', 'log 2'))}. Como ${M('log 12 = log(2²·3) = 2·0,30 + 0,48 = 1,08')}, vem ${M(`x = ${fr('1,08', '0,30')} = 3,6`)}.` },
+
+  /* ---------- 9 · Trigonometria ---------- */
+  { m: 9, nome: 'Rampa de acesso',
+    t: 'Uma rampa de acesso, com inclinação de 30° em relação ao solo, deve vencer um desnível de 1,5 m, como na figura. O comprimento da rampa é',
+    fig: 'rampa',
+    a: ['3 m.', `1,5${rq(3)} m.`, `${rq(3)} m.`, `2${rq(3)} m.`, '6 m.'],
+    r: `A rampa é a hipotenusa e o desnível é o cateto oposto a 30°: ${M(`sen 30° = ${fr('1,5', 'L')}`)}, então ${M(`${fr(1, 2)} = ${fr('1,5', 'L')}`)} e ${M('L = 3')} m.` },
+  { m: 9, nome: 'Lei dos cossenos',
+    t: 'Dois lados de um triângulo medem 5 cm e 8 cm e formam entre si um ângulo de 60°. O terceiro lado desse triângulo mede',
+    a: ['7 cm.', `${rq(89)} cm.`, `${rq(129)} cm.`, '13 cm.', '9 cm.'],
+    r: `${M('c² = 5² + 8² − 2·5·8·cos 60° = 25 + 64 − 40 = 49')}, logo ${M('c = 7')} cm. (${rq(129)} sai de quem troca o sinal: usa ${M('+40')}.)` },
+  { m: 9, nome: 'Temperatura ao longo do dia',
+    t: `Em certo dia, a temperatura de uma cidade, em °C, foi modelada por ${M(`T(t) = 22 + 6·cos(${fr('πt', 12)})`)}, em que ${M('t')} é a hora do dia, com ${M('0 ≤ t < 24')}. A temperatura mínima desse dia e o horário em que ocorreu foram`,
+    a: ['16 °C, às 12 h.', '16 °C, às 6 h.', '22 °C, às 12 h.', '28 °C, às 0 h.', '16 °C, às 18 h.'],
+    r: `O cosseno vale no mínimo −1, então ${M('T mín = 22 − 6 = 16')} °C. Isso ocorre quando ${M(`${fr('πt', 12)} = π`)}, ou seja, ${M('t = 12')}.` },
+
+  /* ---------- 10 · Geometria plana ---------- */
+  { m: 10, nome: 'Sombras',
+    t: 'Em certo instante, um poste projeta uma sombra de 6 m no chão plano. No mesmo instante, uma pessoa de 1,8 m de altura projeta uma sombra de 1,2 m. A altura do poste é',
+    fig: 'sombra',
+    a: ['9 m.', '4 m.', '7,2 m.', '10,8 m.', '8 m.'],
+    r: `Os raios de sol são paralelos, então os triângulos são semelhantes: ${M(`${fr('h', 6)} = ${fr('1,8', '1,2')}`)}, logo ${M('h = 6·1,5 = 9')} m.` },
+  { m: 10, nome: 'Terreno com piscina',
+    t: 'Um terreno retangular mede 20 m por 30 m. Nele há uma piscina circular de 3 m de raio. Usando π = 3, a área do terreno <b>não</b> ocupada pela piscina é',
+    a: ['573 m².', '591 m².', '582 m².', '564 m².', '492 m².'],
+    r: `Área do terreno: ${M('20·30 = 600')} m². Área da piscina: ${M('π·3² = 3·9 = 27')} m². Restam ${M('600 − 27 = 573')} m². (582 m² sai de quem usa o comprimento ${M('2πr = 18')}.)` },
+  { m: 10, nome: 'Hexágono inscrito',
+    t: 'Um hexágono regular está inscrito em uma circunferência de raio 4 cm. A área desse hexágono é',
+    a: [`24${rq(3)} cm².`, `48${rq(3)} cm².`, `12${rq(3)} cm².`, '96 cm².', `16${rq(3)} cm².`],
+    r: `No hexágono regular inscrito, o lado é igual ao raio (4 cm), e ele se divide em 6 triângulos equiláteros: ${M(`A = 6·${fr(`4²${rq(3)}`, 4)} = 6·4${rq(3)} = 24${rq(3)}`)} cm².` },
+
+  /* ---------- 11 · Geometria espacial ---------- */
+  { m: 11, nome: 'Caixa-d’água',
+    t: 'Uma caixa-d’água tem a forma de um cilindro circular reto com 1 m de raio da base e 2 m de altura. Ela está com 3/4 de sua capacidade. Usando π = 3, a quantidade de água na caixa é',
+    a: ['4.500 L.', '6.000 L.', '1.500 L.', '450 L.', '18.000 L.'],
+    r: `${M('V = π·r²·h = 3·1·2 = 6')} m³ = 6 000 L. Três quartos: ${M(`${fr(3, 4)}·6000 = 4500`)} L. (18 000 L sai de quem usa o diâmetro como raio.)` },
+  { m: 11, nome: 'Esfera no cubo',
+    t: 'Uma esfera está inscrita em um cubo de aresta 6 cm, como na figura. O volume, em cm³, da região do cubo exterior à esfera é',
+    fig: 'cubo',
+    a: [M('216 − 36π') + '.', M('216 − 288π') + '.', M('216 − 27π') + '.', M('36π') + '.', M('216 − 108π') + '.'],
+    r: `Cubo: ${M('6³ = 216')}. A esfera inscrita tem raio 3: ${M(`${fr(4, 3)}π·3³ = 36π`)}. Região exterior: ${M('216 − 36π')}. (288π usa raio 6.)` },
+  { m: 11, nome: 'Volume do cone',
+    t: 'Um cone circular reto tem raio da base 6 cm e geratriz 10 cm. O volume desse cone é',
+    fig: 'cone',
+    a: [M('96π cm³') + '.', M('288π cm³') + '.', M('120π cm³') + '.', M('60π cm³') + '.', M('100π cm³') + '.'],
+    r: `A altura vem de Pitágoras: ${M('h² + 6² = 10²')}, logo ${M('h = 8')}. Então ${M(`V = ${fr(1, 3)}π·6²·8 = 96π`)} cm³. (120π usa a geratriz como altura; 60π é a área lateral.)` },
+
+  /* ---------- 12 · Tratamento da informação ---------- */
+  { m: 12, nome: 'Média, mediana e moda',
+    t: 'As notas de 10 alunos em um simulado foram: 4, 5, 6, 6, 7, 8, 9, 10, 8 e 6. A média, a mediana e a moda dessas notas são, respectivamente,',
+    a: ['6,9; 6,5 e 6.', '6,9; 7 e 6.', '6,5; 6,9 e 6.', '6,9; 6,5 e 8.', '7; 6,5 e 6.'],
+    r: `Soma 69, média ${M('69 ÷ 10 = 6,9')}. Em ordem: 4, 5, 6, 6, <b>6, 7</b>, 8, 8, 9, 10; mediana ${M(`${fr('6 + 7', 2)} = 6,5`)}. A nota mais frequente é 6 (três vezes).` },
+  { m: 12, nome: 'Média ponderada',
+    t: 'A nota final de uma disciplina é a média ponderada de três provas, com pesos 2, 3 e 5. Um aluno tirou 6 na primeira e 8 na segunda. Para que sua média final seja exatamente 7, ele precisa tirar, na terceira prova,',
+    a: ['6,8.', '7,0.', '7,2.', '6,4.', '8,0.'],
+    r: `${M(`${fr('2·6 + 3·8 + 5x', 10)} = 7`)}, então ${M('12 + 24 + 5x = 70')}, ${M('5x = 34')} e ${M('x = 6,8')}.` },
+  { m: 12, nome: 'Leitura de gráfico',
+    t: 'O gráfico mostra o número de bicicletas vendidas por uma loja de janeiro a junho. Em quantos desses meses as vendas ficaram <b>acima da média mensal</b> do semestre?',
+    fig: 'vendas',
+    a: ['3.', '2.', '4.', '1.', '5.'],
+    r: `Média: ${M('(40 + 55 + 50 + 70 + 65 + 80) ÷ 6 = 360 ÷ 6 = 60')}. Ficaram acima de 60: abril (70), maio (65) e junho (80), ou seja, <b>3 meses</b>.` },
+];
+const NQ = QUESTOES.length;
+const POR = 3;
+
+/* =========================================================
+   TRILHA UNIFEI 2027 — ranking online e painel ao vivo
+   (servidor Apps Script, projeto p = 'unifei')
+   ========================================================= */
+const SYNC_URL = 'https://script.google.com/macros/s/AKfycbzYd8FOYRRHc4YmuPpa1jbLA6UvFyTrqyZy0cbdCebQs22HiBGS7kv6wGJZ2DZ2wVRxZg/exec';
+const urlOk = () => /^https:\/\/script\.google\.com\//.test(SYNC_URL) && !/claude/i.test(location.hostname);
+let srvOk = null; // o servidor só recebe dados depois de confirmar que conhece este jogo
+const syncOn = () => urlOk() && srvOk === true;
+let teacherKey = '';
+let onlineWhere = '';
+let hbTimer = 0; let profTimer = 0;
+let pubCache = null; let pubAt = 0;
+let prof = { data: null, filtro: 'todas', aba: 'vivo', pod: 0, err: false };
+
+const slugOf = (s) => norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50);
+function snapshot() {
+  const solsArr = MARCOS.map((f) => ({ pts: ptsSala(f.n), em: (S.fim && S.fim[f.n]) || 0 }));
+  return {
+    id: S.sid, nome: S.name, turma: S.turma, tent: S.seed.toString(36), pts: pontos(), rank: rankLabel(),
+    pecas: feitos(), ft: dePrimeira(), o2: minRest(), sol: salaAtual(), peca: onlineWhere || 'No mapa', sols: solsArr, fim: S.finished ? S.t1 || Date.now() : 0, saidas: S.saidas || 0,
+  };
+}
+function syncPost(ev, batida) {
+  if (!syncOn() || !S || !S.sid || projection) return;
+  try {
+    fetch(SYNC_URL, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ p: 'unifei', s: snapshot(), ev: (ev || []).map((x) => Object.assign({ t: Date.now() }, x)), batida: !!batida }) }).catch(() => {});
+  } catch (e) { /* sem rede */ }
+}
+const syncEv = (ev) => syncPost(ev, false);
+function heartbeat() {
+  clearInterval(hbTimer); hbTimer = 0;
+  if (!syncOn() || !S || S.finished) return;
+  hbTimer = setInterval(() => { if (!document.hidden && S && !S.finished) syncPost([], true); }, 30000);
+}
+let jsonpN = 0;
+function jsonp(params) {
+  return new Promise((res, rej) => {
+    const cb = '__uni' + (++jsonpN) + '_' + Date.now();
+    const tag = document.createElement('script');
+    const done = (v, err) => { clearTimeout(tm); try { delete window[cb]; } catch (e) { window[cb] = undefined; } tag.remove(); err ? rej(err) : res(v); };
+    const tm = setTimeout(() => done(null, new Error('tempo')), 15000);
+    window[cb] = (d) => done(d);
+    tag.onerror = () => done(null, new Error('rede'));
+    tag.src = `${SYNC_URL}?${new URLSearchParams(Object.assign({ p: 'unifei', callback: cb, _: Date.now() }, params))}`;
+    document.head.appendChild(tag);
+  });
+}
+function probe() {
+  if (!urlOk() || srvOk !== null) return;
+  srvOk = false;
+  jsonp({ acao: 'publico' }).then((d) => { srvOk = !!(d && d.ok && Array.isArray(d.sois)); if (srvOk && S && !S.finished) { syncPost([], false); heartbeat(); } }).catch(() => { srvOk = null; });
+}
+setTimeout(probe, 300);
+async function getPub(force) {
+  if (!force && pubCache && Date.now() - pubAt < 15000) return pubCache;
+  const d = await jsonp({ acao: 'publico' });
+  if (d && d.ok) { pubCache = d; pubAt = Date.now(); }
+  return d;
+}
+const MEDAL = ['🥇', '🥈', '🥉'];
+const shortName = (n) => { const p = String(n).trim().split(/\s+/); return p[0] + (p.length > 1 ? ' ' + p[p.length - 1].charAt(0).toUpperCase() + '.' : ''); };
+const isMe = (r) => S && r.turma === S.turma && r.nome === shortName(S.name);
+const hhmm = (t) => (t ? new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '');
+function podiumHTML(rows, kind, limit) {
+  if (!rows || !rows.length) return '<p class="muted">Ninguém concluiu este marco ainda. Você pode ser o primeiro!</p>';
+  const lim = limit || 10; let list = rows.slice(0, lim);
+  const mine = rows.findIndex(isMe);
+  const li = (r, i) => `<li class="${isMe(r) ? 'me' : ''} ${i < 3 ? 'top' : ''}"><span class="p-n">${MEDAL[i] || i + 1}</span><b>${esc(r.nome)}</b><span class="p-t">${esc(r.turma)}</span>${kind === 'final' ? `<span class="p-r">${esc(r.rank || '')} · ${r.o2} acertos</span>` : ''}<b class="p-p">${r.pts}<small> pts</small></b></li>`;
+  let h = `<ol class="podium">${list.map(li).join('')}</ol>`;
+  if (mine >= lim) h += `<p class="p-mine">Sua posição: <b>${mine + 1}º</b> de ${rows.length}, com ${rows[mine].pts} pontos.</p>`;
+  else if (mine >= 0) h += `<p class="p-mine">Você está em <b>${mine + 1}º</b> lugar de ${rows.length}!</p>`;
+  return h;
+}
+async function fillPodium(el, idx, kind, limit) {
+  if (!el) return;
+  if (!syncOn()) { el.innerHTML = `<p class="muted">${urlOk() ? 'O ranking online deste jogo ainda vai ser ativado pelo professor. Seu resultado fica salvo neste aparelho.' : 'O ranking online aparece no site publicado.'}</p>`; return; }
+  el.innerHTML = '<p class="muted pulse">Buscando a classificação geral…</p>';
+  try {
+    const d = await getPub(true);
+    if (!el.isConnected) return;
+    el.innerHTML = podiumHTML(kind === 'final' ? d.final : d.sois[idx], kind, limit);
+  } catch (e) { if (el.isConnected) el.innerHTML = '<p class="muted">Sem conexão com a central da trilha. Tente de novo em instantes.</p>'; }
+}
+
+/* ---------- painel do professor ---------- */
+const agoTxt = (t, now) => { if (!t) return '—'; const s = Math.max(0, Math.round((now - t) / 1000)); return s < 60 ? 'agora' : s < 3600 ? `há ${Math.round(s / 60)} min` : `há ${Math.round(s / 3600)} h`; };
+function profHTML() {
+  if (!syncOn()) return urlOk() ? '<p class="muted">O servidor do ranking ainda não conhece este jogo. Publique a nova versão do Apps Script (Implantar → Gerenciar implantações → Nova versão) e recarregue esta página.</p>' : '<p class="muted">O painel ao vivo funciona no site publicado (mateusbibiano.github.io).</p>';
+  if (!teacherKey) return '<p class="muted">Entre de novo pela senha para ver o painel ao vivo.</p>';
+  const d = prof.data;
+  if (!d) return `<p class="muted pulse">${prof.err ? 'Sem conexão com o servidor. Tentando de novo…' : 'Conectando à central da trilha…'}</p>`;
+  if (!d.ok) return '<p class="err">O servidor recusou a senha. Saia e entre de novo.</p>';
+  const now = d.agora; const f = prof.filtro;
+  const byT = (a) => f === 'todas' || a.turma === f;
+  const alunos = d.alunos.filter(byT).sort((a, b) => (b.visto || 0) - (a.visto || 0));
+  const online = alunos.filter((a) => !a.fim && a.visto && now - a.visto < 90000);
+  const tabs = [['vivo', `Ao vivo (${online.length})`], ['pod', 'Pódios dos marcos'], ['final', `Ranking final (${d.final.filter(byT).length})`], ['todos', `Todos (${alunos.length})`]];
+  let body = '';
+  const row = (a) => {
+    const on = !a.fim && a.visto && now - a.visto < 90000;
+    return `<tr class="${on ? 'on' : ''}"><td><span class="dot ${on ? 'on' : a.fim ? 'fim' : ''}"></span></td><td><b>${esc(a.nome)}</b><small>${esc(a.turma)}</small></td>
+      <td>${a.fim ? `<b class="ok">Chegou ao cume</b> <small>${esc(a.rank || '')}</small>` : `Marco ${a.sol} <small>${esc(a.peca || '')}</small>`}</td><td class="num">${a.pecas}/36</td><td class="num">${a.ft}</td><td class="num">${a.pts}</td><td class="num">${a.o2}</td><td class="num ${a.saidas ? 'warn' : ''}">${a.saidas || 0}</td><td class="muted">${agoTxt(a.visto, now)}</td></tr>`;
+  };
+  const table = (arr) => (arr.length ? `<div class="tscroll"><table class="live"><thead><tr><th></th><th>Aluno</th><th>Onde está</th><th>Questões</th><th>De primeira</th><th>Pontos</th><th>Acertos</th><th>Saídas</th><th>Visto</th></tr></thead><tbody>${arr.map(row).join('')}</tbody></table></div>` : '<p class="muted">Ninguém por aqui ainda.</p>');
+  if (prof.aba === 'vivo') body = `${table(online)}<h3 class="feed-h">Atividade recente</h3><ul class="feed">${d.eventos.filter(byT).slice(0, 18).map((e) => `<li><span class="muted">${hhmm(e.t)}</span> <b>${esc(e.nome)}</b> (${esc(e.turma)}) · ${esc(e.ev)}${e.det ? ` · ${esc(e.det)}` : ''}${e.ev === 'Concluiu o marco' || e.ev === 'Chegou ao cume' ? ` · <b>${e.pts} pts</b>` : ''}</li>`).join('') || '<li class="muted">Nada ainda.</li>'}</ul>`;
+  if (prof.aba === 'todos') body = table(alunos);
+  if (prof.aba === 'pod') {
+    body = `<div class="seg-tabs">${MARCOS.map((s, i) => `<button class="${prof.pod === i ? 'on' : ''}" data-act="prof-pod" data-i="${i}">${s.n}</button>`).join('')}</div>
+      <p class="muted">Marco ${MARCOS[prof.pod].n} · ${MARCOS[prof.pod].nome}. Pontos no marco (100 de primeira, 50 na segunda tentativa). Melhor tentativa de cada aluno; no empate, quem terminou primeiro.</p>
+      ${profRank(d.sois[prof.pod].filter(byT), false)}`;
+  }
+  if (prof.aba === 'final') body = profRank(d.final.filter(byT), true);
+  return `<div class="prof-bar"><div class="seg-tabs">${['todas'].concat(TURMAS).map((t) => `<button class="${f === t ? 'on' : ''}" data-act="prof-filtro" data-id="${t}">${t === 'todas' ? 'Todas' : t}</button>`).join('')}</div>
+    <span class="muted live-tag"><span class="dot on"></span> atualiza sozinho · ${hhmm(now)}</span></div>
+    <div class="seg-tabs big">${tabs.map(([k, t]) => `<button class="${prof.aba === k ? 'on' : ''}" data-act="prof-aba" data-id="${k}">${t}</button>`).join('')}</div>
+    <div class="prof-body">${body}</div>
+    ${d.planilha ? `<p><a class="link" href="${esc(d.planilha)}" target="_blank" rel="noopener">Abrir a planilha completa</a></p>` : ''}`;
+}
+function profRank(rows, fin) {
+  if (!rows.length) return '<p class="muted">Ninguém concluiu ainda.</p>';
+  return `<ol class="podium prof">${rows.map((r, i) => `<li class="${i < 3 ? 'top' : ''}"><span class="p-n">${MEDAL[i] || i + 1}</span><b>${esc(r.nome)}</b><span class="p-t">${esc(r.turma)}</span>${fin ? `<span class="p-r">${esc(r.rank)} · ${r.ft}/36 de primeira · ${r.o2} acertos${r.saidas ? ` · <span class="warn">${r.saidas} ${r.saidas === 1 ? 'saída' : 'saídas'} da tela</span>` : ''}</span>` : ''}<span class="muted">${hhmm(r.em)}</span><b class="p-p">${r.pts}</b></li>`).join('')}</ol>`;
+}
+function renderProf() { const el = document.getElementById('prof-live'); if (el) el.innerHTML = profHTML(); }
+async function loadProf() {
+  if (!syncOn() || !teacherKey) { renderProf(); return; }
+  try { prof.data = await jsonp({ chave: teacherKey }); prof.err = false; } catch (e) { prof.err = true; }
+  renderProf();
+}
+function startProf() { clearInterval(profTimer); renderProf(); loadProf(); profTimer = setInterval(() => { if (!document.hidden) loadProf(); }, 8000); }
+function stopProf() { clearInterval(profTimer); profTimer = 0; }
+
+/* =========================================================
+   MODO SEGURANÇA — tela cheia durante a missão e registro de saídas
+   ========================================================= */
+const DOCEL = document.documentElement;
+const fsOK = () => !!(DOCEL.requestFullscreen || DOCEL.webkitRequestFullscreen) && !/claude/i.test(location.hostname);
+const isFull = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+const focoOn = () => !!S && !S.finished && !projection && ['mapa', 'questao', 'marco'].includes(screen);
+let awayAt = 0;
+function enterFull() { if (!fsOK() || isFull()) return; try { const r = (DOCEL.requestFullscreen || DOCEL.webkitRequestFullscreen).call(DOCEL); if (r && r.catch) r.catch(() => {}); } catch (e) { /* ok */ } }
+function exitFull() { if (!isFull()) return; try { const r = (document.exitFullscreen || document.webkitExitFullscreen).call(document); if (r && r.catch) r.catch(() => {}); } catch (e) { /* ok */ } }
+function guard(kind, dur) {
+  let g = document.getElementById('guard');
+  if (!g) { g = document.createElement('div'); g.id = 'guard'; g.setAttribute('role', 'alertdialog'); g.setAttribute('aria-modal', 'true'); document.body.appendChild(g); }
+  const n = (S && S.saidas) || 0;
+  g.innerHTML = `<div class="guard-box"><span class="guard-ic">⚠</span>
+    <small>ALERTA DA SEGURANÇA</small>
+    <h2>${kind === 'away' ? 'Você saiu da trilha' : 'A trilha só funciona em tela cheia'}</h2>
+    <p>${kind === 'away' ? 'Sair para outra guia ou aplicativo fica registrado e aparece para o professor.' : 'Volte para a tela cheia para continuar a missão. Saídas para outras guias ficam registradas.'}</p>
+    <dl><div><dt>Saídas registradas</dt><dd>${n}</dd></div>${kind === 'away' ? `<div><dt>Tempo fora</dt><dd>${dur} s</dd></div>` : ''}</dl>
+    <button type="button" class="btn hot big" id="guard-back">${fsOK() ? 'Voltar para a tela cheia' : 'Voltar para a missão'}</button></div>`;
+  g.hidden = false;
+  const b = document.getElementById('guard-back');
+  b.onclick = () => { g.hidden = true; enterFull(); };
+  try { b.focus(); } catch (e) { /* ok */ }
+}
+function hideGuard() { const g = document.getElementById('guard'); if (g) g.hidden = true; }
+function leaveStation() {
+  if (!focoOn() || awayAt) return;
+  awayAt = Date.now(); S.saidas = (S.saidas || 0) + 1; save();
+}
+function backToStation() {
+  if (!awayAt) return;
+  const dur = Math.max(1, Math.round((Date.now() - awayAt) / 1000)); awayAt = 0;
+  if (!S) return;
+  S.foraSeg = (S.foraSeg || 0) + dur; save();
+  syncEv([{ ev: 'Saiu da tela', det: `Marco ${salaAtual()} · ${dur} s fora`, pts: 0 }]);
+  guard('away', dur);
+}
+function syncFull() {
+  if (focoOn()) enterFull();
+  else { exitFull(); hideGuard(); awayAt = 0; }
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden) leaveStation(); else backToStation(); });
+window.addEventListener('blur', () => { setTimeout(() => { if (!document.hasFocus()) leaveStation(); }, 150); });
+window.addEventListener('focus', backToStation);
+const onFsChange = () => { if (!isFull() && fsOK() && focoOn() && !awayAt) { const g = document.getElementById('guard'); if (!g || g.hidden) guard('fs'); } };
+document.addEventListener('fullscreenchange', onFsChange);
+document.addEventListener('webkitfullscreenchange', onFsChange);
+const foraTxt = () => { const n = (S && S.saidas) || 0; const t = (S && S.foraSeg) || 0; return n ? `${n} (${t >= 60 ? Math.round(t / 60) + ' min' : t + ' s'} fora)` : '0'; };
+
+/* =========================================================
+   TRILHA UNIFEI 2027 · MATEMÁTICA — telas e fluxo
+   ========================================================= */
+const KEY = 'trilha-unifei-2027-mat-v1';
+const PIN_HASH = 2392177968;
+const TURMAS = ['M31', 'M32', 'PV'];
+const PROVA = new Date('2026-11-29T13:00:00-03:00');
+const $app = document.getElementById('app');
+const sum = (a) => a.reduce((s, x) => s + x, 0);
+const norm = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+function fnv(str) { let h = 0x811c9dc5; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); } return h >>> 0; }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+function mulberry(a) { return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+function shuffle(arr, rng) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const store = {
+  get() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } },
+  set(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) { /* sem armazenamento */ } },
+};
+let DB = Object.assign({ cur: null, hall: [] }, store.get());
+const save = () => store.set(DB);
+let S = DB.cur;
+let screen = S ? (S.finished ? 'final' : 'mapa') : 'cover';
+let modal = null; let projection = false; let reveal = false; let cur = 0; let marcoV = 1; let sel = -1; let review = false;
+
+/* ---------- estado ---------- */
+function newGame(name, turma) {
+  const seed = (Date.now() ^ fnv(name + turma)) >>> 0;
+  S = { name, turma, seed, e: {}, fim: {}, t0: Date.now(), finished: false, saidas: 0, foraSeg: 0 };
+  S.sid = `${slugOf(name)}-${turma.toLowerCase()}-${seed.toString(36)}`;
+  DB.cur = S; save();
+  syncEv([{ ev: 'Entrou na trilha', det: 'Marco 1 · ' + MARCOS[0].nome, pts: 0 }]);
+}
+const ks = (n) => [0, 1, 2].map((j) => (n - 1) * POR + j);
+const st = (k) => S.e[k] || { tries: 0, wrong: [] };
+const done = (k) => { const x = S.e[k]; return !!x && (x.ok || x.tries >= 2); };
+const marcoFeito = (n) => ks(n).every(done);
+const marcoAberto = (n) => n === 1 || marcoFeito(n - 1) || projection;
+const salaAtual = () => { for (let n = 1; n <= 12; n++) if (!marcoFeito(n)) return n; return 12; };
+const feitos = () => Object.keys(S.e).filter((k) => done(+k)).length;
+const dePrimeira = () => Object.values(S.e).filter((x) => x.ok && x.tries === 1).length;
+const ptsOf = (k) => { const x = S.e[k]; return x && x.ok ? (x.tries === 1 ? 100 : 50) : 0; };
+const ptsSala = (n) => sum(ks(n).map(ptsOf));
+const pontos = () => sum(MARCOS.map((m) => ptsSala(m.n)));
+const acertos = () => Object.values(S.e).filter((x) => x.ok).length;
+const minRest = () => acertos();
+const altAtual = () => { let a = 760; MARCOS.forEach((m) => { if (marcoFeito(m.n)) a = m.alt; }); return a; };
+const patente = (p) => (p >= 3200 ? 'Cume conquistado' : p >= 2600 ? 'Montanhista' : p >= 1900 ? 'Trilheiro experiente' : p >= 1200 ? 'Trilheiro' : 'Iniciante na serra');
+const rankLabel = () => patente(pontos());
+function certCode() { const base = `${norm(S.name)}|${S.turma}|${pontos()}|${acertos()}|g9-unifei27`; return (fnv(base) % 46656).toString(36).toUpperCase().padStart(3, '0') + '-' + (fnv(base + '#') % 46656).toString(36).toUpperCase().padStart(3, '0'); }
+const LETRAS = ['A', 'B', 'C', 'D', 'E'];
+// ordem das alternativas: embaralhada por aluno; devolve índices do banco (0 = correta)
+const ordem = (k) => (projection && !S ? [0, 1, 2, 3, 4] : shuffle([0, 1, 2, 3, 4], mulberry(((S ? S.seed : 7) + k * 7919 + 101) >>> 0)));
+const diasProva = () => Math.ceil((PROVA - Date.now()) / 86400000);
+
+/* ---------- peças visuais ---------- */
+const ICON = {
+  lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11 V7 a4 4 0 0 1 8 0 V11"/>',
+  check: '<path d="M5 12.5 L10 17.5 L19.5 7"/>',
+  x: '<path d="M6 6 L18 18 M18 6 L6 18"/>',
+  map: '<path d="M3 6 L9 4 L15 6 L21 4 V18 L15 20 L9 18 L3 20 Z M9 4 V18 M15 6 V20"/>',
+  peak: '<path d="M2 20 L9 7 L13 13 L16 9 L22 20 Z"/><path d="M7.5 10 L9 7 L10.5 10"/>',
+  flag: '<path d="M5 21 V4 M5 4 H17 L14.5 8 L17 12 H5"/>',
+  arrow: '<path d="M5 12 H19 M13 6 L19 12 L13 18"/>',
+  back: '<path d="M19 12 H5 M11 6 L5 12 L11 18"/>',
+  trophy: '<path d="M7 4 H17 V9 a5 5 0 0 1 -10 0 Z"/><path d="M7 6 H4 a3 3 0 0 0 3 5 M17 6 H20 a3 3 0 0 1 -3 5"/><path d="M12 14 V18 M8 21 H16 L15 18 H9 Z"/>',
+  menu: '<path d="M4 7 H20 M4 12 H20 M4 17 H20"/>',
+  book: '<path d="M4 5 a2 2 0 0 1 2 -2 H20 V19 H6 a2 2 0 0 0 -2 2 Z M4 21 V5"/>',
+};
+const ic = (k) => `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k] || ''}</svg>`;
+const logo = () => (typeof IMG !== 'undefined' && IMG.logo ? `<img class="logo" src="${IMG.logo.uri}" alt="Curso G9">` : '');
+function toast(t) { const el = document.getElementById('toast'); if (!el) return; el.innerHTML = t; el.classList.add('on'); clearTimeout(toast.tm); toast.tm = setTimeout(() => el.classList.remove('on'), 2600); }
+function hud() {
+  const back = S ? (S.finished ? 'final' : 'mapa') : 'cover';
+  return `<header class="hud"><button class="brand" data-act="${back}" aria-label="Voltar ao mapa da trilha">${ic('peak')}<span>Trilha UNIFEI 2027<small>Matemática</small></span></button>
+    ${projection ? '<span class="proj-tag">Projeção</span>' : ''}
+    <div class="hud-r">${S ? `<div class="stat"><small>Altitude</small><b>${altAtual()} m</b></div><div class="stat"><small>Pontos</small><b>${pontos()}</b></div>` : ''}
+    <button class="ibtn" data-act="menu" aria-label="Menu">${ic('menu')}</button></div></header>`;
+}
+// curva suave fechada (Catmull-Rom → Bézier)
+function smooth(pts, closed) {
+  const n = pts.length; const P = (i) => pts[closed ? (i + n) % n : Math.max(0, Math.min(n - 1, i))];
+  let d = `M${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+  for (let i = 0; i < (closed ? n : n - 1); i++) {
+    const p0 = P(i - 1); const p1 = P(i); const p2 = P(i + 1); const p3 = P(i + 2);
+    d += ` C${(p1[0] + (p2[0] - p0[0]) / 6).toFixed(1)} ${(p1[1] + (p2[1] - p0[1]) / 6).toFixed(1)} ${(p2[0] - (p3[0] - p1[0]) / 6).toFixed(1)} ${(p2[1] - (p3[1] - p1[1]) / 6).toFixed(1)} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`;
+  }
+  return d + (closed ? 'Z' : '');
+}
+// curvas de nível decorativas
+function topo(seed, n) {
+  const r = mulberry(seed); let d = '';
+  for (let i = 0; i < (n || 5); i++) {
+    const cx = 100 + r() * 1000; const cy = 60 + r() * 600; const ph = r() * 6;
+    for (let j = 0; j < 5; j++) {
+      const R = 34 + j * 38; const pts = [];
+      for (let a = 0; a < 10; a++) { const t = (a / 10) * Math.PI * 2; const rr = R * (1 + 0.18 * Math.sin(3 * t + ph) + 0.08 * Math.cos(5 * t + ph * 2)); pts.push([cx + Math.cos(t) * rr * 1.4, cy + Math.sin(t) * rr]); }
+      d += smooth(pts, true) + ' ';
+    }
+  }
+  return `<svg class="topo" viewBox="0 0 1200 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="${d}"/></svg>`;
+}
+
+/* ---------- capa ---------- */
+function coverView() {
+  const d = diasProva();
+  return `<main class="cover">${topo(11, 5)}
+    <div class="cover-in">
+      <p class="kick">${logo()} Prof. Mateus Bibiano · Curso G9 · M31 · M32 · PV</p>
+      <h1>Trilha<br><em>UNIFEI 2027</em></h1>
+      <p class="sub">Matemática do vestibular, marco a marco: <b>12 conteúdos do programa oficial</b> e <b>36 questões</b> no formato da prova, com 5 alternativas e sem calculadora.</p>
+      ${d > 0 ? `<p class="count"><b>${d}</b> ${d === 1 ? 'dia' : 'dias'} para a prova · domingo, 29 de novembro</p>` : ''}
+      <form class="start card" data-form="start" autocomplete="off">
+        <label class="fld"><span>Seu nome</span><input name="nome" required minlength="3" maxlength="60" placeholder="Nome e sobrenome"></label>
+        <fieldset class="fld"><legend>Turma</legend><div class="chips">${TURMAS.map((t, i) => `<label class="chip"><input type="radio" name="turma" value="${t}" ${i === 0 ? 'checked' : ''}><span>${t}</span></label>`).join('')}</div></fieldset>
+        <button class="btn hot big" type="submit">Começar a subida ${ic('arrow')}</button>
+      </form>
+      <div class="cover-links"><button class="link" data-act="hall">Recordes deste aparelho</button><button class="link" data-act="pin">Área do professor</button></div>
+    </div>
+    <aside class="cover-prof" aria-hidden="true">${perfil(0, true)}</aside>
+  </main>`;
+}
+
+/* ---------- perfil da montanha (mapa) ---------- */
+const PX = (i) => 60 + i * 88;
+const PY = (alt) => 400 - (alt - 760) * 0.22;
+function perfil(feitosN, deco) {
+  const pts = MARCOS.map((m, i) => [PX(i), PY(m.alt) + (i % 2 ? 10 : -4)]);
+  const top = [1090, PY(2110) - 56];
+  const ground = [[-20, 430]].concat(pts.map(([x, y], i) => [x, y + 26 + (i % 3) * 6]), [[top[0], top[1] + 6], [1160, PY(2110) + 10]]);
+  const ridge = smooth(ground, false) + ' L1160 470 L-20 470 Z';
+  const back = [[-20, 380], [140, 330], [300, 352], [470, 250], [620, 286], [780, 170], [900, 210], [1010, 120], [1160, 150]];
+  const ridge2 = smooth(back, false) + ' L1160 470 L-20 470 Z';
+  const route = [[-10, 440]].concat(pts, [top]);
+  const marks = deco ? '' : MARCOS.map((m, i) => {
+    const [x, y] = pts[i]; const ok = marcoFeito(m.n); const open = marcoAberto(m.n); const atual = !ok && open;
+    return `<g class="mk ${ok ? 'ok' : atual ? 'now' : 'lock'}" ${open ? `data-act="marco" data-n="${m.n}" role="button" tabindex="0"` : ''} aria-label="Marco ${m.n}: ${m.nome}${ok ? ', concluído' : open ? '' : ', bloqueado'}">
+      <circle cx="${x}" cy="${y}" r="18"/><text x="${x}" y="${y + 5}" text-anchor="middle">${ok ? '✓' : m.n}</text>
+      <text class="alt" x="${x}" y="${y - 28}" text-anchor="middle">${m.alt} m</text></g>`;
+  }).join('');
+  const walked = deco || !feitosN ? '' : `<path class="trail done" d="${smooth(route.slice(0, feitosN + 1 + (feitosN === 12 ? 1 : 0)), false)}"/>`;
+  return `<svg class="perfil" viewBox="0 0 1140 470" ${deco ? 'preserveAspectRatio="xMidYMax slice"' : ''} role="img" aria-label="Perfil da serra com os 12 marcos da trilha">
+    <path class="r2" d="${ridge2}"/><path class="r1" d="${ridge}"/>
+    <path class="trail" d="${smooth(route, false)}"/>${walked}
+    <g class="summit"><path d="M${top[0]} ${top[1]} V${top[1] - 44} H${top[0] + 30} L${top[0] + 23} ${top[1] - 35} L${top[0] + 30} ${top[1] - 26} H${top[0]}"/><text x="${top[0] - 10}" y="${top[1] - 30}" text-anchor="end">UNIFEI</text></g>
+    ${marks}</svg>`;
+}
+function mapaView() {
+  const nFeitos = MARCOS.filter((m) => marcoFeito(m.n)).length;
+  const prox = MARCOS.find((m) => !marcoFeito(m.n));
+  return `<main class="page">${hud()}
+    <section class="map-head wrap"><div><p class="kick">Mapa da trilha · ${esc(S.name)} · ${esc(S.turma)}</p>
+      <h2>${nFeitos === 0 ? 'A subida começa no marco 1.' : nFeitos === 12 ? 'Você chegou ao cume!' : `${nFeitos} de 12 marcos vencidos.`}</h2>
+      <p class="muted">Cada marco é um item do conteúdo programático de Matemática do Vestibular UNIFEI 2027. Acertar de primeira vale 100 pontos; na segunda tentativa, 50.</p></div>
+      ${prox ? `<button class="btn hot big" data-act="marco" data-n="${prox.n}">${nFeitos ? 'Continuar' : 'Começar'}: marco ${prox.n} ${ic('arrow')}</button>` : '<button class="btn hot big" data-act="final">Ver o resultado no cume</button>'}
+    </section>
+    <section class="map-svg">${perfil(nFeitos)}</section>
+    <section class="wrap"><ol class="marcos">${MARCOS.map((m) => {
+      const ok = marcoFeito(m.n); const open = marcoAberto(m.n); const pts = ptsSala(m.n);
+      return `<li class="${ok ? 'ok' : open ? 'now' : 'lock'}"><button ${open ? `data-act="marco" data-n="${m.n}"` : 'disabled'}>
+        <span class="mn">${ok ? ic('check') : open ? m.n : ic('lock')}</span>
+        <span class="mt"><b>${m.nome}</b><small>${m.sub}</small></span>
+        <span class="mp">${ok ? `${pts}<small> pts</small>` : `<small>${m.alt} m</small>`}</span></button></li>`;
+    }).join('')}</ol></section></main>`;
+}
+
+/* ---------- questão ---------- */
+function questaoView() {
+  const q = QUESTOES[cur]; const m = MARCOS[q.m - 1]; const x = st(cur); const fin = done(cur) || review; const ord = ordem(cur);
+  const j = cur % POR;
+  const alts = ord.map((oi, li) => {
+    const right = oi === 0; const wrong = x.wrong && x.wrong.includes(oi);
+    const cls = [fin && right ? 'right' : '', wrong ? 'wrong' : '', sel === oi && !fin ? 'sel' : ''].join(' ');
+    return `<li><button class="alt ${cls}" data-act="alt" data-i="${oi}" ${fin || wrong ? 'disabled' : ''} aria-pressed="${sel === oi}"><span class="lt">${LETRAS[li]}</span><span class="tx">${q.a[oi]}</span>${fin && right ? `<span class="tag">${ic('check')}</span>` : wrong ? `<span class="tag">${ic('x')}</span>` : ''}</button></li>`;
+  }).join('');
+  let fb = '';
+  if (fin) {
+    const msg = review ? 'Resolução' : x.ok ? (x.tries === 1 ? 'Certo de primeira! +100' : 'Certo na segunda tentativa. +50') : 'Não foi desta vez. Veja a resolução:';
+    fb = `<div class="sol ${x.ok ? 'good' : 'bad'}"><p class="sol-h">${msg}</p><p>${q.r}</p></div>
+      <div class="row"><button class="btn hot" data-act="prox">${j < POR - 1 ? 'Próxima questão' : review ? 'Voltar ao mapa' : 'Fechar o marco'} ${ic('arrow')}</button></div>`;
+  } else {
+    fb = `${x.tries === 1 ? '<p class="warn-line">Ainda não. Você tem mais uma tentativa nesta questão.</p>' : ''}
+      <div class="row"><button class="btn hot" data-act="conf" ${sel < 0 ? 'disabled' : ''}>Confirmar resposta</button>
+      ${projection ? `<button class="btn ghost" data-act="reveal">${reveal ? 'Esconder' : 'Mostrar'} resposta</button>` : ''}</div>
+      ${projection && reveal ? `<div class="sol good"><p class="sol-h">Resposta: ${LETRAS[ord.indexOf(0)]}</p><p>${q.r}</p></div>` : ''}`;
+  }
+  return `<main class="page">${hud()}<div class="wrap qwrap">
+    <nav class="crumbs"><button class="link" data-act="mapa">${ic('back')} Mapa</button><span>Marco ${m.n} · ${m.nome}</span>
+      <span class="dots">${ks(m.n).map((k) => `<i class="${k === cur ? 'on' : ''} ${done(k) ? (S.e[k].ok ? 'g' : 'b') : ''}"></i>`).join('')}</span></nav>
+    <article class="card qcard">
+      <p class="qn">Questão ${j + 1} de ${POR} · ${esc(q.nome)}</p>
+      <div class="enun">${q.t}</div>
+      ${q.fig ? FIG[q.fig]() : ''}
+      <ol class="alts">${alts}</ol>
+      ${fb}
+    </article></div></main>`;
+}
+
+/* ---------- marco concluído ---------- */
+function marcoView() {
+  const m = MARCOS[marcoV - 1]; const p = ptsSala(m.n); const ac = ks(m.n).filter((k) => S.e[k] && S.e[k].ok).length; const nx = MARCOS[m.n];
+  return `<main class="page">${hud()}<div class="wrap narrow"><section class="card center marco-ok">
+    <div class="badge">${ic('flag')}</div>
+    <p class="kick">Marco ${m.n} vencido · ${m.alt} m de altitude</p>
+    <h2>${m.nome}</h2>
+    <div class="nums"><div><b>${p}</b><small>pontos</small></div><div><b>${ac}/3</b><small>acertos</small></div><div><b>${pontos()}</b><small>total</small></div></div>
+    <p class="muted">${ac === 3 ? 'Conteúdo dominado. Siga em frente!' : ac === 2 ? 'Quase lá. Vale reler a resolução da questão que escapou.' : 'Este conteúdo merece revisão antes da prova. As resoluções ficam abertas no mapa.'}</p>
+    <h3>Pódio do marco ${m.n}</h3><div id="podio"></div>
+    <div class="row center">${nx ? `<button class="btn hot big" data-act="marco" data-n="${nx.n}">Seguir para o marco ${nx.n}: ${nx.nome} ${ic('arrow')}</button>` : '<button class="btn hot big" data-act="final">Chegar ao cume</button>'}
+      <button class="btn ghost" data-act="mapa">Ver o mapa</button></div>
+  </section></div></main>`;
+}
+
+/* ---------- cume (final) ---------- */
+function finalView() {
+  const linhas = MARCOS.map((m) => { const ok = ks(m.n).filter((k) => S.e[k] && S.e[k].ok).length; const f1 = ks(m.n).filter((k) => S.e[k] && S.e[k].ok && S.e[k].tries === 1).length; return { m, ok, f1 }; });
+  const revisar = linhas.filter((l) => l.f1 < 2);
+  return `<main class="page">${hud()}<div class="wrap"><section class="card summit-card">
+    <div class="sum-top">${topo(5, 4)}<p class="kick">Cume · 2.110 m</p><h2>${esc(S.name)}, você completou a Trilha UNIFEI 2027!</h2>
+      <p class="rank">${rankLabel()}</p></div>
+    <div class="nums"><div><b>${pontos()}</b><small>pontos de 3.600</small></div><div><b>${acertos()}/36</b><small>acertos</small></div><div><b>${dePrimeira()}</b><small>de primeira</small></div></div>
+    <h3>Seu desempenho por conteúdo</h3>
+    <ul class="perf">${linhas.map((l) => `<li class="${l.f1 === 3 ? 'top' : l.f1 < 2 ? 'low' : ''}"><span>${l.m.n}. ${l.m.nome}</span><span class="bar"><i style="width:${(l.f1 / 3) * 100}%"></i></span><b>${l.f1}/3</b></li>`).join('')}</ul>
+    <p class="muted small">Barra = questões certas de primeira, que é o que conta na prova.</p>
+    ${revisar.length ? `<div class="tip"><b>Revise antes do dia 29:</b> ${revisar.map((l) => l.m.nome).join(', ')}. Toque no marco no mapa para reler as resoluções.</div>` : '<div class="tip good"><b>Excelente!</b> Pelo menos 2 de 3 de primeira em todos os conteúdos.</div>'}
+    <p class="cert">Código de verificação: <b>${certCode()}</b> · ${esc(S.turma)}</p>
+    <h3>Ranking geral</h3><div id="podio"></div>
+    <div class="row center"><button class="btn ghost" data-act="mapa">Rever as resoluções no mapa</button><button class="btn ghost" data-act="novo">Começar de novo</button></div>
+  </section></div></main>`;
+}
+
+/* ---------- recordes e professor ---------- */
+function hallList(rows) { return rows.length ? `<ol class="hall">${rows.map((h, i) => `<li><span class="h-n">${i + 1}</span><b>${esc(h.name)}</b><span>${esc(h.turma)} · ${esc(h.rank)}</span><span>${h.min}/36 acertos</span><b>${h.pts}</b></li>`).join('')}</ol>` : '<p class="muted">Ninguém concluiu a trilha neste aparelho ainda.</p>'; }
+const sortedHall = () => DB.hall.slice().sort((a, b) => b.pts - a.pts || b.min - a.min || a.t - b.t);
+function hallView() { return `<main class="page">${hud()}<div class="wrap narrow"><section class="card"><h2>Recordes deste aparelho</h2>${hallList(sortedHall().slice(0, 20))}<div class="row"><button class="btn ghost" data-act="${S ? 'mapa' : 'cover'}">Voltar</button></div></section></div></main>`; }
+function teacherView() {
+  return `<main class="page">${hud()}<div class="wrap"><section class="card"><h2>Área do professor</h2>
+    <div class="tcards"><div><h3>Modo projeção</h3><p>Libera todos os marcos, mostra o botão “Mostrar resposta” e desliga a tela cheia, para resolver com a turma no projetor.</p><button class="btn hot" data-act="proj">${projection ? 'Desligar' : 'Ligar'} projeção</button></div>
+    <div><h3>Questões</h3><p>36 questões autorais no formato da prova (5 alternativas, sem calculadora), 3 por item do conteúdo programático. A ordem das alternativas muda para cada aluno.</p><button class="btn ghost" data-act="${S ? 'mapa' : 'projmap'}">Abrir o mapa</button></div></div>
+    <h3>Painel ao vivo</h3><div id="prof-live"></div>
+    <details class="local"><summary>Trilhas concluídas neste aparelho</summary>${TURMAS.map((t) => `<h3>${t}</h3>${hallList(sortedHall().filter((h) => h.turma === t))}`).join('')}</details>
+    <div class="row"><button class="btn ghost" data-act="cover">Sair</button><button class="link" data-act="wipe">Apagar dados deste aparelho</button></div></section></div></main>`;
+}
+function modalView() {
+  if (!modal) return '';
+  let inner = '';
+  if (modal.type === 'pin') inner = `<h3>Área do professor</h3><form data-form="pin" autocomplete="off"><label class="fld"><span>Senha</span><input name="pin" type="password" required></label>${modal.err ? '<p class="err">Senha incorreta.</p>' : ''}<div class="row"><button class="btn hot" type="submit">Entrar</button><button class="btn ghost" type="button" data-act="close">Cancelar</button></div></form>`;
+  if (modal.type === 'menu') inner = `<h3>Menu</h3><div class="menu">${S ? '<button class="btn ghost" data-act="mapa">Mapa da trilha</button>' : ''}<button class="btn ghost" data-act="hall">Recordes deste aparelho</button><button class="btn ghost" data-act="pin">Área do professor</button><button class="btn ghost" data-act="cover">Tela inicial</button><button class="btn ghost" data-act="close">Fechar</button></div>`;
+  return `<div class="veil" data-act="veil"><div class="modal card" role="dialog" aria-modal="true">${inner}</div></div>`;
+}
+
+/* ---------- render ---------- */
+function render() {
+  if (screen === 'teacher' && !teacherKey) screen = 'cover';
+  const V = { cover: coverView, mapa: mapaView, questao: questaoView, marco: marcoView, final: finalView, hall: hallView, teacher: teacherView }[screen] || coverView;
+  if (!S && ['mapa', 'questao', 'marco', 'final'].includes(screen) && !projection) screen = 'cover';
+  $app.innerHTML = (S || screen === 'cover' || screen === 'hall' || screen === 'teacher' || projection ? V() : coverView()) + modalView() + '<div id="toast" role="status" aria-live="polite"></div>';
+  document.body.dataset.screen = screen; document.body.classList.toggle('proj', projection);
+  syncFull();
+  if (screen === 'teacher') startProf(); else stopProf();
+  const prev = onlineWhere;
+  onlineWhere = !S ? '' : screen === 'questao' ? `Marco ${QUESTOES[cur].m} · ${QUESTOES[cur].nome}` : screen === 'marco' ? `Venceu o marco ${marcoV}` : 'No mapa';
+  if (S && !S.finished && onlineWhere !== prev && ['questao', 'mapa', 'marco'].includes(screen)) syncPost([], true);
+  if (!hbTimer) heartbeat();
+  if (screen === 'marco') fillPodium(document.getElementById('podio'), marcoV - 1, 'sol', 10);
+  if (screen === 'final') fillPodium(document.getElementById('podio'), 0, 'final', 50);
+}
+function go(s) { screen = s; modal = null; render(); window.scrollTo(0, 0); }
+function openMarco(n) {
+  marcoV = n; review = marcoFeito(n) && !projection;
+  const k = ks(n).find((x) => !done(x)); cur = k == null ? ks(n)[0] : k; sel = -1; reveal = false; go('questao');
+}
+
+/* ---------- respostas ---------- */
+function confirmar() {
+  if (sel < 0 || done(cur) || !S) return;
+  const q = QUESTOES[cur]; const x = st(cur); x.wrong = x.wrong || [];
+  x.tries += 1; const ok = sel === 0;
+  if (ok) x.ok = true; else x.wrong.push(sel);
+  S.e[cur] = x;
+  const evs = [{ ev: ok ? 'Acertou' : 'Errou', det: `Marco ${q.m} · ${q.nome}${ok ? '' : x.tries >= 2 ? ' (sem pontos)' : ' (1ª tentativa)'}`, pts: ok ? ptsOf(cur) : 0 }];
+  if (marcoFeito(q.m) && !S.fim[q.m]) {
+    S.fim[q.m] = Date.now();
+    evs.push({ ev: 'Concluiu o marco', det: `Marco ${q.m} · ${MARCOS[q.m - 1].nome}`, pts: ptsSala(q.m) });
+    if (MARCOS.every((m) => marcoFeito(m.n))) {
+      S.finished = true; S.t1 = Date.now();
+      evs.push({ ev: 'Chegou ao cume', det: `${acertos()}/36 acertos · ${rankLabel()}`, pts: pontos() });
+      DB.hall.push({ name: S.name, turma: S.turma, pts: pontos(), min: acertos(), rank: rankLabel(), t: Date.now() }); if (DB.hall.length > 200) DB.hall = sortedHall().slice(0, 200);
+    }
+  }
+  if (!S.temp) { save(); syncEv(evs); }
+  sel = -1; render();
+  toast(ok ? (x.tries === 1 ? 'Certo de primeira! +100' : 'Certo! +50') : x.tries >= 2 ? 'Resposta errada. Leia a resolução.' : 'Ainda não. Mais uma tentativa.');
+}
+function proxima() {
+  const n = QUESTOES[cur].m; const j = cur % POR;
+  if (j < POR - 1) { cur += 1; sel = -1; reveal = false; render(); window.scrollTo(0, 0); return; }
+  if (review || projection) { go('mapa'); return; }
+  marcoV = n; go('marco');
+}
+
+/* ---------- eventos ---------- */
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const a = b.dataset.act;
+  if (a === 'veil') { if (e.target === b) { modal = null; render(); } return; }
+  if (a === 'alt') { if (b.disabled) return; sel = +b.dataset.i; render(); }
+  else if (a === 'conf') confirmar();
+  else if (a === 'prox') proxima();
+  else if (a === 'marco') openMarco(+b.dataset.n);
+  else if (a === 'mapa') go(S || projection ? 'mapa' : 'cover');
+  else if (a === 'projmap') { projection = true; if (!S) S = { temp: true, name: 'Projeção', turma: '—', seed: 7, e: {}, fim: {}, finished: false }; go('mapa'); }
+  else if (a === 'final') go('final');
+  else if (a === 'cover') { projection = false; if (S && S.temp) S = DB.cur; go('cover'); }
+  else if (a === 'menu') { modal = { type: 'menu' }; render(); }
+  else if (a === 'close') { modal = null; render(); }
+  else if (a === 'hall') go('hall');
+  else if (a === 'pin') { modal = { type: 'pin' }; render(); setTimeout(() => { const i = document.querySelector('.modal input'); if (i) i.focus(); }, 30); }
+  else if (a === 'proj') { projection = !projection; if (!projection && S && S.temp) S = DB.cur; render(); }
+  else if (a === 'reveal') { reveal = !reveal; render(); }
+  else if (a === 'prof-filtro') { prof.filtro = b.dataset.id; renderProf(); }
+  else if (a === 'prof-aba') { prof.aba = b.dataset.id; renderProf(); }
+  else if (a === 'prof-pod') { prof.pod = +b.dataset.i; renderProf(); }
+  else if (a === 'novo') { if (confirm('Começar uma nova subida? O resultado atual continua nos recordes deste aparelho.')) { S = null; DB.cur = null; save(); go('cover'); } }
+  else if (a === 'wipe') { if (confirm('Apagar a trilha atual e os recordes deste aparelho?')) { DB = { cur: null, hall: [] }; S = null; save(); go('cover'); } }
+});
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || modal) return;
+  if (e.key === 'Enter' && e.target.closest && e.target.closest('.mk')) { openMarco(+e.target.closest('.mk').dataset.n); return; }
+  if (screen !== 'questao') return;
+  const li = 'abcde'.indexOf(e.key.toLowerCase());
+  if (li >= 0 && !done(cur) && !review) { const oi = ordem(cur)[li]; if (!(st(cur).wrong || []).includes(oi)) { sel = oi; render(); } }
+  else if (e.key === 'Enter') { if (done(cur) || review) proxima(); else confirmar(); }
+});
+document.addEventListener('submit', (e) => {
+  e.preventDefault(); const f = e.target;
+  if (f.dataset.form === 'start') {
+    const nome = f.nome.value.trim().replace(/\s+/g, ' '); const turma = f.turma.value;
+    if (nome.length < 3) return;
+    projection = false; newGame(nome, turma); go('mapa');
+  }
+  if (f.dataset.form === 'pin') { if (fnv('missao:' + norm(f.pin.value)) === PIN_HASH) { teacherKey = norm(f.pin.value); modal = null; go('teacher'); } else { modal = { type: 'pin', err: true }; render(); } }
+});
+render();
+
+})();
+</script>
+</body>
+</html>

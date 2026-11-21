@@ -22,3 +22,9 @@ Batalha naval contra o computador para revisar a prova de cilindros, cones e esf
 Arcade de revisão da prova de cilindros, cones e esferas (M21/M22): as contas caem do céu e o aluno digita a resposta antes que cheguem ao chão. Níveis, combos, itens dourados e modo treino por conteúdo (π = 3).
 
 **Acesse:** https://mateusbibiano.github.io/missao-enem/chuva/
+
+## Trilha UNIFEI 2027 · Matemática
+
+Revisão para o Vestibular UNIFEI 2027 (M31, M32 e PV): 12 marcos, um para cada item do conteúdo programático de Matemática, com 36 questões autorais no formato da prova (5 alternativas, sem calculadora) e resolução comentada.
+
+**Acesse:** https://mateusbibiano.github.io/missao-enem/unifei/
