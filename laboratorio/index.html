@@ -952,7 +952,7 @@ function guard(kind, dur) {
   const n = (S && S.saidas) || 0;
   g.innerHTML = `<div class="guard-box"><span class="guard-ic">⚠</span>
     <small>ALERTA DA SEGURANÇA</small>
-    <h2>${kind === 'away' ? 'Você saiu do banco' : 'O banco só abre em tela cheia'}</h2>
+    <h2>${kind === 'away' ? 'Você saiu do laboratório' : 'O laboratório só funciona em tela cheia'}</h2>
     <p>${kind === 'away' ? 'Sair para outra guia ou aplicativo fica registrado e aparece para o professor.' : 'Volte para a tela cheia para continuar a missão. Saídas para outras guias ficam registradas.'}</p>
     <dl><div><dt>Saídas registradas</dt><dd>${n}</dd></div>${kind === 'away' ? `<div><dt>Tempo fora</dt><dd>${dur} s</dd></div>` : ''}</dl>
     <button type="button" class="btn hot big" id="guard-back">${fsOK() ? 'Voltar para a tela cheia' : 'Voltar para a missão'}</button></div>`;
@@ -971,7 +971,7 @@ function backToStation() {
   const dur = Math.max(1, Math.round((Date.now() - awayAt) / 1000)); awayAt = 0;
   if (!S) return;
   S.foraSeg = (S.foraSeg || 0) + dur; save();
-  syncEv([{ ev: 'Saiu da tela', det: `Sala ${salaAtual()} · ${dur} s fora`, pts: 0 }]);
+  syncEv([{ ev: 'Saiu da tela', det: `Bancada ${salaAtual()} · ${dur} s fora`, pts: 0 }]);
   guard('away', dur);
 }
 function syncFull() {
