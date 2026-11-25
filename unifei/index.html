@@ -494,7 +494,7 @@ let prof = { data: null, filtro: 'todas', aba: 'vivo', pod: 0, err: false };
 
 const slugOf = (s) => norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50);
 function snapshot() {
-  const solsArr = MARCOS.map((f) => ({ pts: ptsSala(f.n), em: (S.fim && S.fim[f.n]) || 0 }));
+  const solsArr = MARCOS.map((f) => ({ pts: Math.max(0, ptsSala(f.n)), em: (S.fim && S.fim[f.n]) || 0 }));
   return {
     id: S.sid, nome: S.name, turma: S.turma, tent: S.seed.toString(36), pts: pontos(), rank: rankLabel(),
     pecas: feitos(), ft: dePrimeira(), o2: minRest(), sol: salaAtual(), peca: onlineWhere || 'No mapa', sols: solsArr, fim: S.finished ? S.t1 || Date.now() : 0, saidas: S.saidas || 0,
@@ -700,9 +700,10 @@ const marcoAberto = (n) => n === 1 || marcoFeito(n - 1) || projection;
 const salaAtual = () => { for (let n = 1; n <= 12; n++) if (!marcoFeito(n)) return n; return 12; };
 const feitos = () => Object.keys(S.e).filter((k) => done(+k)).length;
 const dePrimeira = () => Object.values(S.e).filter((x) => x.ok && x.tries === 1).length;
-const ptsOf = (k) => { const x = S.e[k]; return x && x.ok ? (x.tries === 1 ? 100 : 50) : 0; };
+const PENAL = 100;
+const ptsOf = (k) => { const x = S.e[k]; return x && x.ok ? (x.tries === 1 ? 100 : 50) : x && x.tries >= 2 ? -PENAL : 0; };
 const ptsSala = (n) => sum(ks(n).map(ptsOf));
-const pontos = () => sum(MARCOS.map((m) => ptsSala(m.n)));
+const pontos = () => Math.max(0, sum(MARCOS.map((m) => ptsSala(m.n))));
 const acertos = () => Object.values(S.e).filter((x) => x.ok).length;
 const minRest = () => acertos();
 const altAtual = () => { let a = 760; MARCOS.forEach((m) => { if (marcoFeito(m.n)) a = m.alt; }); return a; };
@@ -812,7 +813,7 @@ function mapaView() {
   return `<main class="page">${hud()}
     <section class="map-head wrap"><div><p class="kick">Mapa da trilha · ${esc(S.name)} · ${esc(S.turma)}</p>
       <h2>${nFeitos === 0 ? 'A subida começa no marco 1.' : nFeitos === 12 ? 'Você chegou ao cume!' : `${nFeitos} de 12 marcos vencidos.`}</h2>
-      <p class="muted">Cada marco é um item do conteúdo programático de Matemática do Vestibular UNIFEI 2027. Acertar de primeira vale 100 pontos; na segunda tentativa, 50.</p></div>
+      <p class="muted">Cada marco é um item do conteúdo programático de Matemática do Vestibular UNIFEI 2027. Acertar de primeira vale 100 pontos; na segunda tentativa, 50. Errar duas vezes tira 100 pontos, e a trilha segue.</p></div>
       ${prox ? `<button class="btn hot big" data-act="marco" data-n="${prox.n}">${nFeitos ? 'Continuar' : 'Começar'}: marco ${prox.n} ${ic('arrow')}</button>` : '<button class="btn hot big" data-act="final">Ver o resultado no cume</button>'}
     </section>
     <section class="map-svg">${perfil(nFeitos)}</section>
@@ -836,11 +837,11 @@ function questaoView() {
   }).join('');
   let fb = '';
   if (fin) {
-    const msg = review ? 'Resolução' : x.ok ? (x.tries === 1 ? 'Certo de primeira! +100' : 'Certo na segunda tentativa. +50') : 'Não foi desta vez. Veja a resolução:';
+    const msg = review ? 'Resolução' : x.ok ? (x.tries === 1 ? 'Certo de primeira! +100' : 'Certo na segunda tentativa. +50') : `Dois erros: −${PENAL} pontos. Veja a resolução e siga em frente.`;
     fb = `<div class="sol ${x.ok ? 'good' : 'bad'}"><p class="sol-h">${msg}</p><p>${q.r}</p></div>
       <div class="row"><button class="btn hot" data-act="prox">${j < POR - 1 ? 'Próxima questão' : review ? 'Voltar ao mapa' : 'Fechar o marco'} ${ic('arrow')}</button></div>`;
   } else {
-    fb = `${x.tries === 1 ? '<p class="warn-line">Ainda não. Você tem mais uma tentativa nesta questão.</p>' : ''}
+    fb = `${x.tries === 1 ? '<p class="warn-line">Ainda não. Você tem mais uma tentativa: se errar de novo, perde 100 pontos.</p>' : ''}
       <div class="row"><button class="btn hot" data-act="conf" ${sel < 0 ? 'disabled' : ''}>Confirmar resposta</button>
       ${projection ? `<button class="btn ghost" data-act="reveal">${reveal ? 'Esconder' : 'Mostrar'} resposta</button>` : ''}</div>
       ${projection && reveal ? `<div class="sol good"><p class="sol-h">Resposta: ${LETRAS[ord.indexOf(0)]}</p><p>${q.r}</p></div>` : ''}`;
@@ -939,7 +940,7 @@ function confirmar() {
   x.tries += 1; const ok = sel === 0;
   if (ok) x.ok = true; else x.wrong.push(sel);
   S.e[cur] = x;
-  const evs = [{ ev: ok ? 'Acertou' : 'Errou', det: `Marco ${q.m} · ${q.nome}${ok ? '' : x.tries >= 2 ? ' (sem pontos)' : ' (1ª tentativa)'}`, pts: ok ? ptsOf(cur) : 0 }];
+  const evs = [{ ev: ok ? 'Acertou' : 'Errou', det: `Marco ${q.m} · ${q.nome}${ok ? '' : x.tries >= 2 ? ` (−${PENAL} pontos)` : ' (1ª tentativa)'}`, pts: ok ? ptsOf(cur) : 0 }];
   if (marcoFeito(q.m) && !S.fim[q.m]) {
     S.fim[q.m] = Date.now();
     evs.push({ ev: 'Concluiu o marco', det: `Marco ${q.m} · ${MARCOS[q.m - 1].nome}`, pts: ptsSala(q.m) });
@@ -951,7 +952,7 @@ function confirmar() {
   }
   if (!S.temp) { save(); syncEv(evs); }
   sel = -1; render();
-  toast(ok ? (x.tries === 1 ? 'Certo de primeira! +100' : 'Certo! +50') : x.tries >= 2 ? 'Resposta errada. Leia a resolução.' : 'Ainda não. Mais uma tentativa.');
+  toast(ok ? (x.tries === 1 ? 'Certo de primeira! +100' : 'Certo! +50') : x.tries >= 2 ? `Dois erros: −${PENAL} pontos. Leia a resolução.` : 'Ainda não. Mais uma tentativa.');
 }
 function proxima() {
   const n = QUESTOES[cur].m; const j = cur % POR;
