@@ -28,10 +28,3 @@ Arcade de revisão da prova de cilindros, cones e esferas (M21/M22): as contas c
 Revisão para o Vestibular UNIFEI 2027 (M31, M32 e PV): 12 marcos, um para cada item do conteúdo programático de Matemática, com 36 questões autorais no formato da prova (5 alternativas, sem calculadora) e resolução comentada.
 
 **Acesse:** https://mateusbibiano.github.io/missao-enem/unifei/
-
-### Rodada 2 (subida noturna)
-
-Segunda rodada da trilha, com 36 questões inéditas (os mesmos 12 itens do programa) e três novidades: lanterna de dicas (−30 pontos), bônus "vento a favor" (+50 a cada 3 acertos seguidos de primeira) e caderno de erros com comparação com a rodada 1. Começa **bloqueada**: o professor libera pela Área do professor (a chave fica no documento `config/trilha-unifei-r2` do Firestore do projeto `enem-games-g9`). Ranking online no projeto `unifei2` do Apps Script.
-
-**Acesse:** https://mateusbibiano.github.io/missao-enem/unifei/rodada2/
-
